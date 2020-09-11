@@ -1,0 +1,1 @@
+# NodeJS DuckDB bindings
