@@ -1,0 +1,26 @@
+{
+  "name": "node-duckdb",
+  "version": "1.0.0",
+  "main": "src/hello.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "build": "cmake-js compile",
+    "build:test:watch": "nodemon --exec 'yarn build && yarn jest --watch'",
+    "install": "yarn build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^2.0.2"
+  },
+  "devDependencies": {
+    "cmake-js": "^6.1.0",
+    "jest": "^26.2.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5"
+  },
+  "engines": {
+    "node": ">= 12.11.0"
+  }
+}
