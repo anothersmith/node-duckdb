@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf ./build",
     "build": "cmake-js compile",
-    "build:test:watch": "nodemon --exec 'yarn build && yarn jest --watch'",
+    "build:test:watch": "nodemon --exec 'yarn build && yarn jest --watchAll'",
     "install": "yarn build",
     "test": "jest"
   },

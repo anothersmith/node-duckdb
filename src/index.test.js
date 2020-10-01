@@ -46,10 +46,10 @@ describe("node-duckdb", () => {
         const cw = new ConnectionWrapper();
 
         const rw = cw.execute(
-          "SELECT count(*) FROM read_csv_auto('duckdb/test/sql/copy/web_page.csv')"
+          "SELECT count(*) FROM read_csv_auto('duckdb/test/sql/copy/csv/test_web_page.test')"
         );
 
-        expect(rw.fetchRow()).toMatchObject([60]);
+        expect(rw.fetchRow()).toMatchObject([38]);
         expect(rw.fetchRow()).toBe(null);
       });
     });

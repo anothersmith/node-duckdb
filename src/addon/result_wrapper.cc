@@ -78,38 +78,41 @@ Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
       continue;
     }
     auto val = current_chunk->data[col_idx].GetValue(chunk_offset);
-    switch (result->sql_types[col_idx].id) {
-    case duckdb::SQLTypeId::BOOLEAN:
+    switch (result->types[col_idx].id()) {
+    case duckdb::LogicalTypeId::BOOLEAN:
       row.Set(col_idx, Napi::Boolean::New(env, val.GetValue<bool>()));
       break;
-    case duckdb::SQLTypeId::TINYINT:
+    case duckdb::LogicalTypeId::TINYINT:
       row.Set(col_idx, Napi::Number::New(env, val.GetValue<int8_t>()));
       break;
-    case duckdb::SQLTypeId::SMALLINT:
+    case duckdb::LogicalTypeId::SMALLINT:
       row.Set(col_idx, Napi::Number::New(env, val.GetValue<int16_t>()));
       break;
-    case duckdb::SQLTypeId::INTEGER:
+    case duckdb::LogicalTypeId::INTEGER:
       row.Set(col_idx, Napi::Number::New(env, val.GetValue<int32_t>()));
       break;
-    case duckdb::SQLTypeId::BIGINT:
+    case duckdb::LogicalTypeId::BIGINT:
       #ifdef NAPI_EXPERIMENTAL
         row.Set(col_idx, Napi::BigInt::New(env, val.GetValue<int64_t>()));
       #else
         row.Set(col_idx, Napi::Number::New(env, val.GetValue<int64_t>()));
       #endif
       break;
-    case duckdb::SQLTypeId::FLOAT:
+    case duckdb::LogicalTypeId::FLOAT:
       row.Set(col_idx, Napi::Number::New(env, val.GetValue<float>()));
       break;
-    case duckdb::SQLTypeId::DOUBLE:
+    case duckdb::LogicalTypeId::DOUBLE:
       row.Set(col_idx, Napi::Number::New(env, val.GetValue<double>()));
       break;
-    case duckdb::SQLTypeId::VARCHAR:
+    case duckdb::LogicalTypeId::DECIMAL:
+      row.Set(col_idx, Napi::Number::New(env, val.CastAs(duckdb::LogicalType::DOUBLE).GetValue<double>()));
+      break;      
+    case duckdb::LogicalTypeId::VARCHAR:
       row.Set(col_idx, Napi::String::New(env, val.GetValue<string>()));
       break;
 
-    case duckdb::SQLTypeId::TIMESTAMP: {
-      if (result->types[col_idx] != duckdb::TypeId::INT64) {
+    case duckdb::LogicalTypeId::TIMESTAMP: {
+      if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT64) {
         throw runtime_error("expected int64 for timestamp");
       }
       int64_t tval = val.GetValue<int64_t>();
@@ -118,15 +121,15 @@ Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
       row.Set(col_idx, Napi::Number::New(env, date + time));
       break;
     }
-    case duckdb::SQLTypeId::DATE: {
-      if (result->types[col_idx] != duckdb::TypeId::INT32) {
+    case duckdb::LogicalTypeId::DATE: {
+      if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT32) {
         throw runtime_error("expected int32 for date");
       }
       row.Set(col_idx, Napi::Number::New(env, Epoch(val.GetValue<int32_t>()) * 1000));
       break;
     }
-    case duckdb::SQLTypeId::TIME: {
-      if (result->types[col_idx] != duckdb::TypeId::INT32) {
+    case duckdb::LogicalTypeId::TIME: {
+      if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT32) {
         throw runtime_error("expected int32 for time");
       }
       int64_t tval = val.GetValue<int64_t>();      
@@ -135,7 +138,7 @@ Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
     }
 
     default:
-      throw runtime_error("unsupported type: " + SQLTypeToString(result->sql_types[col_idx]));
+      throw runtime_error("unsupported type: " + result->types[col_idx].ToString());
     }
   }
   chunk_offset++;
@@ -155,7 +158,7 @@ Napi::Value ResultWrapper::Describe(const Napi::CallbackInfo& info) {
   for (idx_t col_idx = 0; col_idx < col_count; col_idx++) {
     Napi::Array col = Napi::Array::New(env, 2);
     col.Set(name_idx, Napi::String::New(env, result->names[col_idx]));
-    col.Set(type_idx, Napi::String::New(env, duckdb::SQLTypeToString(result->sql_types[col_idx])));
+    col.Set(type_idx, Napi::String::New(env, result->types[col_idx].ToString()));
     row.Set(col_idx, col);
   }
   return row;
