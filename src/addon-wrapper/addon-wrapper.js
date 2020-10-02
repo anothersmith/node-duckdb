@@ -1,4 +1,4 @@
-var { ConnectionWrapper, ResultWrapper } = require("bindings")(
+const { ConnectionWrapper, ResultWrapper } = require("bindings")(
   "node-duckdb-addon"
 );
 

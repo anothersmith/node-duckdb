@@ -1,13 +1,13 @@
+import {ConnectionWrapper, ResultWrapper} from "./addon-wrapper";
+
 describe("node-duckdb", () => {
   it("exports a ConnectionWrapper", () => {
-    const { ConnectionWrapper } = require(".");
 
     expect(ConnectionWrapper).not.toBe(undefined);
   });
 
   describe("ConnectionWrapper", () => {
     it("can be instantiated", () => {
-      const { ConnectionWrapper } = require(".");
       const cw = new ConnectionWrapper();
 
       expect(cw).toBeInstanceOf(ConnectionWrapper);
@@ -15,14 +15,12 @@ describe("node-duckdb", () => {
 
     describe("execute()", () => {
       it("validates parameters", () => {
-        const { ConnectionWrapper } = require(".");
         const cw = new ConnectionWrapper();
 
-        expect(() => cw.execute()).toThrow("String expected");
+        expect(() => (<any>cw).execute()).toThrow("String expected");
       });
 
       it("returns a ResultWrapper", () => {
-        const { ConnectionWrapper, ResultWrapper } = require(".");
         const cw = new ConnectionWrapper();
 
         const rw = cw.execute("SELECT 1");
@@ -32,7 +30,6 @@ describe("node-duckdb", () => {
       });
 
       it("returns a ResultWrapper", () => {
-        const { ConnectionWrapper, ResultWrapper } = require(".");
         const cw = new ConnectionWrapper();
 
         const rw = cw.execute("SELECT 1");
@@ -42,7 +39,6 @@ describe("node-duckdb", () => {
       });
 
       it("can do a csv scan", () => {
-        const { ConnectionWrapper, ResultWrapper } = require(".");
         const cw = new ConnectionWrapper();
 
         const rw = cw.execute(
@@ -58,7 +54,6 @@ describe("node-duckdb", () => {
   describe("ResultWrapper", () => {
     describe("description()", () => {
       it("errors when without a result", () => {
-        const { ResultWrapper } = require(".");
         const rw = new ResultWrapper();
 
         expect(rw).toBeInstanceOf(ResultWrapper);
@@ -67,7 +62,6 @@ describe("node-duckdb", () => {
       });
 
       it("can read column names", () => {
-        const { ConnectionWrapper } = require(".");
         const cw = new ConnectionWrapper();
         const rw = cw.execute(`SELECT 
           null AS c_null,
@@ -87,7 +81,6 @@ describe("node-duckdb", () => {
 
     describe("fetchRow()", () => {
       it("errors when without a result", () => {
-        const { ResultWrapper } = require(".");
         const rw = new ResultWrapper();
 
         expect(rw).toBeInstanceOf(ResultWrapper);
@@ -96,7 +89,6 @@ describe("node-duckdb", () => {
       });
 
       it("can read a single record containing all types", () => {
-        const { ConnectionWrapper, ResultWrapper } = require(".");
         const cw = new ConnectionWrapper();
         const rw = cw.execute(`SELECT 
           null,
