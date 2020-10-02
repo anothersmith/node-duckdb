@@ -1,4 +1,6 @@
-import {ConnectionWrapper, ResultWrapper} from "./addon-wrapper";
+import wrapper from "./addon-wrapper";
+
+const {ConnectionWrapper, ResultWrapper} = wrapper;
 
 describe("node-duckdb", () => {
   it("exports a ConnectionWrapper", () => {
