@@ -1,14 +1,15 @@
-const { ConnectionWrapper, ResultWrapper } = require("bindings")(
+const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = require("bindings")(
   "node-duckdb-addon"
 );
 
-declare class IConnectionWrapper {
-  execute(command: string): IResultWrapper;
+declare class ConnectionWrapperClass {
+  execute(command: string): ResultWrapperClass;
 }
 
-declare class IResultWrapper {
+declare class ResultWrapperClass {
   public fetchRow(): any[];
   public describe(): string[][];
 }
 
-export default {ConnectionWrapper: <typeof IConnectionWrapper> ConnectionWrapper, ResultWrapper: <typeof IResultWrapper> ResultWrapper};
+export const ConnectionWrapper: typeof ConnectionWrapperClass = ConnectionWrapperBinding;
+export const ResultWrapper: typeof ResultWrapperClass = ResultWrapperBinding;
