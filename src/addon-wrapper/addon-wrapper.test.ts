@@ -1,8 +1,7 @@
-import {ConnectionWrapper, ResultWrapper} from "./addon-wrapper";
+import { ConnectionWrapper, ResultWrapper } from "./addon-wrapper";
 
 describe("node-duckdb", () => {
   it("exports a ConnectionWrapper", () => {
-
     expect(ConnectionWrapper).not.toBe(undefined);
   });
 
@@ -29,21 +28,10 @@ describe("node-duckdb", () => {
         expect(rw).toBeInstanceOf(ResultWrapper);
       });
 
-      it("returns a ResultWrapper", () => {
-        const cw = new ConnectionWrapper();
-
-        const rw = cw.execute("SELECT 1");
-
-        expect(rw).toBeDefined();
-        expect(rw).toBeInstanceOf(ResultWrapper);
-      });
-
       it("can do a csv scan", () => {
         const cw = new ConnectionWrapper();
 
-        const rw = cw.execute(
-          "SELECT count(*) FROM read_csv_auto('duckdb/test/sql/copy/csv/test_web_page.test')"
-        );
+        const rw = cw.execute("SELECT count(*) FROM read_csv_auto('duckdb/test/sql/copy/csv/test_web_page.test')");
 
         expect(rw.fetchRow()).toMatchObject([38]);
         expect(rw.fetchRow()).toBe(null);

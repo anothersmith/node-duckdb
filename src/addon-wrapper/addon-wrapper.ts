@@ -1,13 +1,16 @@
-const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = require("bindings")(
-  "node-duckdb-addon"
+/* eslint-disable max-classes-per-file */
+import bindings from "bindings";
+
+const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = bindings(
+  "node-duckdb-addon",
 );
 
 declare class ConnectionWrapperClass {
-  execute(command: string): ResultWrapperClass;
+  public execute(command: string): ResultWrapperClass;
 }
 
 declare class ResultWrapperClass {
-  public fetchRow(): any[];
+  public fetchRow(): unknown[];
   public describe(): string[][];
 }
 

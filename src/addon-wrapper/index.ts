@@ -1,1 +1,1 @@
-export * from './addon-wrapper'
+export * from "./addon-wrapper";

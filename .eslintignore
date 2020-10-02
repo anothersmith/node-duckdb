@@ -1,0 +1,9 @@
+coverage/
+dist
+node_modules/
+.eslintrc.js
+jest.config.js
+tsconfig.json
+duckdb
+addon
+nodemon.json
