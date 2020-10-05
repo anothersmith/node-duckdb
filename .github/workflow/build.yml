@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@master
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+          scope: "@deepcrawl"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Restore keys from cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Checkout submodules
+        uses: srt32/git-actions@v0.0.3
+        with:
+            args: git submodule update --init --recursive
+      - name: Install modules with frozen lockfile and build
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+          yarn test
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
