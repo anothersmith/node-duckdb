@@ -35,6 +35,7 @@ jobs:
       - name: Install modules with frozen lockfile and build
         run: |
           yarn install --frozen-lockfile
+          yarn lint
           yarn build
           yarn test
         env:
