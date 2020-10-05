@@ -29,7 +29,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Checkout submodules
-        uses: textbook/git-checkout-submodule-action@master
+        uses: srt32/git-actions@v0.0.3
+        with:
+            args: git submodule update --init --recursive
       - name: Install modules with frozen lockfile and build
         run: |
           yarn install --frozen-lockfile
