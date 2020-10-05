@@ -1,8 +1,6 @@
 #include "connection_wrapper.h"
 #include "result_wrapper.h"
 #include "duckdb.hpp"
-#include "duckdb/parser/parsed_data/create_table_function_info.hpp"
-#include "duckdb/main/client_context.hpp"
 using namespace std;
 
 Napi::FunctionReference ConnectionWrapper::constructor;

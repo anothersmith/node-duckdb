@@ -3,12 +3,12 @@ cmake_policy(SET CMP0042 NEW)
 project(node-duckdb-addon)
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(${CMAKE_JS_INC} ./duckdb/src/include)
-link_directories(./duckdb/build/release/src)
+include_directories(${CMAKE_JS_INC} ./libduckdb-src)
+link_directories(./libduckdb-src)
 file(GLOB SOURCE_FILES "./addon/*")
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
-target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB} duckdb)
+target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB})
 
 # Include N-API wrappers
 execute_process(COMMAND node -p "require('node-addon-api').include"
