@@ -5,8 +5,8 @@
   "main": "src/hello.js",
   "scripts": {
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
-    "build:duckdb": "cd duckdb && make && cd -",
     "build:addon": "rimraf build && cmake-js compile",
+    "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --watchAll'",
     "build:ts": "rimraf dist && tsc",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
