@@ -2,7 +2,8 @@
   "name": "@deepcrawl/node-duckdb",
   "version": "1.0.7",
   "license": "MIT",
-  "main": "src/hello.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "private": false,
   "scripts": {
     "build": "yarn build:addon && yarn build:ts",
@@ -30,11 +31,11 @@
     "node-addon-api": "^2.0.2"
   },
   "devDependencies": {
-    "@deepcrawl/eslint-config": "^5.0.0",
     "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "cmake-js": "^6.1.0",
     "eslint": "^7.10.0",
+    "eslint-config-deepcrawl": "^5.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-array-func": "^3.1.6",
@@ -44,7 +45,7 @@
     "eslint-plugin-jest": "^23.13.1",
     "eslint-plugin-json-format": "^2.0.1",
     "eslint-plugin-no-loops": "^0.3.0",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^26.2.2",
