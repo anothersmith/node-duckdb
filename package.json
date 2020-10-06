@@ -1,11 +1,10 @@
 {
   "name": "node-duckdb",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "main": "src/hello.js",
   "private": false,
   "scripts": {
-    "prepublish": "yarn build",
     "build": "yarn build:addon && yarn build:ts",
     "build:addon": "rimraf build && cmake-js compile",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --watchAll'",
