@@ -1,9 +1,11 @@
 {
   "name": "node-duckdb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "main": "src/hello.js",
+  "private": false,
   "scripts": {
+    "prepublish": "yarn build",
     "build": "yarn build:addon && yarn build:ts",
     "build:addon": "rimraf build && cmake-js compile",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --watchAll'",
@@ -13,6 +15,14 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "test": "jest"
+  },
+  "author": "DeepCrawl",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/deepcrawl/node-duckdb.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
     "@types/bindings": "^1.3.0",
