@@ -4,7 +4,7 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ["@deepcrawl/eslint-config"],
+  extends: ["eslint-config-deepcrawl"],
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
   },
