@@ -4,7 +4,7 @@ project(node-duckdb-addon)
 set(CMAKE_CXX_STANDARD 11)
 
 include_directories(${CMAKE_JS_INC} ./libduckdb-src)
-add_subdirectory(./libduckdb-src "./xyi")
+add_subdirectory(./libduckdb-src)
 link_directories(./libduckdb-src)
 file(GLOB SOURCE_FILES "./addon/*")
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})

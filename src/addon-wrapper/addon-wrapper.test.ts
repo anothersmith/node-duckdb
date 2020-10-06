@@ -31,7 +31,7 @@ describe("node-duckdb", () => {
       it("can do a csv scan", () => {
         const cw = new ConnectionWrapper();
 
-        const rw = cw.execute("SELECT count(*) FROM read_csv_auto('duckdb/test/sql/copy/csv/test_web_page.test')");
+        const rw = cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/test_web_page.test.txt')");
 
         expect(rw.fetchRow()).toMatchObject([38]);
         expect(rw.fetchRow()).toBe(null);
