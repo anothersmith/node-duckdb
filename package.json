@@ -1,6 +1,6 @@
 {
   "name": "@deepcrawl/node-duckdb",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "main": "src/hello.js",
   "private": false,
