@@ -59,6 +59,16 @@ describe("node-duckdb", () => {
           3,
           4,]);
       });
+
+      it("can do a parquet scan - count", () => {
+        const cw = new ConnectionWrapper();
+
+        const rw = cw.execute(
+          "SELECT count(*) FROM parquet_scan('src/addon-wrapper/test-fixtures/alltypes_plain.parquet')",
+        );
+        expect(rw.fetchRow()).toMatchObject([7]);
+        expect(rw.fetchRow()).toBe(null);
+      });
     });
   });
 
