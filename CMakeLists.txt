@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 cmake_policy(SET CMP0042 NEW)
 project(node-duckdb-addon)
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 include_directories(${CMAKE_JS_INC} ./libduckdb-src)
 add_subdirectory(./libduckdb-src)

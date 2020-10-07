@@ -1,3 +1,4 @@
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(duckdb_source_files
   duckdb.cpp
   duckdb.h
