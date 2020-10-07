@@ -66,7 +66,33 @@ describe("node-duckdb", () => {
         const rw = cw.execute(
           "SELECT count(*) FROM parquet_scan('src/addon-wrapper/test-fixtures/alltypes_plain.parquet')",
         );
-        expect(rw.fetchRow()).toMatchObject([7]);
+        expect(rw.fetchRow()).toMatchObject([8]);
+        expect(rw.fetchRow()).toBe(null);
+      });
+
+
+      // types wrong? see https://github.com/cwida/duckdb/blob/633ad9cdf82710e4c96c93720b83bec3465d99de/test/sql/copy/parquet/test_parquet_scan.test
+      // eslint-disable-next-line jest/no-disabled-tests
+      it.skip("can do a parquet scan - select all", () => {
+        const cw = new ConnectionWrapper();
+
+        const rw = cw.execute(
+          "SELECT * FROM parquet_scan('src/addon-wrapper/test-fixtures/alltypes_plain.parquet')",
+        );
+        expect(rw.fetchRow()).toMatchObject([
+          8,
+          4,
+          true,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          "03/01/09",
+          "0",
+          1235865600000,
+        ]);
         expect(rw.fetchRow()).toBe(null);
       });
     });
