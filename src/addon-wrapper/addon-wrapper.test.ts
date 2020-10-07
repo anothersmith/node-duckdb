@@ -31,9 +31,7 @@ describe("node-duckdb", () => {
       it("can do a csv scan - count", () => {
         const cw = new ConnectionWrapper();
 
-        const rw = cw.execute(
-          "SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')",
-        );
+        const rw = cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
         expect(rw.fetchRow()).toMatchObject([60]);
         expect(rw.fetchRow()).toBe(null);
       });
@@ -41,10 +39,9 @@ describe("node-duckdb", () => {
       it("can do a csv scan - select all", () => {
         const cw = new ConnectionWrapper();
 
-        const rw = cw.execute(
-          "SELECT * FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')",
-        );
-        expect(rw.fetchRow()).toMatchObject([1,
+        const rw = cw.execute("SELECT * FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+        expect(rw.fetchRow()).toMatchObject([
+          1,
           "AAAAAAAABAAAAAAA",
           873244800000,
           null,
@@ -57,7 +54,8 @@ describe("node-duckdb", () => {
           2531,
           8,
           3,
-          4,]);
+          4,
+        ]);
       });
 
       it("can do a parquet scan - count", () => {
@@ -70,29 +68,13 @@ describe("node-duckdb", () => {
         expect(rw.fetchRow()).toBe(null);
       });
 
-
       // types wrong? see https://github.com/cwida/duckdb/blob/633ad9cdf82710e4c96c93720b83bec3465d99de/test/sql/copy/parquet/test_parquet_scan.test
       // eslint-disable-next-line jest/no-disabled-tests
       it.skip("can do a parquet scan - select all", () => {
         const cw = new ConnectionWrapper();
 
-        const rw = cw.execute(
-          "SELECT * FROM parquet_scan('src/addon-wrapper/test-fixtures/alltypes_plain.parquet')",
-        );
-        expect(rw.fetchRow()).toMatchObject([
-          8,
-          4,
-          true,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "03/01/09",
-          "0",
-          1235865600000,
-        ]);
+        const rw = cw.execute("SELECT * FROM parquet_scan('src/addon-wrapper/test-fixtures/alltypes_plain.parquet')");
+        expect(rw.fetchRow()).toMatchObject([8, 4, true, 0, 0, 0, 0, 0, 0, "03/01/09", "0", 1235865600000]);
         expect(rw.fetchRow()).toBe(null);
       });
     });
