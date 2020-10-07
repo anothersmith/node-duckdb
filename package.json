@@ -20,7 +20,7 @@
     "lint:fix": "yarn lint --fix",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "test": "jest"
+    "test": "yarn build:ts && jest"
   },
   "dependencies": {
     "@types/bindings": "^1.3.0",

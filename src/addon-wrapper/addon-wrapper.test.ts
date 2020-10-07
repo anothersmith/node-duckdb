@@ -28,15 +28,36 @@ describe("node-duckdb", () => {
         expect(rw).toBeInstanceOf(ResultWrapper);
       });
 
-      it("can do a csv scan", () => {
+      it("can do a csv scan - count", () => {
         const cw = new ConnectionWrapper();
 
         const rw = cw.execute(
-          "SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/test_web_page.test.txt')",
+          "SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')",
         );
-
-        expect(rw.fetchRow()).toMatchObject([38]);
+        expect(rw.fetchRow()).toMatchObject([60]);
         expect(rw.fetchRow()).toBe(null);
+      });
+
+      it("can do a csv scan - select all", () => {
+        const cw = new ConnectionWrapper();
+
+        const rw = cw.execute(
+          "SELECT * FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')",
+        );
+        expect(rw.fetchRow()).toMatchObject([1,
+          "AAAAAAAABAAAAAAA",
+          873244800000,
+          null,
+          2450810,
+          2452620,
+          "Y",
+          98539,
+          "http://www.foo.com",
+          "welcome",
+          2531,
+          8,
+          3,
+          4,]);
       });
     });
   });
