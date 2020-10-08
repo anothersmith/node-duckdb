@@ -3,6 +3,7 @@
 #include "duckdb.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "duckdb/main/client_context.hpp"
+#include "parquet-extension.hpp"
 using namespace std;
 
 Napi::FunctionReference ConnectionWrapper::constructor;
@@ -35,7 +36,7 @@ ConnectionWrapper::ConnectionWrapper(const Napi::CallbackInfo& info) : Napi::Obj
     config.access_mode = duckdb::AccessMode::READ_ONLY;
 
   database = duckdb::make_unique<duckdb::DuckDB>(database_name, &config);
-  // TODO: database->LoadExtension<duckdb::ParquetExtension>();
+  database->LoadExtension<duckdb::ParquetExtension>();
   connection = duckdb::make_unique<duckdb::Connection>(*database);
 }
 
