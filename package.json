@@ -1,23 +1,52 @@
 {
-  "name": "node-duckdb",
-  "version": "1.0.0",
-  "main": "src/hello.js",
+  "name": "@deepcrawl/node-duckdb",
+  "version": "1.0.7",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/deepcrawl/node-duckdb.git",
+    "directory": "node-duckdb"
+  },
   "license": "MIT",
+  "author": "DeepCrawl",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "clean": "rm -rf ./build",
-    "build:native": "rimraf build && cmake-js compile",
-    "build:ts": "rimraf dist && tsc",
-    "build": "yarn build:native && yarn build:ts",
+    "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
+    "build:addon": "rimraf build && cmake-js compile",
+    "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --watchAll'",
-    "test": "jest"
+    "build:ts": "rimraf dist && tsc",
+    "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.1.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.1 duckdb && rm duckdb.tar.gz",
+    "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
+    "lint:fix": "yarn lint --fix",
+    "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
+    "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
+    "test": "yarn build:ts && jest"
   },
   "dependencies": {
+    "@types/bindings": "^1.3.0",
     "bindings": "^1.5.0",
     "node-addon-api": "^2.0.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
     "cmake-js": "^6.1.0",
+    "eslint": "^7.10.0",
+    "eslint-config-deepcrawl": "^5.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-array-func": "^3.1.6",
+    "eslint-plugin-clean-code": "^0.1.12",
+    "eslint-plugin-filenames": "^1.3.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-json-format": "^2.0.1",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^26.2.2",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
@@ -26,5 +55,8 @@
   },
   "engines": {
     "node": ">= 12.11.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
