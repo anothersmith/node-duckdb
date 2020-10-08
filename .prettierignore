@@ -1,0 +1,6 @@
+coverage/
+node_modules/
+duckdb
+addon
+dist
+tsconfig.json
