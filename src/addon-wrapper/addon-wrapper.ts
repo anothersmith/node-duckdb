@@ -1,18 +1,36 @@
 /* eslint-disable max-classes-per-file */
-import bindings from "bindings";
 
-const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = bindings(
-  "node-duckdb-addon",
-);
+import {Worker} from "worker_threads";
 
-declare class ConnectionWrapperClass {
-  public execute(command: string): ResultWrapperClass;
+import {join} from "path";
+
+
+export class ResultWrapper {
+  // private resultWrapperId = 1;
+  constructor(private worker: Worker) {}
+
+  public async fetchRow(): Promise<unknown[]> {
+    return new Promise((resolve) => {
+      this.worker.on("fetched", resolve)
+      this.worker.postMessage({command: "fetchRow"})
+    })
+  }
 }
 
-declare class ResultWrapperClass {
-  public fetchRow(): unknown[];
-  public describe(): string[][];
-}
+export class ConnectionWrapper {
+  private worker = new Worker(join(__dirname, "./worker.js"))
 
-export const ConnectionWrapper: typeof ConnectionWrapperClass = ConnectionWrapperBinding;
-export const ResultWrapper: typeof ResultWrapperClass = ResultWrapperBinding;
+  public execute(query: string): Promise<ResultWrapper> {
+    return new Promise((resolve) => {
+      this.worker.on("message", message => {
+        console.log("--------gdfgdfds")
+        if (message.event === "executed") {
+          console.log("--------lllljksdas")
+          resolve(new ResultWrapper(this.worker))
+
+        }
+      } );
+      this.worker.postMessage({command: "execute", query});
+    })
+  }
+}
