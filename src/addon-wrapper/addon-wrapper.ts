@@ -5,8 +5,14 @@ const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrappe
   "node-duckdb-addon",
 );
 
-declare class ConnectionWrapperClass {
-  public execute(command: string, cb: Function): void;
+export class ConnectionWrapper {
+  private connectionWrapperBinding = new ConnectionWrapperBinding();
+  public execute(command: string): Promise<ResultWrapperClass> {
+      return new Promise((resolve) => {
+        console.log("--------herexxx")
+        this.connectionWrapperBinding.execute(command, resolve);
+      })
+  }
 }
 
 declare class ResultWrapperClass {
@@ -14,5 +20,4 @@ declare class ResultWrapperClass {
   public describe(): string[][];
 }
 
-export const ConnectionWrapper: typeof ConnectionWrapperClass = ConnectionWrapperBinding;
 export const ResultWrapper: typeof ResultWrapperClass = ResultWrapperBinding;

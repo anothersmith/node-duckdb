@@ -4,48 +4,25 @@ $ rimraf dist && tsc
 xxxxxxx!
 fdsfdsafdsdfs!
 pppppppp
-0x10302f618
-0x10302f610
-Materialized!  console.log
-    [ ResultWrapper {} ]
-
-      at src/addon-wrapper/addon-wrapper.test.ts:36:19
-
-  console.log
-    ResultWrapper {}
-
-      at src/addon-wrapper/addon-wrapper.test.ts:37:19
-
-  console.log
-    [ 60 ]
-
-      at src/addon-wrapper/addon-wrapper.test.ts:39:19
-
-FAIL dist/addon-wrapper/addon-wrapper.test.js (5.409 s)
+0x10382b418
+0x10382b410
+Materialized!PASS dist/addon-wrapper/addon-wrapper.test.js
   node-duckdb
     ○ skipped exports a ConnectionWrapper
     ConnectionWrapper
       ○ skipped can be instantiated
       execute()
-        ✕ can do a csv scan - count (5007 ms)
+        ✓ can do a csv scan - count (21 ms)
 
-  ● node-duckdb › ConnectionWrapper › execute() › can do a csv scan - count
+  console.log
+    --------herexxx
 
-    : Timeout - Async callback was not invoked within the 5000 ms timeout specified by jest.setTimeout.Timeout - Async callback was not invoked within the 5000 ms timeout specified by jest.setTimeout.Error:
+      at src/addon-wrapper/addon-wrapper.ts:12:17
 
-      30 |       // });
-      31 | 
-    > 32 |       it.only("can do a csv scan - count", async () => {
-         |          ^
-      33 |         const cw = new ConnectionWrapper();
-      34 |         let rw: any;
-      35 |         cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')", (...args: any) => {
+  console.log
+    ------dsadsadsadsa
 
-      at new Spec (node_modules/jest-jasmine2/build/jasmine/Spec.js:116:22)
-      at Suite.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:32:10)
-      at Suite.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:16:5)
-      at Suite.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:9:3)
-      at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:4:1)
+      at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:35:17)
 
 ------------------|---------|----------|---------|---------|-------------------
 File              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
@@ -53,10 +30,9 @@ File              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 All files         |     100 |      100 |     100 |     100 |                   
  addon-wrapper.ts |     100 |      100 |     100 |     100 |                   
 ------------------|---------|----------|---------|---------|-------------------
-Test Suites: 1 failed, 1 total
-Tests:       1 failed, 2 skipped, 3 total
+Test Suites: 1 passed, 1 total
+Tests:       2 skipped, 1 passed, 3 total
 Snapshots:   0 total
-Time:        5.841 s, estimated 6 s
+Time:        0.815 s, estimated 6 s
 Ran all test suites.
-error Command failed with exit code 1.
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Done in 5.13s.

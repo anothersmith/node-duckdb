@@ -31,16 +31,10 @@ describe("node-duckdb", () => {
 
       it.only("can do a csv scan - count", async () => {
         const cw = new ConnectionWrapper();
-        let rw: any;
-        cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')", (...args: any) => {
-          console.log(args)
-          console.log(args[0])
-          rw = args[0]
-          console.log(rw.fetchRow());
-        });
-        // expect(rw.fetchRow()).toMatchObject([60]);
+        const rw = await cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+        console.log("------dsadsadsadsa")
+        expect(rw.fetchRow()).toMatchObject([60]);
         // expect(rw.fetchRow()).toBe(null);
-        await new Promise(() => {});
       });
 
     //   it.only("can do a csv scan - select all", () => {
