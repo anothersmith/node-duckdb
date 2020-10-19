@@ -19,7 +19,7 @@ import { starta } from "./bindings";
       // });
 
       it.only("can do a csv scan - count", async () => {
-        
+
 starta(function () {
   console.log("JavaScript callback called with arguments", Array.from(arguments));
 }, 5);
