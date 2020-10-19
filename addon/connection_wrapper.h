@@ -11,7 +11,7 @@ class ConnectionWrapper : public Napi::ObjectWrap<ConnectionWrapper> {
 
   private:
     static Napi::FunctionReference constructor;
-    Napi::Value Execute(const Napi::CallbackInfo& info);
+    void Execute(const Napi::CallbackInfo& info);
     Napi::Value Close(const Napi::CallbackInfo& info);
 
     unique_ptr<duckdb::DuckDB> database;

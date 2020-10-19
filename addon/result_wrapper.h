@@ -8,7 +8,7 @@ class ResultWrapper : public Napi::ObjectWrap<ResultWrapper> {
  	public:
 		static Napi::Object Init(Napi::Env env, Napi::Object exports);
 		ResultWrapper(const Napi::CallbackInfo& info);
-		static Napi::Object Create(const Napi::CallbackInfo& info);
+		static Napi::Object Create();
 		unique_ptr<duckdb::QueryResult> result;
 
  	private:
