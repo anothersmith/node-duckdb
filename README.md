@@ -1,13 +1,15 @@
 # NodeJS DuckDB driver with native bindings
 
 ## Developing
-- `yarn install` 
+
+- `yarn install`
 - `yarn build` - builds everything, including duckdb, duckdb node bindings and the typescript wrapper
-    - `yarn build:[addon|duckdb|ts]` to build one one of those things
+  - `yarn build:[addon|duckdb|ts]` to build one one of those things
 - `yarn test` to run unit tests
 - `yarn lint` to lint
 
 ## Using as a dependency
+
 ```
 import { ConnectionWrapper, ResultWrapper } from "node-duckdb";
 const cw = new ConnectionWrapper();
