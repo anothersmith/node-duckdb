@@ -9,19 +9,19 @@ pppppppp
 0x10382b410
 fdsfdsafdsdfs!
 RELEASE!
+JOIN!
 pppppppp
 0x10382b418
 0x10382b410
 fdsfdsafdsdfs!
 RELEASE!
-JOIN!
   console.log
     start
 
       at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:117:17)
 
   console.log
-    2020-10-20T11:38:47.129Z
+    2020-10-20T12:02:43.540Z
 
       at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:118:17)
 
@@ -36,12 +36,12 @@ JOIN!
       at src/addon-wrapper/addon-wrapper.ts:12:17
 
   console.log
-    2020-10-20T11:38:47.134Z
+    2020-10-20T12:02:43.546Z
 
       at src/addon-wrapper/addon-wrapper.test.ts:115:19
 
   console.log
-    2020-10-20T11:38:47.141Z
+    2020-10-20T12:02:43.552Z
 
       at src/addon-wrapper/addon-wrapper.test.ts:115:19
 
@@ -56,7 +56,7 @@ JOIN!
       at src/addon-wrapper/addon-wrapper.ts:12:17
 
   console.log
-    2020-10-20T11:38:47.142Z
+    2020-10-20T12:02:43.553Z
 
       at src/addon-wrapper/addon-wrapper.test.ts:115:19
 
@@ -71,21 +71,20 @@ JOIN!
       at src/addon-wrapper/addon-wrapper.ts:12:17
 
   console.log
-    2020-10-20T11:41:00.593Z
+    2020-10-20T12:04:58.601Z
 
       at src/addon-wrapper/addon-wrapper.test.ts:115:19
 
-JOIN!
 pppppppp
 0x10382b418
 0x10382b410
-PASS dist/addon-wrapper/addon-wrapper.test.js (138.446 s)
+PASS dist/addon-wrapper/addon-wrapper.test.js (139.811 s)
   node-duckdb
     ○ skipped exports a ConnectionWrapper
     ConnectionWrapper
       ○ skipped can be instantiated
       execute()
-        ✓ slow test (137933 ms)
+        ✓ slow test (139290 ms)
         ○ skipped can do a csv scan - count
 
 ------------------|---------|----------|---------|---------|-------------------
@@ -97,22 +96,18 @@ All files         |     100 |      100 |     100 |     100 |
 Test Suites: 1 passed, 1 total
 Tests:       3 skipped, 1 passed, 4 total
 Snapshots:   0 total
-Time:        139.206 s
+Time:        140.605 s
 Ran all test suites.
-  console.log
-    2020-10-20T11:41:00.595Z
-
-      at src/addon-wrapper/addon-wrapper.test.ts:115:19
-
+JOIN!
+JOIN!
   console.log
     end
 
-      at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:133:17)
+      at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:131:17)
 
   console.log
-    2020-10-20T11:41:05.056Z
+    2020-10-20T12:05:02.812Z
 
-      at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:134:17)
+      at Object.<anonymous> (src/addon-wrapper/addon-wrapper.test.ts:132:17)
 
-JOIN!
-Done in 145.10s.
+Done in 146.29s.

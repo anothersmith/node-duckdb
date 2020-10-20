@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { ConnectionWrapper } from "./addon-wrapper";
-
+jest.setTimeout(9999999999);
 describe("node-duckdb", () => {
   it("exports a ConnectionWrapper", () => {
     expect(ConnectionWrapper).not.toBe(undefined);
@@ -29,9 +29,19 @@ describe("node-duckdb", () => {
       //   expect(rw).toBeInstanceOf(ResultWrapper);
       // });
 
-      it.only("can do a csv scan - count", async () => {
+      it.skip("can do a csv scan - count", async () => {
+
+        setInterval(() => {
+          console.log(new Date());
+        }, 0)
         const cw = new ConnectionWrapper();
         const rw = await cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+        // new ConnectionWrapper()
+        await cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')")
+        await cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')")
+
+        await cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')")
+
         console.log("------dsadsadsadsa")
         expect(rw.fetchRow()).toMatchObject([60]);
         // expect(rw.fetchRow()).toBe(null);
@@ -39,9 +49,9 @@ describe("node-duckdb", () => {
 
     //   it.only("can do a csv scan - select all", () => {
 
-    //     setInterval(() => {
-    //       console.log(new Date());
-    //     }, 0)
+        // setInterval(() => {
+        //   console.log(new Date());
+        // }, 0)
     //     const cw = new ConnectionWrapper();
 
     //     const rw = cw.execute("SELECT * FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
@@ -98,30 +108,29 @@ describe("node-duckdb", () => {
     //     expect(rw.fetchRow()).toBe(null);
     //   });
 
-    //   // eslint-disable-next-line jest/expect-expect
-    //   // eslint-disable-next-line jest/no-disabled-tests
-    //   it.skip("slow test", async () => {
-    //     setInterval(() => {
-    //       console.log(new Date());
-    //     }, 0)
-    //     console.log("start")
-    //     console.log(new Date())
-    //     new ConnectionWrapper();
-    //     console.log("end")
-    //     console.log(new Date())
-    //     // cw.execute(
-    //     //   "CREATE TABLE test (a INTEGER, b INTEGER);",
-    //     // );
-    //     // cw.execute(
-    //     //   "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 100000000) tbl2(c)",
-    //     // );
-    //     // cw.execute(
-    //     //   "DELETE FROM test WHERE a=12",
-    //     // );
-    //     // console.log("end")
-    //     // console.log(new Date())
-    //     await new Promise(() => {});
-    //   });
+      // eslint-disable-next-line jest/expect-expect
+      // eslint-disable-next-line jest/no-disabled-tests
+      it.only("slow test", async () => {
+        setInterval(() => {
+          console.log(new Date());
+        }, 0)
+        console.log("start")
+        console.log(new Date())
+        const cw = new ConnectionWrapper();
+
+        console.log("aaaaaaa")
+        await cw.execute(
+          "CREATE TABLE test (a INTEGER, b INTEGER);"
+        );
+        console.log("bbbbbbb")
+        await cw.execute(
+          "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 100000000) tbl2(c)"
+        );
+        console.log("ccccccc")
+        await cw.execute("DELETE FROM test WHERE a=12");
+        console.log("end")
+        console.log(new Date())
+      });
     });
   });
 

@@ -74,8 +74,10 @@ void ConnectionWrapper::Execute(const Napi::CallbackInfo &info)
       0,                      // Unlimited queue
       1,                      // Only one thread will use this initially
       [](Napi::Env) {         // Finalizer used to clean threads up
-        nativeThread.join();
+        cout << "JOIN!" << endl;
+        // nativeThread.join();
       });
+
   nativeThread = std::thread([this, query] {
     auto callback = [this, query](Napi::Env env, Function jsCallback, int *value) {
       cout << "pppppppp" << endl;
@@ -83,8 +85,10 @@ void ConnectionWrapper::Execute(const Napi::CallbackInfo &info)
       auto prep = connection->Prepare(query);
       if (!prep->success)
       {
-        Napi::Error::New(env, prep->error).ThrowAsJavaScriptException();
-        return env.Undefined();
+        // Napi::Error::New(env, prep->error).ThrowAsJavaScriptException();
+        // return env.Undefined();
+        jsCallback.Call({env.Undefined()});
+        return;
       }
       Napi::Object result_value = ResultWrapper::Create();
       ResultWrapper *result = ResultWrapper::Unwrap(result_value);
@@ -100,16 +104,18 @@ void ConnectionWrapper::Execute(const Napi::CallbackInfo &info)
 
       // We're finished with the data.
       delete value;
-      // return;
     };
     int* value = new int( clock() );
     // Perform a blocking call
     napi_status status = tsfn.BlockingCall( value, callback );
 
     // Release the thread-safe function
+    cout << "RELEASE!" << endl;
+
     tsfn.Release();
     return;
   });
+  nativeThread.detach();
 };
 
 Napi::Value ConnectionWrapper::Close(const Napi::CallbackInfo &info)
