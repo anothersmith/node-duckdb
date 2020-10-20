@@ -101,7 +101,7 @@ static napi_value StartWork(napi_env env, napi_callback_info info) {
                           (void**)(&addon_data)) == napi_ok);
 
   // Ensure that no work is currently in progress.
-  CHECK(addon_data->work == NULL && "Only one work item must exist at a time");
+  // CHECK(addon_data->work == NULL && "Only one work item must exist at a time");
 
   // Create a string to describe this asynchronous operation.
   CHECK(napi_create_string_utf8(env,

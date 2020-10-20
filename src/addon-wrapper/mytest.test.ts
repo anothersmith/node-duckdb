@@ -7,6 +7,7 @@ it("validates parameters", async () => {
     setInterval(() => {
         console.log(new Date());
     }, 0)
-    const b = await a();
-    console.log(b);
+    const b = a();
+    const c = a();
+    console.log(await Promise.all([b, c]));
   });
