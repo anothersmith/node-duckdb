@@ -1,0 +1,2569 @@
+yarn run v1.22.5
+$ yarn build:ts && jest mytest
+$ rimraf dist && tsc
+  console.log
+    2020-10-20T15:41:17.339Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.347Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.349Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.351Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.353Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.354Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.356Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.358Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.362Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.364Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.366Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.367Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.369Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.371Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.372Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.374Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.376Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.377Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.379Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.381Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.382Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.384Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.385Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.387Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.389Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.390Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.392Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.393Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.395Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.397Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.398Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.400Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.401Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.403Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.405Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.406Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.408Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.410Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.411Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.413Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.414Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.416Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.418Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.419Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.421Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.422Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.424Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.425Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.427Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.429Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.430Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.432Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.433Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.435Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.436Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.438Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.440Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.441Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.443Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.445Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.447Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.449Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.450Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.452Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.453Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.455Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.457Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.458Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.460Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.461Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.463Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.465Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.466Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.468Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.469Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.471Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.472Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.474Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.476Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.477Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.479Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.480Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.482Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.484Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.485Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.487Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.488Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.490Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.492Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.493Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.495Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.496Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.498Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.499Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.501Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.503Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.504Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.506Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.508Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.509Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.511Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.512Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.514Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.515Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.517Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.518Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.520Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.521Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.523Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.524Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.526Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.527Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.529Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.531Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.532Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.534Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.535Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.537Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.538Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.540Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.542Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.543Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.545Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.547Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.548Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.550Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.551Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.554Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.555Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.557Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.559Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.561Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.563Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.565Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.567Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.568Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.570Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.571Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.573Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.574Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.576Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.578Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.579Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.581Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.583Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.584Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.586Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.587Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.589Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.591Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.592Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.594Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.596Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.598Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.603Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.604Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.606Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.608Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.609Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.611Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.613Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.614Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.616Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.617Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.619Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.621Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.622Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.624Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.625Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.626Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.628Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.630Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.632Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.633Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.635Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.636Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.638Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.639Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.641Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.642Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.644Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.645Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.647Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.648Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.650Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.652Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.653Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.655Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.656Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.658Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.659Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.661Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.662Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.664Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.665Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.667Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.668Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.670Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.671Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.673Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.674Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.676Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.677Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.679Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.681Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.682Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.684Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.685Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.687Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.689Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.690Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.692Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.693Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.697Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.699Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.700Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.702Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.703Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.705Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.706Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.708Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.710Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.711Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.713Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.714Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.716Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.718Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.719Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.721Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.722Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.724Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.726Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.727Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.729Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.730Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.732Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.733Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.735Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.737Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.738Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.740Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.741Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.743Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.745Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.746Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.748Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.749Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.751Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.753Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.754Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.756Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.757Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.759Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.760Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.762Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.763Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.765Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.767Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.769Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.770Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.772Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.773Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.775Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.776Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.778Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.780Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.781Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.783Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.784Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.786Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.787Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.789Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.790Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.792Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.794Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.795Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.797Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.798Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.800Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.801Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.803Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.804Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.806Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.808Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.809Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.811Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.812Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.814Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.816Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.818Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.819Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.821Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.822Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.824Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.825Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.827Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.828Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.830Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.832Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.833Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.835Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.836Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.838Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.840Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.842Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.843Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.845Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.846Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.848Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.849Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.851Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.852Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.854Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.855Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.857Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.859Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.860Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.862Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.864Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.865Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.867Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.869Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.870Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.872Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.873Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.875Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.876Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.878Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.880Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.881Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.883Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.884Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.886Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.887Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.889Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.891Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.892Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.894Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.895Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.897Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.898Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.900Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.902Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.903Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.905Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.906Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.908Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.910Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.911Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.913Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.914Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.916Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.918Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.919Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.921Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.922Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.924Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.929Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.930Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.932Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.933Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.935Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.936Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.942Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.943Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.945Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.946Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.948Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.949Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.951Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.952Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.954Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.955Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.957Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.959Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.960Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.962Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.963Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.965Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.967Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.968Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.970Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.971Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.973Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.974Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.976Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.977Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.979Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.981Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.982Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.984Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.985Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.987Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.988Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.990Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.992Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.993Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.995Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.996Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.998Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:17.999Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.001Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.002Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.004Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.005Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.007Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.008Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.010Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.011Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.013Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.014Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.016Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.017Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.019Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.020Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.022Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.023Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.025Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.027Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.028Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.030Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.031Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.033Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.034Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.036Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.037Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.039Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.040Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.042Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.043Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.045Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.046Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.048Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.049Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.051Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.052Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.054Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.056Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.057Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.059Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.060Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.062Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.063Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.065Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.066Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.068Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.069Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.071Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.072Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.074Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.075Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.077Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.079Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.080Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.082Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.083Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.085Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.086Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.087Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.089Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.090Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.092Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.093Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.095Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.097Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.098Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.100Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.101Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.103Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.104Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.106Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.107Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.109Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.110Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.112Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.113Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.115Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.116Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.118Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.119Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.121Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.123Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.124Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.126Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.127Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.129Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.130Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.132Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.133Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.135Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.136Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.138Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.139Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.141Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.142Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.144Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.145Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.147Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.148Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.150Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.152Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.153Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+PASS dist/addon-wrapper/mytest.test.js
+  ✓ validates parameters (832 ms)
+
+------------------|---------|----------|---------|---------|-------------------
+File              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+------------------|---------|----------|---------|---------|-------------------
+All files         |     100 |      100 |     100 |     100 |                   
+ addon-wrapper.ts |     100 |      100 |     100 |     100 |                   
+------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.703 s
+Ran all test suites matching /mytest/i.
+  console.log
+    2020-10-20T15:41:18.155Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.156Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.158Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.159Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    2020-10-20T15:41:18.161Z
+
+      at src/addon-wrapper/mytest.test.ts:8:17
+
+  console.log
+    [
+        2,   3,   5,   7,  11,  13,  17,  19,  23,  29,  31,  37,
+       41,  43,  47,  53,  59,  61,  67,  71,  73,  79,  83,  89,
+       97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
+      157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223,
+      227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281,
+      283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359,
+      367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433,
+      439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503,
+      509, 521, 523, 541,
+      ... 9900 more items
+    ]
+
+      at Object.<anonymous> (src/addon-wrapper/mytest.test.ts:11:13)
+
+Done in 5.66s.
