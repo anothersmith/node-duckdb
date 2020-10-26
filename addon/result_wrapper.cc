@@ -25,7 +25,7 @@ ResultWrapper::ResultWrapper(const Napi::CallbackInfo& info) : Napi::ObjectWrap<
   Napi::Env env = info.Env();
 }
 
-Napi::Object ResultWrapper::Create(const Napi::CallbackInfo& info) {
+Napi::Object ResultWrapper::Create() {
   return constructor.New({});
 }
 

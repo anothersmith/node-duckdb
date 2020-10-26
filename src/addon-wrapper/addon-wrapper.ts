@@ -6,7 +6,7 @@ const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrappe
 );
 
 declare class ConnectionWrapperClass {
-  public execute(command: string): ResultWrapperClass;
+  public execute(command: string, cb: any): void;
 }
 
 declare class ResultWrapperClass {
