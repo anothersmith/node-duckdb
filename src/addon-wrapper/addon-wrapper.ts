@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import bindings from "bindings";
 
-const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = bindings(
+const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding, test: xyi } = bindings(
   "node-duckdb-addon",
 );
 
@@ -16,3 +16,4 @@ declare class ResultWrapperClass {
 
 export const ConnectionWrapper: typeof ConnectionWrapperClass = ConnectionWrapperBinding;
 export const ResultWrapper: typeof ResultWrapperClass = ResultWrapperBinding;
+export const bla = xyi;

@@ -1,4 +1,4 @@
-import { ConnectionWrapper, ResultWrapper } from "./addon-wrapper";
+import { ConnectionWrapper, ResultWrapper, bla } from "./addon-wrapper";
 
 describe("node-duckdb", () => {
   it("exports a ConnectionWrapper", () => {
@@ -6,6 +6,15 @@ describe("node-duckdb", () => {
   });
 
   describe("ConnectionWrapper", () => {
+    // eslint-disable-next-line jest/no-focused-tests
+    it.only("can be sadasda", async () => {
+      // eslint-disable-next-line no-console
+      bla((...arg: any) => {
+        console.log("here:", arg);
+      });
+      await new Promise(() => {})
+    });
+
     it("can be instantiated", () => {
       const cw = new ConnectionWrapper();
 
