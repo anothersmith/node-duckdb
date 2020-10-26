@@ -27,7 +27,7 @@
   "dependencies": {
     "@types/bindings": "^1.3.0",
     "bindings": "^1.5.0",
-    "node-addon-api": "^2.0.2"
+    "node-addon-api": "^3.0.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
