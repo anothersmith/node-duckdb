@@ -75,9 +75,11 @@ Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {
   string query = info[0].ToString();
 
   Napi::Function cb = info[1].As<Napi::Function>();
-  AsyncExecutor* wk = new AsyncExecutor(cb, query, connection);
+  Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(info.Env());
+
+  AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred);
   wk->Queue();
-  return info.Env().Undefined();
+  return deferred.Promise();
 }
 
 Napi::Value ConnectionWrapper::Close(const Napi::CallbackInfo& info) {

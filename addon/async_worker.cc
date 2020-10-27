@@ -6,7 +6,7 @@
 class AsyncExecutor : public Napi::AsyncWorker {
 
     public:
-        AsyncExecutor(Napi::Function& callback, std::string& query, std::shared_ptr<duckdb::Connection>& connection) : Napi::AsyncWorker(callback), query(query), connection(connection) {}
+        AsyncExecutor(Napi::Env &env, std::string& query, std::shared_ptr<duckdb::Connection>& connection,  Napi::Promise::Deferred& deferred) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred) {}
 
         ~AsyncExecutor() {}
     
@@ -24,11 +24,12 @@ class AsyncExecutor : public Napi::AsyncWorker {
             Napi::Object result_wrapper = ResultWrapper::Create();
             ResultWrapper* result_unwrapped = ResultWrapper::Unwrap(result_wrapper);
             result_unwrapped->result = std::move(result);
-            Callback().Call({result_wrapper});
+            deferred.Resolve(result_wrapper);
         }
     
     private:
         std::string query;
         std::shared_ptr<duckdb::Connection> connection;
         std::unique_ptr<duckdb::QueryResult> result;
+        Napi::Promise::Deferred deferred;
 };
