@@ -96,11 +96,11 @@ describe("Async execute", () => {
     await cw.execute("CREATE TABLE test (a INTEGER, b INTEGER);");
     const operationStartTime = new Date();
     await cw.execute(
-      "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 300000000) tbl2(c)",
+      "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 80000000) tbl2(c)",
     );
     const operationEndTime = new Date();
-    // operation must take longer than 20 secs
-    expect(new Date(operationStartTime.getTime() + 20000) < operationEndTime).toBe(true);
+    // operation must take longer than 5 secs
+    expect(new Date(operationStartTime.getTime() + 5000) < operationEndTime).toBe(true);
     expect(didEventLoopBlock).toBe(false);
     clearInterval(timer);
   });

@@ -15,7 +15,7 @@
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
     "build:addon": "rimraf build && cmake-js compile",
     "build:duckdb": "cd duckdb && make && cd -",
-    "build:test:watch": "nodemon --exec 'yarn build && yarn jest'",
+    "build:test:watch": "nodemon --exec 'yarn build && yarn jest --maxConcurrency=1'",
     "build:ts": "rimraf dist && ttsc",
     "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.1.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.1 duckdb && rm duckdb.tar.gz",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
