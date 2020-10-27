@@ -67,15 +67,13 @@ ConnectionWrapper::ConnectionWrapper(const Napi::CallbackInfo& info) : Napi::Obj
 
 Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
+  Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
   if (!info[0].IsString()) {
-    Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
-    return env.Undefined();
+    deferred.Reject(Napi::TypeError::New(env, "String expected").Value());
+    return deferred.Promise();
   }
 
   string query = info[0].ToString();
-
-  Napi::Function cb = info[1].As<Napi::Function>();
-  Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(info.Env());
 
   AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred);
   wk->Queue();

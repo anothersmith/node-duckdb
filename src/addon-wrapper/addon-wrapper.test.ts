@@ -16,8 +16,7 @@ describe("node-duckdb", () => {
     describe("execute()", () => {
       it("validates parameters", async () => {
         const cw = new ConnectionWrapper();
-
-        await expect((<any>cw).execute()).rejects.toEqual("String expected");
+        await expect((<any>cw).execute()).rejects.toEqual(TypeError("String expected"));
       });
 
       it("returns a ResultWrapper", async () => {
