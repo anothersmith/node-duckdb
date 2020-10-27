@@ -16,7 +16,7 @@
     "build:addon": "rimraf build && cmake-js compile",
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest'",
-    "build:ts": "rimraf dist && tsc",
+    "build:ts": "rimraf dist && ttsc",
     "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.1.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.1 duckdb && rm duckdb.tar.gz",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@zerollup/ts-transform-paths": "^1.7.18",
     "cmake-js": "^6.1.0",
     "eslint": "^7.10.0",
     "eslint-config-deepcrawl": "^5.6.0",
@@ -51,6 +52,7 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
+    "ttypescript": "^1.5.12",
     "typescript": "^4.0.3"
   },
   "engines": {

@@ -1,4 +1,4 @@
-import { ConnectionWrapper } from "../index";
+import { ConnectionWrapper } from "@root/index";
 
 describe("Execute on parquet", () => {
   it("can do a count", async () => {

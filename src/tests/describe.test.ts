@@ -1,4 +1,4 @@
-import { ConnectionWrapper, ResultWrapper } from "../index";
+import { ConnectionWrapper, ResultWrapper } from "@root/index";
 
 describe("description()", () => {
   it("errors when without a result", () => {

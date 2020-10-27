@@ -1,4 +1,4 @@
-import { ConnectionWrapper } from "../index";
+import { ConnectionWrapper } from "@root/index";
 
 jest.setTimeout(888888);
 describe("Execute method error handling", () => {
