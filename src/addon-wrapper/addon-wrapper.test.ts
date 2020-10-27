@@ -58,6 +58,86 @@ describe("node-duckdb", () => {
         ]);
       });
 
+      it("can do concurrent operations with same ConnectionWrapper", async () => {
+        const cw = new ConnectionWrapper();
+        const p1 = cw.execute("SELECT * FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+
+        const p2 = cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+        const [rw1, rw2] = await Promise.all([p1, p2])
+        expect(rw1.fetchRow()).toMatchObject([
+          1,
+          "AAAAAAAABAAAAAAA",
+          873244800000,
+          null,
+          2450810,
+          2452620,
+          "Y",
+          98539,
+          "http://www.foo.com",
+          "welcome",
+          2531,
+          8,
+          3,
+          4,
+        ]);
+
+        expect(rw2.fetchRow()).toMatchObject([60]);
+      });
+
+
+      it("can do concurrent operations with different ConnectionWrapper", async () => {
+        const cw1 = new ConnectionWrapper();
+        const cw2 = new ConnectionWrapper();
+        const p1 = cw1.execute("SELECT * FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+
+        const p2 = cw2.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+        const [rw1, rw2] = await Promise.all([p1, p2])
+        expect(rw1.fetchRow()).toMatchObject([
+          1,
+          "AAAAAAAABAAAAAAA",
+          873244800000,
+          null,
+          2450810,
+          2452620,
+          "Y",
+          98539,
+          "http://www.foo.com",
+          "welcome",
+          2531,
+          8,
+          3,
+          4,
+        ]);
+
+        expect(rw2.fetchRow()).toMatchObject([60]);
+      });
+
+
+      it("can do a consequtive operations", async () => {
+        const cw = new ConnectionWrapper();
+
+        const rw1 = await cw.execute("SELECT * FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+        expect(rw1.fetchRow()).toMatchObject([
+          1,
+          "AAAAAAAABAAAAAAA",
+          873244800000,
+          null,
+          2450810,
+          2452620,
+          "Y",
+          98539,
+          "http://www.foo.com",
+          "welcome",
+          2531,
+          8,
+          3,
+          4,
+        ]);
+
+        const rw2 = await cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+        expect(rw2.fetchRow()).toMatchObject([60]);
+      });
+
       it("can do a parquet scan - count", async () => {
         const cw = new ConnectionWrapper();
 
