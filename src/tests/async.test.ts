@@ -80,7 +80,7 @@ describe("Async execute", () => {
     expect(rw2.fetchRow()).toMatchObject([60]);
   });
 
-  jest.setTimeout(60000);
+  jest.setTimeout(60000 * 5);
   it("does not block thread during a long running execution", async () => {
     let lastDate = new Date();
     let didEventLoopBlock = false;
