@@ -4,7 +4,6 @@
 #include "result_wrapper.h"
 
 class AsyncExecutor : public Napi::AsyncWorker {
-
     public:
         AsyncExecutor(Napi::Env &env, std::string& query, std::shared_ptr<duckdb::Connection>& connection,  Napi::Promise::Deferred& deferred) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred) {}
 
@@ -25,12 +24,10 @@ class AsyncExecutor : public Napi::AsyncWorker {
             } catch (...) {
                 SetError("Uknown Error: Something happened during execution of the query");
             }
-
         }
 
         void OnOK() override {
             Napi::HandleScope scope(Env());
-
             Napi::Object result_wrapper = ResultWrapper::Create();
             ResultWrapper* result_unwrapped = ResultWrapper::Unwrap(result_wrapper);
             result_unwrapped->result = std::move(result);

@@ -41,30 +41,6 @@ ConnectionWrapper::ConnectionWrapper(const Napi::CallbackInfo& info) : Napi::Obj
   connection = duckdb::make_shared<duckdb::Connection>(*database);
 }
 
-// Napi::Value ConnectionWrapper::Execute2(const Napi::CallbackInfo& info) {
-//   Napi::Env env = info.Env();
-//   if (!info[0].IsString()) {
-//     Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
-//     return env.Undefined();
-//   }
-
-//   string query = info[0].ToString();
-
-//   auto prep = connection->Prepare(query);
-//   if (!prep->success) {
-//     Napi::Error::New(env, prep->error).ThrowAsJavaScriptException();
-//     return env.Undefined();
-//   }
-
-//   Napi::Object result_value = ResultWrapper::Create(info);
-//   ResultWrapper* result = ResultWrapper::Unwrap(result_value);
-
-//   vector<duckdb::Value> args; // TODO: take arguments
-//   result->result = prep->Execute(args, true);
-
-//   return result_value;
-// }
-
 Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
