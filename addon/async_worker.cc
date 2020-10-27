@@ -11,16 +11,21 @@ class AsyncExecutor : public Napi::AsyncWorker {
         ~AsyncExecutor() {}
     
         void Execute() override {
-            auto prep = connection->Prepare(query);
-            if (!prep->success) {
-                SetError(prep->error);
-                return;
+            try {
+                auto prep = connection->Prepare(query);
+                if (!prep->success) {
+                    SetError(prep->error);
+                    return;
+                }
+                vector<duckdb::Value> args; // TODO: take arguments
+                result = prep->Execute(args, true);
+                if (!result.get()->success) {
+                    SetError(result.get()->error);
+                }
+            } catch (...) {
+                SetError("Uknown Error: Something happened during execution of the query");
             }
-            vector<duckdb::Value> args; // TODO: take arguments
-            result = prep->Execute(args, true);
-            if (!result.get()->success) {
-                SetError(result.get()->error);
-            }
+
         }
 
         void OnOK() override {

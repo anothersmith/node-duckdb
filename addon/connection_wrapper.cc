@@ -68,15 +68,19 @@ ConnectionWrapper::ConnectionWrapper(const Napi::CallbackInfo& info) : Napi::Obj
 Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
-  if (!info[0].IsString()) {
-    deferred.Reject(Napi::TypeError::New(env, "String expected").Value());
-    return deferred.Promise();
+  try {
+    if (!info[0].IsString()) {
+      throw Napi::TypeError::New(env, "String expected");
+    }
+    string query = info[0].ToString();
+    AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred);
+    wk->Queue();
+  } catch (Napi::Error& e) {
+    deferred.Reject(e.Value());
+  } catch (...) {
+    deferred.Reject(Napi::Error::New(env, "Unknown Error: Something happened when preparing to run the query").Value());
   }
 
-  string query = info[0].ToString();
-
-  AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred);
-  wk->Queue();
   return deferred.Promise();
 }
 
