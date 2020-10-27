@@ -69,15 +69,37 @@ describe("node-duckdb", () => {
         expect(rw.fetchRow()).toBe(null);
       });
 
-      // types wrong? see https://github.com/cwida/duckdb/blob/633ad9cdf82710e4c96c93720b83bec3465d99de/test/sql/copy/parquet/test_parquet_scan.test
-      // eslint-disable-next-line jest/no-disabled-tests
-      it.skip("can do a parquet scan - select all", async () => {
+      it("can do a parquet scan - select all", async () => {
         const cw = new ConnectionWrapper();
 
         const rw = await cw.execute("SELECT * FROM parquet_scan('src/addon-wrapper/test-fixtures/alltypes_plain.parquet')");
-        expect(rw.fetchRow()).toMatchObject([8, 4, true, 0, 0, 0, 0, 0, 0, "03/01/09", "0", 1235865600000]);
-        expect(rw.fetchRow()).toBe(null);
+        expect(rw.fetchRow()).toMatchObject([4, true, 0, 0, 0, 0, 0, 0, "03/01/09", "0", 1235865600000]);
+        expect(rw.fetchRow()).toMatchObject([5, false, 1, 1, 1, 10, 1.100000023841858, 10.1, "03/01/09", "1", 1235865660000]);
       });
+
+      jest.setTimeout(60000)
+      it("long running execution does not block thread", async () => {
+        let lastDate = new Date();
+        let didEventLoopBlock = false;
+        const timer = setInterval(() => {
+          const currentDate = new Date();
+          // if setInterval hasn't fired within last 50 ms then assume event loop has been blocked
+          if (new Date(lastDate.getTime() + 50) < currentDate) {
+            didEventLoopBlock = true;
+          }
+          lastDate = currentDate;
+        }, 0)
+        const cw = new ConnectionWrapper();
+        await cw.execute("CREATE TABLE test (a INTEGER, b INTEGER);");
+        const operationStartTime = new Date();
+        await cw.execute("INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 300000000) tbl2(c)");
+        const operationEndTime = new Date();
+        // operation must take longer than 20 secs
+        expect(new Date(operationStartTime.getTime() + 20000) < operationEndTime).toBe(true);
+        expect(didEventLoopBlock).toBe(false);
+        clearInterval(timer);
+      });
+
     });
   });
 
