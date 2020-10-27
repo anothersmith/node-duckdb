@@ -11,11 +11,16 @@ class AsyncExecutor : public Napi::AsyncWorker {
         ~AsyncExecutor() {}
     
         void Execute() override {
-
             auto prep = connection->Prepare(query);
-            // TODO: error handling 
+            if (!prep->success) {
+                SetError(prep->error);
+                return;
+            }
             vector<duckdb::Value> args; // TODO: take arguments
             result = prep->Execute(args, true);
+            if (!result.get()->success) {
+                SetError(result.get()->error);
+            }
         }
 
         void OnOK() override {
@@ -25,6 +30,10 @@ class AsyncExecutor : public Napi::AsyncWorker {
             ResultWrapper* result_unwrapped = ResultWrapper::Unwrap(result_wrapper);
             result_unwrapped->result = std::move(result);
             deferred.Resolve(result_wrapper);
+        }
+
+        void OnError(const Napi::Error& e) override {
+            deferred.Reject(e.Value());
         }
     
     private:
