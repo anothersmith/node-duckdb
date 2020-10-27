@@ -81,7 +81,7 @@ describe("Async execute", () => {
   });
 
   jest.setTimeout(60000);
-  it("long running execution does not block thread", async () => {
+  it("does not block thread during a long running execution", async () => {
     let lastDate = new Date();
     let didEventLoopBlock = false;
     const timer = setInterval(() => {
