@@ -15,7 +15,7 @@ class ConnectionWrapper : public Napi::ObjectWrap<ConnectionWrapper> {
     Napi::Value Close(const Napi::CallbackInfo& info);
 
     unique_ptr<duckdb::DuckDB> database;
-    unique_ptr<duckdb::Connection> connection;
+    shared_ptr<duckdb::Connection> connection;
 };
 
 #endif

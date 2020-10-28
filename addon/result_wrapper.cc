@@ -25,7 +25,7 @@ ResultWrapper::ResultWrapper(const Napi::CallbackInfo& info) : Napi::ObjectWrap<
   Napi::Env env = info.Env();
 }
 
-Napi::Object ResultWrapper::Create(const Napi::CallbackInfo& info) {
+Napi::Object ResultWrapper::Create() {
   return constructor.New({});
 }
 
@@ -57,9 +57,9 @@ Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
     chunk_offset = 0;
   }
   if (result->type == duckdb::QueryResultType::STREAM_RESULT) {
-    cout << "Streaming!";
+    cout << "Streaming!" << endl;
   } else {
-    cout << "Materialized!";
+    cout << "Materialized!" << endl;
   }
   if (!current_chunk) {
     Napi::Error::New(env, result->error).ThrowAsJavaScriptException();

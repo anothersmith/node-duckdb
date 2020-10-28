@@ -13,6 +13,6 @@
 ```
 import { ConnectionWrapper, ResultWrapper } from "node-duckdb";
 const cw = new ConnectionWrapper();
-const rw = cw.execute("SELECT count(*) FROM read_csv_auto('src/addon-wrapper/test-fixtures/web_page.csv')");
+const rw = cw.execute("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
 rw.fetchRow()
 ```

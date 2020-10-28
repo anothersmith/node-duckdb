@@ -13,6 +13,7 @@ module.exports = {
       files: ["**/*.test.ts"],
       rules: {
         "max-lines-per-function": "off",
+        "import/no-relative-parent-imports": "off",
       },
     },
   ],

@@ -15,19 +15,19 @@
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
     "build:addon": "rimraf build && cmake-js compile",
     "build:duckdb": "cd duckdb && make && cd -",
-    "build:test:watch": "nodemon --exec 'yarn build && yarn jest'",
-    "build:ts": "rimraf dist && tsc",
+    "build:test:watch": "nodemon --exec 'yarn build && yarn jest --maxConcurrency=1 --testTimeout=60000'",
+    "build:ts": "rimraf dist && ttsc",
     "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.1.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.1 duckdb && rm duckdb.tar.gz",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "test": "yarn build:ts && jest"
+    "test": "yarn build:ts && jest --testTimeout=60000"
   },
   "dependencies": {
     "@types/bindings": "^1.3.0",
     "bindings": "^1.5.0",
-    "node-addon-api": "^2.0.2"
+    "node-addon-api": "^3.0.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
@@ -51,6 +51,7 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
+    "ttypescript": "^1.5.12",
     "typescript": "^4.0.3"
   },
   "engines": {

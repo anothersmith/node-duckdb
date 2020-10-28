@@ -1,6 +1,7 @@
 #include <napi.h>
 #include "connection_wrapper.h"
 #include "result_wrapper.h"
+#include "async_worker.cc"
 
 Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
   ConnectionWrapper::Init(env, exports);

@@ -4,6 +4,7 @@
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "parquet-extension.hpp"
+#include "async_worker.cc"
 using namespace std;
 
 Napi::FunctionReference ConnectionWrapper::constructor;
@@ -37,31 +38,26 @@ ConnectionWrapper::ConnectionWrapper(const Napi::CallbackInfo& info) : Napi::Obj
 
   database = duckdb::make_unique<duckdb::DuckDB>(database_name, &config);
   database->LoadExtension<duckdb::ParquetExtension>();
-  connection = duckdb::make_unique<duckdb::Connection>(*database);
+  connection = duckdb::make_shared<duckdb::Connection>(*database);
 }
 
 Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  if (!info[0].IsString()) {
-    Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
-    return env.Undefined();
+  Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
+  try {
+    if (!info[0].IsString()) {
+      throw Napi::TypeError::New(env, "String expected");
+    }
+    string query = info[0].ToString();
+    AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred);
+    wk->Queue();
+  } catch (Napi::Error& e) {
+    deferred.Reject(e.Value());
+  } catch (...) {
+    deferred.Reject(Napi::Error::New(env, "Unknown Error: Something happened when preparing to run the query").Value());
   }
 
-  string query = info[0].ToString();
-
-  auto prep = connection->Prepare(query);
-  if (!prep->success) {
-    Napi::Error::New(env, prep->error).ThrowAsJavaScriptException();
-    return env.Undefined();
-  }
-
-  Napi::Object result_value = ResultWrapper::Create(info);
-  ResultWrapper* result = ResultWrapper::Unwrap(result_value);
-
-  vector<duckdb::Value> args; // TODO: take arguments
-  result->result = prep->Execute(args, true);
-
-  return result_value;
+  return deferred.Promise();
 }
 
 Napi::Value ConnectionWrapper::Close(const Napi::CallbackInfo& info) {
