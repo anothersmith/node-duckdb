@@ -29,7 +29,7 @@ public:
         }
         catch (...)
         {
-            SetError("Uknown Error: Something happened during execution of the query");
+            SetError("Unknown Error: Something happened during execution of the query");
         }
     }
 
