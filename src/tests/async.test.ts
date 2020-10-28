@@ -54,8 +54,8 @@ describe("Async execute", () => {
     let didEventLoopBlock = false;
     const timer = setInterval(() => {
       const currentDate = new Date();
-      // if setInterval hasn't fired within last 800 ms then assume event loop has been blocked
-      if (new Date(lastDate.getTime() + 800) < currentDate) {
+      // if setInterval hasn't fired within last 1.5 s then assume event loop has been blocked
+      if (new Date(lastDate.getTime() + 1500) < currentDate) {
         didEventLoopBlock = true;
       }
       lastDate = currentDate;
