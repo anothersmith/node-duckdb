@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { ConnectionWrapper } from "@root/index";
+import { ConnectionWrapper } from "index";
 
 describe("Async execute", () => {
   it("can do concurrent operations with same ConnectionWrapper", async () => {

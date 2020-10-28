@@ -1,4 +1,4 @@
-import { ResultWrapper, ConnectionWrapper } from "@root/index";
+import { ResultWrapper, ConnectionWrapper } from "index";
 
 describe("fetchRow()", () => {
   it("errors when without a result", () => {
