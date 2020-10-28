@@ -51,6 +51,9 @@ describe("Async execute", () => {
   jest.setTimeout(60000 * 5);
   // this test is a bit tricky to run on machines of very different specs
   it("does not block thread during a long running execution", async () => {
+    const cw = new ConnectionWrapper();
+    await cw.execute("CREATE TABLE test (a INTEGER, b INTEGER);");
+    const operationStartTime = new Date();
     let lastDate = new Date();
     let didEventLoopBlock = false;
     const timer = setInterval(() => {
@@ -61,9 +64,6 @@ describe("Async execute", () => {
       }
       lastDate = currentDate;
     }, 0);
-    const cw = new ConnectionWrapper();
-    await cw.execute("CREATE TABLE test (a INTEGER, b INTEGER);");
-    const operationStartTime = new Date();
     await cw.execute(
       "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 60000000) tbl2(c)",
     );
