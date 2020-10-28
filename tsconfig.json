@@ -4,8 +4,6 @@
       "rootDir": "./src",
       "baseUrl": "./src",
       "allowJs": true,
-      "plugins": [{ "transform": "@zerollup/ts-transform-paths" }],
-      "paths": { "*": ["*"] },
 
       /* Basic Options */
       "incremental": false,                     /* Enable incremental compilation */

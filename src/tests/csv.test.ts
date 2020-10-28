@@ -1,4 +1,4 @@
-import { ConnectionWrapper } from "index";
+import { ConnectionWrapper } from "../index";
 
 describe("Execute on csv", () => {
   it("can do a count", async () => {
