@@ -4,7 +4,7 @@
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "parquet-extension.hpp"
-#include "async_worker.cc"
+#include "async_worker.h"
 using namespace std;
 
 Napi::FunctionReference ConnectionWrapper::constructor;
