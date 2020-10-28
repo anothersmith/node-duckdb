@@ -49,6 +49,7 @@ describe("Async execute", () => {
   });
 
   jest.setTimeout(60000 * 5);
+  // this test is a bit tricky to run on machines of very different specs
   it("does not block thread during a long running execution", async () => {
     let lastDate = new Date();
     let didEventLoopBlock = false;
@@ -64,11 +65,11 @@ describe("Async execute", () => {
     await cw.execute("CREATE TABLE test (a INTEGER, b INTEGER);");
     const operationStartTime = new Date();
     await cw.execute(
-      "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 80000000) tbl2(c)",
+      "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 60000000) tbl2(c)",
     );
     const operationEndTime = new Date();
-    // operation must take longer than 5 secs
-    expect(new Date(operationStartTime.getTime() + 5000) < operationEndTime).toBe(true);
+    // operation must take longer than 2 secs
+    expect(new Date(operationStartTime.getTime() + 2000) < operationEndTime).toBe(true);
     expect(didEventLoopBlock).toBe(false);
     clearInterval(timer);
   });
