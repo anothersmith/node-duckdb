@@ -12,6 +12,7 @@ Napi::Object ResultWrapper::Init(Napi::Env env, Napi::Object exports) {
                   {
                     InstanceMethod("fetchRow", &ResultWrapper::FetchRow),
                     InstanceMethod("describe", &ResultWrapper::Describe),
+                    InstanceAccessor<&ResultWrapper::GetType>("type")
                   });
 
   constructor = Napi::Persistent(func);
@@ -56,11 +57,7 @@ Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
     current_chunk = result->Fetch();
     chunk_offset = 0;
   }
-  if (result->type == duckdb::QueryResultType::STREAM_RESULT) {
-    cout << "Streaming!" << endl;
-  } else {
-    cout << "Materialized!" << endl;
-  }
+
   if (!current_chunk) {
     Napi::Error::New(env, result->error).ThrowAsJavaScriptException();
     return env.Undefined();
@@ -163,3 +160,9 @@ Napi::Value ResultWrapper::Describe(const Napi::CallbackInfo& info) {
   }
   return row;
 }
+
+Napi::Value ResultWrapper::GetType(const Napi::CallbackInfo &info) {
+    Napi::Env env = info.Env();
+    return Napi::String::New(env, this->type);
+}
+

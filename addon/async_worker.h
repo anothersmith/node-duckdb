@@ -5,7 +5,7 @@
 class AsyncExecutor : public Napi::AsyncWorker
 {
 public:
-    AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred);
+    AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred, bool forceMaterialized);
 
     ~AsyncExecutor();
 
@@ -22,4 +22,5 @@ private:
     std::shared_ptr<duckdb::Connection> connection;
     std::unique_ptr<duckdb::QueryResult> result;
     Napi::Promise::Deferred deferred;
+    bool forceMaterialized;
 };
