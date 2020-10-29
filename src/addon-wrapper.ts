@@ -17,7 +17,7 @@ declare class ResultWrapperClass {
 
 export enum ResultType {
   Materialized = "Materialized",
-  Streaming = "Streaming"
+  Streaming = "Streaming",
 }
 
 export const ConnectionWrapper: typeof ConnectionWrapperClass = ConnectionWrapperBinding;

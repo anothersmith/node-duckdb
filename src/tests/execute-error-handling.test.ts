@@ -4,7 +4,7 @@ jest.setTimeout(888888);
 describe("Execute method error handling", () => {
   it("validates parameters", async () => {
     const cw = new ConnectionWrapper();
-    await expect((<any>cw).execute()).rejects.toMatchObject({ message: "String expected" });
+    await expect((<any>cw).execute()).rejects.toMatchObject({ message: "First argument must be a string" });
   });
   it("correctly handles an invalid query", async () => {
     const cw = new ConnectionWrapper();
