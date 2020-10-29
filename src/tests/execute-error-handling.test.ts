@@ -1,6 +1,5 @@
 import { ConnectionWrapper } from "../index";
 
-jest.setTimeout(888888);
 describe("executeIterator method error handling", () => {
   it("validates parameters", async () => {
     const cw = new ConnectionWrapper();
