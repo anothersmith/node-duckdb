@@ -11,7 +11,7 @@ describe("description()", () => {
 
   it("can read column names", async () => {
     const cw = new ConnectionWrapper();
-    const rw = await cw.execute(`SELECT 
+    const rw = await cw.executeIterator(`SELECT 
         null AS c_null,
         0,
         'something',

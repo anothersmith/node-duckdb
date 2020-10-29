@@ -5,25 +5,25 @@ const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_p
 describe("Streaming/materialized capability", () => {
   it("allows streaming", async () => {
     const cw = new ConnectionWrapper();
-    const rw = await cw.execute(query, false);
+    const rw = await cw.executeIterator(query, false);
     expect(rw.fetchRow()).toMatchObject([60]);
     expect(rw.type).toBe(ResultType.Streaming);
   });
   it("streams by default", async () => {
     const cw = new ConnectionWrapper();
-    const rw = await cw.execute(query);
+    const rw = await cw.executeIterator(query);
     expect(rw.fetchRow()).toMatchObject([60]);
     expect(rw.type).toBe(ResultType.Streaming);
   });
   it("allows materialized", async () => {
     const cw = new ConnectionWrapper();
-    const rw = await cw.execute(query, true);
+    const rw = await cw.executeIterator(query, true);
     expect(rw.fetchRow()).toMatchObject([60]);
     expect(rw.type).toBe(ResultType.Materialized);
   });
   it("validates type parameter", async () => {
     const cw = new ConnectionWrapper();
-    await expect((<any>cw).execute(query, "i break you")).rejects.toMatchObject({
+    await expect((<any>cw).executeIterator(query, "i break you")).rejects.toMatchObject({
       message: "Second argument is an optional boolean",
     });
   });

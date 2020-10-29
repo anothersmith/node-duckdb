@@ -9,7 +9,7 @@ declare class ConnectionWrapperClass {
   public execute(command: string, forceMaterialized?: boolean): Promise<ResultWrapperClass>;
 }
 
-declare class ResultWrapperClass {
+export declare class ResultWrapperClass {
   public fetchRow(): unknown[];
   public describe(): string[][];
   public type: ResultType;

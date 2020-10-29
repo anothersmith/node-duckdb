@@ -11,7 +11,7 @@ describe("fetchRow()", () => {
 
   it("can read a single record containing all types", async () => {
     const cw = new ConnectionWrapper();
-    const rw = await cw.execute(`SELECT 
+    const rw = await cw.executeIterator(`SELECT 
             null,
             true,
             0,

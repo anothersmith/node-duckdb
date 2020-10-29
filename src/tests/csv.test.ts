@@ -1,10 +1,10 @@
 import { ConnectionWrapper } from "../index";
 
-describe("Execute on csv", () => {
+describe("executeIterator on csv", () => {
   it("can do a count", async () => {
     const cw = new ConnectionWrapper();
 
-    const rw = await cw.execute("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
+    const rw = await cw.executeIterator("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
     expect(rw.fetchRow()).toMatchObject([60]);
     expect(rw.fetchRow()).toBe(null);
   });
@@ -12,7 +12,7 @@ describe("Execute on csv", () => {
   it("can do a select all", async () => {
     const cw = new ConnectionWrapper();
 
-    const rw = await cw.execute("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
+    const rw = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
     expect(rw.fetchRow()).toMatchObject([
       1,
       "AAAAAAAABAAAAAAA",
