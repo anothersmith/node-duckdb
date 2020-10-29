@@ -17,6 +17,7 @@ class ResultWrapper : public Napi::ObjectWrap<ResultWrapper> {
 		Napi::Value Describe(const Napi::CallbackInfo& info);
 		Napi::Value GetType(const Napi::CallbackInfo &info);
 
+		// TODO: is this correct? 
 		void close() {
 			result = nullptr;
 		}
