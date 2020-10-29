@@ -162,6 +162,7 @@ Napi::Value ResultWrapper::Describe(const Napi::CallbackInfo& info) {
 
 Napi::Value ResultWrapper::GetType(const Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
-    return Napi::String::New(env, this->type);
+    string type = this->result->type == duckdb::QueryResultType::STREAM_RESULT ? "Streaming" : "Materialized";
+    return Napi::String::New(env, type);
 }
 

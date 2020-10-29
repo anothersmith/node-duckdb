@@ -10,7 +10,6 @@ class ResultWrapper : public Napi::ObjectWrap<ResultWrapper> {
 		ResultWrapper(const Napi::CallbackInfo& info);
 		static Napi::Object Create();
 		unique_ptr<duckdb::QueryResult> result;
-		string type;
 
  	private:
 	 	static Napi::FunctionReference constructor;
