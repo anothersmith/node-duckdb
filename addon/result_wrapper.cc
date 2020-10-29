@@ -57,7 +57,6 @@ Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
     current_chunk = result->Fetch();
     chunk_offset = 0;
   }
-
   if (!current_chunk) {
     Napi::Error::New(env, result->error).ThrowAsJavaScriptException();
     return env.Undefined();
