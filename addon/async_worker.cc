@@ -2,54 +2,46 @@
 #include <iostream>
 #include "duckdb.hpp"
 #include "result_wrapper.h"
+#include "async_worker.h"
 
-class AsyncExecutor : public Napi::AsyncWorker
+using namespace duckdb;
+
+AsyncExecutor::AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred, bool forceMaterialized) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred), forceMaterialized(forceMaterialized) {}
+
+AsyncExecutor::~AsyncExecutor() {}
+
+void AsyncExecutor::Execute() 
 {
-public:
-    AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred) {}
-
-    ~AsyncExecutor() {}
-
-    void Execute() override
+    try
     {
-        try
-        {
-            auto prep = connection->Prepare(query);
-            if (!prep->success)
-            {
-                SetError(prep->error);
-                return;
-            }
-            vector<duckdb::Value> args; // TODO: take arguments
-            result = prep->Execute(args, true);
-            if (!result.get()->success)
-            {
-                SetError(result.get()->error);
-            }
+        if (forceMaterialized) {
+            result = connection->Query(query);
+        } else {
+            result = connection->SendQuery(query);
         }
-        catch (...)
+        if (!result.get()->success)
         {
-            SetError("Unknown Error: Something happened during execution of the query");
+            SetError(result.get()->error);
         }
     }
-
-    void OnOK() override
+    catch (...)
     {
-        Napi::HandleScope scope(Env());
-        Napi::Object result_wrapper = ResultWrapper::Create();
-        ResultWrapper *result_unwrapped = ResultWrapper::Unwrap(result_wrapper);
-        result_unwrapped->result = std::move(result);
-        deferred.Resolve(result_wrapper);
+        SetError("Unknown Error: Something happened during execution of the query");
     }
+}
 
-    void OnError(const Napi::Error &e) override
-    {
-        deferred.Reject(e.Value());
-    }
+void AsyncExecutor::OnOK() 
+{
+    Napi::HandleScope scope(Env());
+    Napi::Object result_wrapper = ResultWrapper::Create();
+    ResultWrapper *result_unwrapped = ResultWrapper::Unwrap(result_wrapper);
+    result_unwrapped->result = std::move(result);
+    deferred.Resolve(result_wrapper);
+}
 
-private:
-    std::string query;
-    std::shared_ptr<duckdb::Connection> connection;
-    std::unique_ptr<duckdb::QueryResult> result;
-    Napi::Promise::Deferred deferred;
-};
+void AsyncExecutor::OnError(const Napi::Error &e) 
+{
+    deferred.Reject(e.Value());
+}
+
+            

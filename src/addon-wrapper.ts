@@ -6,12 +6,20 @@ const { ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrappe
 );
 
 declare class ConnectionWrapperClass {
-  public execute(command: string): Promise<ResultWrapperClass>;
+  public execute(command: string, forceMaterialized?: boolean): Promise<ResultWrapperClass>;
 }
 
-declare class ResultWrapperClass {
+export declare class ResultWrapperClass {
   public fetchRow(): unknown[];
   public describe(): string[][];
+  public close(): void;
+  public type: ResultType;
+  public isClosed: boolean;
+}
+
+export enum ResultType {
+  Materialized = "Materialized",
+  Streaming = "Streaming",
 }
 
 export const ConnectionWrapper: typeof ConnectionWrapperClass = ConnectionWrapperBinding;

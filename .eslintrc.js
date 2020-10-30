@@ -7,6 +7,7 @@ module.exports = {
   extends: ["eslint-config-deepcrawl"],
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
+    "clean-code/feature-envy": "off",
   },
   overrides: [
     {

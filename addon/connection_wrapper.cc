@@ -4,7 +4,8 @@
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "parquet-extension.hpp"
-#include "async_worker.cc"
+#include "async_worker.h"
+#include <iostream>
 using namespace std;
 
 Napi::FunctionReference ConnectionWrapper::constructor;
@@ -46,10 +47,15 @@ Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {
   Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
   try {
     if (!info[0].IsString()) {
-      throw Napi::TypeError::New(env, "String expected");
+      throw Napi::TypeError::New(env, "First argument must be a string");
+    }
+
+    if (!info[1].IsUndefined() && !info[1].IsBoolean()) {
+      throw Napi::TypeError::New(env, "Second argument is an optional boolean");
     }
     string query = info[0].ToString();
-    AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred);
+    bool forceMaterialized = info[1].IsEmpty() ? false : info[1].ToBoolean().Value();
+    AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterialized);
     wk->Queue();
   } catch (Napi::Error& e) {
     deferred.Reject(e.Value());

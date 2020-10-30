@@ -12,6 +12,9 @@ Napi::Object ResultWrapper::Init(Napi::Env env, Napi::Object exports) {
                   {
                     InstanceMethod("fetchRow", &ResultWrapper::FetchRow),
                     InstanceMethod("describe", &ResultWrapper::Describe),
+                    InstanceMethod("close", &ResultWrapper::Close),
+                    InstanceAccessor<&ResultWrapper::GetType>("type"),
+                    InstanceAccessor<&ResultWrapper::IsClosed>("isClosed")
                   });
 
   constructor = Napi::Persistent(func);
@@ -56,13 +59,8 @@ Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
     current_chunk = result->Fetch();
     chunk_offset = 0;
   }
-  if (result->type == duckdb::QueryResultType::STREAM_RESULT) {
-    cout << "Streaming!" << endl;
-  } else {
-    cout << "Materialized!" << endl;
-  }
   if (!current_chunk) {
-    Napi::Error::New(env, result->error).ThrowAsJavaScriptException();
+    Napi::Error::New(env, "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)").ThrowAsJavaScriptException();
     return env.Undefined();
   }
   if (current_chunk->size() == 0) {
@@ -162,4 +160,16 @@ Napi::Value ResultWrapper::Describe(const Napi::CallbackInfo& info) {
     row.Set(col_idx, col);
   }
   return row;
+}
+
+Napi::Value ResultWrapper::GetType(const Napi::CallbackInfo &info) {
+    Napi::Env env = info.Env();
+    string type = this->result->type == duckdb::QueryResultType::STREAM_RESULT ? "Streaming" : "Materialized";
+    return Napi::String::New(env, type);
+}
+
+Napi::Value ResultWrapper::IsClosed(const Napi::CallbackInfo &info) {
+    Napi::Env env = info.Env();
+    bool isClosed = this->result == nullptr;
+    return Napi::Boolean::New(env, isClosed);
 }
