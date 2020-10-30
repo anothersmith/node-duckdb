@@ -16,11 +16,11 @@ class ResultWrapper : public Napi::ObjectWrap<ResultWrapper> {
 		Napi::Value FetchRow(const Napi::CallbackInfo& info);
 		Napi::Value Describe(const Napi::CallbackInfo& info);
 		Napi::Value GetType(const Napi::CallbackInfo &info);
-
-		// TODO: is this correct? 
-		void close() {
+		Napi::Value Close(const Napi::CallbackInfo &info) {
 			result = nullptr;
+			return info.Env().Undefined();
 		}
+		Napi::Value IsClosed(const Napi::CallbackInfo &info);
 		unique_ptr<duckdb::DataChunk> current_chunk;
 		uint64_t chunk_offset = 0;
 };

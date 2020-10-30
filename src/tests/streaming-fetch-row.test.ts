@@ -37,11 +37,20 @@ describe("Streaming capability", () => {
     expect(rw2.fetchRow()).toEqual([60]);
   });
 
-  it("work fine if done one after another", async () => {
+  it("works fine if done one after another", async () => {
     const cw = new ConnectionWrapper();
     const rw1 = await cw.executeIterator(query, false);
     expect(rw1.fetchRow()).toEqual([60]);
     const rw2 = await cw.executeIterator(query, false);
     expect(rw2.fetchRow()).toEqual([60]);
+  });
+
+  it("is able to close before getting all results", async () => {
+    const cw = new ConnectionWrapper();
+    const rw1 = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
+    expect(rw1.fetchRow()).toBeTruthy();
+    rw1.close();
+    expect(rw1.isClosed).toBe(true);
+    expect(() => rw1.fetchRow()).toThrow("Result closed");
   });
 });

@@ -36,15 +36,6 @@ describe("Result stream", () => {
     ]);
   });
 
-  it("correctly handles errors", async () => {
-    const cw = new ConnectionWrapper();
-    const [rs1] = await Promise.all([cw.execute(query), cw.execute(query)]);
-    await expect(readStream(rs1)).rejects.toMatchObject({
-      message:
-        "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
-    });
-  });
-
   it("is able to read from two streams sequentially", async () => {
     const cw = new ConnectionWrapper();
     const rs1 = await cw.execute(query);
@@ -54,5 +45,39 @@ describe("Result stream", () => {
     const rs2 = await cw.execute(query);
     const elements2 = await readStream(rs2);
     expect(elements2.length).toBe(60);
+  });
+
+  it("correctly handles errors - closes resource", async () => {
+    const cw = new ConnectionWrapper();
+    const rs1 = await cw.execute(query);
+    await cw.execute(query);
+    let hasClosedFired = false;
+    rs1.on("close", () => hasClosedFired = true)
+    await expect(readStream(rs1)).rejects.toMatchObject({
+      message:
+        "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
+    });
+    expect(hasClosedFired).toBe(true);
+  });
+
+  it("closes resource when all data has been read", async () => {
+    const cw = new ConnectionWrapper();
+    const rs = await cw.execute(query);
+    let hasClosedFired = false;
+    rs.on("close", () => hasClosedFired = true)
+    const elements = await readStream(rs);
+    expect(elements.length).toBe(60);
+    expect(hasClosedFired).toBe(true);
+  });
+
+  it("closes resource on manual destroy", async () => {
+    const cw = new ConnectionWrapper();
+    const rs1 = await cw.execute(query);
+    let hasClosedFired = false;
+    rs1.on("close", () => hasClosedFired = true)
+    void readStream(rs1);
+    expect(hasClosedFired).toBe(false);
+    rs1.destroy();
+    expect(hasClosedFired).toBe(true);
   });
 });

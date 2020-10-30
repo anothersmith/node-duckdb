@@ -9,12 +9,27 @@ export class ResultStream extends Readable {
 
   public _read(): void {
     try {
-      this.push(this.rw.fetchRow());
+      const element = this.rw.fetchRow();
+      this.push(element);
+      if (element === null) {
+        this.close();
+      }
     } catch (e) {
       this.destroy(e);
     }
   }
 
-  // TODO: possibly implement
-  // _destroy(error: Error | null, callback: (error?: Error | null) => void): void;
+  public _destroy(error: Error | null, callback: (error?: Error | null) => void): void {
+    this.close();
+    callback(error);
+  }
+
+  private close(): void {
+    this.rw.close();
+    if (!this.rw.isClosed) {
+      this.emit("error", new Error("Close wasn't successful"));
+      return;
+    }
+    this.emit("close");
+  }
 }

@@ -12,7 +12,9 @@ declare class ConnectionWrapperClass {
 export declare class ResultWrapperClass {
   public fetchRow(): unknown[];
   public describe(): string[][];
+  public close(): void;
   public type: ResultType;
+  public isClosed: boolean;
 }
 
 export enum ResultType {

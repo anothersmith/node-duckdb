@@ -12,7 +12,9 @@ Napi::Object ResultWrapper::Init(Napi::Env env, Napi::Object exports) {
                   {
                     InstanceMethod("fetchRow", &ResultWrapper::FetchRow),
                     InstanceMethod("describe", &ResultWrapper::Describe),
-                    InstanceAccessor<&ResultWrapper::GetType>("type")
+                    InstanceMethod("close", &ResultWrapper::Close),
+                    InstanceAccessor<&ResultWrapper::GetType>("type"),
+                    InstanceAccessor<&ResultWrapper::IsClosed>("isClosed")
                   });
 
   constructor = Napi::Persistent(func);
@@ -166,3 +168,8 @@ Napi::Value ResultWrapper::GetType(const Napi::CallbackInfo &info) {
     return Napi::String::New(env, type);
 }
 
+Napi::Value ResultWrapper::IsClosed(const Napi::CallbackInfo &info) {
+    Napi::Env env = info.Env();
+    bool isClosed = this->result == nullptr;
+    return Napi::Boolean::New(env, isClosed);
+}
