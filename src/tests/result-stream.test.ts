@@ -52,7 +52,7 @@ describe("Result stream", () => {
     const rs1 = await cw.execute(query);
     await cw.execute(query);
     let hasClosedFired = false;
-    rs1.on("close", () => hasClosedFired = true)
+    rs1.on("close", () => (hasClosedFired = true));
     await expect(readStream(rs1)).rejects.toMatchObject({
       message:
         "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
@@ -64,7 +64,7 @@ describe("Result stream", () => {
     const cw = new ConnectionWrapper();
     const rs = await cw.execute(query);
     let hasClosedFired = false;
-    rs.on("close", () => hasClosedFired = true)
+    rs.on("close", () => (hasClosedFired = true));
     const elements = await readStream(rs);
     expect(elements.length).toBe(60);
     expect(hasClosedFired).toBe(true);
@@ -74,7 +74,7 @@ describe("Result stream", () => {
     const cw = new ConnectionWrapper();
     const rs1 = await cw.execute(query);
     let hasClosedFired = false;
-    rs1.on("close", () => hasClosedFired = true)
+    rs1.on("close", () => (hasClosedFired = true));
     void readStream(rs1);
     expect(hasClosedFired).toBe(false);
     rs1.destroy();

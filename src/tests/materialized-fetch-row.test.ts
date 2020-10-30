@@ -11,7 +11,8 @@ describe("Materialized fetchRow()", () => {
 
   it("can read a single record containing all types", async () => {
     const cw = new ConnectionWrapper();
-    const rw = await cw.executeIterator(`SELECT 
+    const rw = await cw.executeIterator(
+      `SELECT 
             null,
             true,
             0,
@@ -25,7 +26,9 @@ describe("Materialized fetchRow()", () => {
             TIMESTAMP '1971-02-02 01:01:01.001',
             DATE '1971-02-02',
             TIME '01:01:01.001'
-          `, true);
+          `,
+      true,
+    );
     expect(rw.type).toBe(ResultType.Materialized);
 
     expect(rw.fetchRow()).toMatchObject([

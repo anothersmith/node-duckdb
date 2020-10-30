@@ -8,7 +8,9 @@ describe("Streaming capability", () => {
     const rw1 = await cw.executeIterator(query, false);
     const rw2 = await cw.executeIterator(query, false);
 
-    expect(() => rw1.fetchRow()).toThrow("No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)");
+    expect(() => rw1.fetchRow()).toThrow(
+      "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
+    );
     expect(rw2.fetchRow()).toEqual([60]);
   });
 
@@ -17,7 +19,9 @@ describe("Streaming capability", () => {
     const rw1 = await cw.executeIterator(query, false);
     const rw2 = await cw.executeIterator(query, true);
 
-    expect(() => rw1.fetchRow()).toThrow("No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)");
+    expect(() => rw1.fetchRow()).toThrow(
+      "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
+    );
     expect(rw2.fetchRow()).toEqual([60]);
   });
 

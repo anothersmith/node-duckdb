@@ -79,6 +79,8 @@
     "system_error": "cpp",
     "thread": "cpp",
     "tuple": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "filesystem": "cpp",
+    "__functional_03": "cpp"
   }
 }
