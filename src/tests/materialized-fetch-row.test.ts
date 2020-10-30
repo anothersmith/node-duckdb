@@ -45,7 +45,7 @@ describe("Materialized fetchRow()", () => {
     ]);
   });
 
-  it("is able to close before reading all results", async () => {
+  it("is able to close - throws error when reading from closed result", async () => {
     const cw = new ConnectionWrapper();
     const rw1 = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')", true);
     expect(rw1.type).toBe(ResultType.Materialized);
