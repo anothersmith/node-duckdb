@@ -1,12 +1,12 @@
-import { ConnectionWrapper, DuckDB, DuckDBClass } from "../index";
+import { Connection, DuckDB } from "../index";
 
 
 describe("executeIterator on parquet", () => {
-  let db: DuckDBClass;
-  let cw: ConnectionWrapper;
+  let db: DuckDB;
+  let cw: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new ConnectionWrapper(db);
+    cw = new Connection(db);
   });
 
   it("can do a count", async () => {

@@ -1,14 +1,14 @@
-import { ConnectionWrapper, DuckDB, DuckDBClass, ResultType } from "../index";
+import { Connection, DuckDB, ResultType } from "../index";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
 
 describe("Streaming/materialized capability", () => {
-  let db: DuckDBClass;
-  let cw: ConnectionWrapper;
+  let db: DuckDB;
+  let cw: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new ConnectionWrapper(db);
+    cw = new Connection(db);
   });
 
   it("allows streaming", async () => {

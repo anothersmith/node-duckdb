@@ -1,13 +1,13 @@
-import { ConnectionWrapper, DuckDB, DuckDBClass } from "../index";
+import { Connection, DuckDB } from "../index";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
 describe("Streaming capability", () => {
-  let db: DuckDBClass;
-  let cw: ConnectionWrapper;
+  let db: DuckDB;
+  let cw: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new ConnectionWrapper(db);
+    cw = new Connection(db);
   });
 
   it("gracefully handles inactive stream", async () => {
@@ -46,8 +46,8 @@ describe("Streaming capability", () => {
   });
 
   it("works fine if two streaming operations are done on separate connections to one database", async () => {
-    const cw1 = new ConnectionWrapper(db);
-    const cw2 = new ConnectionWrapper(db);
+    const cw1 = new Connection(db);
+    const cw2 = new Connection(db);
     const rw1 = await cw1.executeIterator(query, false);
     const rw2 = await cw2.executeIterator(query, false);
     expect(rw1.fetchRow()).toEqual([60]);

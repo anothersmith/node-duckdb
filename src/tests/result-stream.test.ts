@@ -1,4 +1,4 @@
-import { ConnectionWrapper, DuckDB, DuckDBClass } from "../index";
+import { Connection, DuckDB } from "../index";
 import { ResultStream } from "../index";
 
 const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
@@ -13,11 +13,11 @@ function readStream(rs: ResultStream): Promise<any[]> {
 }
 
 describe("Result stream", () => {
-  let db: DuckDBClass;
-  let cw: ConnectionWrapper;
+  let db: DuckDB;
+  let cw: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new ConnectionWrapper(db);
+    cw = new Connection(db);
   });
 
   it("reads a csv", async () => {
@@ -84,8 +84,8 @@ describe("Result stream", () => {
   });
 
   it("is able to read from two streams on separate connections to one database while interleaving", async () => {
-    const cw1 = new ConnectionWrapper(db);
-    const cw2 = new ConnectionWrapper(db);
+    const cw1 = new Connection(db);
+    const cw2 = new Connection(db);
     const rs1 = await cw1.execute(query);
     const rs2 = await cw2.execute(query);
     

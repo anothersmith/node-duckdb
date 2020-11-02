@@ -1,9 +1,9 @@
 import { Readable } from "stream";
 
-import { ResultWrapperClass } from "./bindings";
+import { ResultIterator } from "./result-iterator";
 
 export class ResultStream extends Readable {
-  constructor(private rw: ResultWrapperClass) {
+  constructor(private rw: ResultIterator) {
     super({ objectMode: true });
   }
 

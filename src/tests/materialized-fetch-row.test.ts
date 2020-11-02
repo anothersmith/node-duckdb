@@ -1,21 +1,13 @@
-import { ResultWrapper, ConnectionWrapper, ResultType, DuckDB, DuckDBClass } from "../index";
+import { Connection, ResultType, DuckDB } from "../index";
 
 describe("Materialized fetchRow()", () => {
-  let db: DuckDBClass;
-  let cw: ConnectionWrapper;
+  let db: DuckDB;
+  let cw: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new ConnectionWrapper(db);
+    cw = new Connection(db);
   });
   
-  it("errors when without a result", () => {
-    const rw = new ResultWrapper();
-
-    expect(rw).toBeInstanceOf(ResultWrapper);
-
-    expect(() => rw.fetchRow()).toThrow("Result closed");
-  });
-
   it("can read a single record containing all types", async () => {
     const rw = await cw.executeIterator(
       `SELECT 

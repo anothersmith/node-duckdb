@@ -1,11 +1,11 @@
-import { DuckDB, ConnectionWrapper, DuckDBClass } from "../index";
+import { DuckDB, Connection } from "../index";
 
 describe("executeIterator on csv", () => {
-  let db: DuckDBClass;
-  let cw: ConnectionWrapper;
+  let db: DuckDB;
+  let cw: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new ConnectionWrapper(db);
+    cw = new Connection(db);
   });
 
   afterEach(() => {
