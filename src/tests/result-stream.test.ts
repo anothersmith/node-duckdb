@@ -1,4 +1,4 @@
-import { ConnectionWrapper } from "../index";
+import { ConnectionWrapper, DuckDB, DuckDBClass } from "../index";
 import { ResultStream } from "../result-stream";
 
 const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
@@ -13,8 +13,14 @@ function readStream(rs: ResultStream): Promise<any[]> {
 }
 
 describe("Result stream", () => {
+  let db: DuckDBClass;
+  let cw: ConnectionWrapper;
+  beforeEach(() => {
+    db = new DuckDB();
+    cw = new ConnectionWrapper(db);
+  });
+
   it("reads a csv", async () => {
-    const cw = new ConnectionWrapper();
     const rs = await cw.execute(query);
     const elements = await readStream(rs);
     expect(elements.length).toBe(60);
@@ -37,7 +43,6 @@ describe("Result stream", () => {
   });
 
   it("is able to read from two streams sequentially", async () => {
-    const cw = new ConnectionWrapper();
     const rs1 = await cw.execute(query);
     const elements1 = await readStream(rs1);
     expect(elements1.length).toBe(60);
@@ -48,7 +53,6 @@ describe("Result stream", () => {
   });
 
   it("correctly handles errors - closes resource", async () => {
-    const cw = new ConnectionWrapper();
     const rs1 = await cw.execute(query);
     await cw.execute(query);
     let hasClosedFired = false;
@@ -61,7 +65,6 @@ describe("Result stream", () => {
   });
 
   it("closes resource when all data has been read", async () => {
-    const cw = new ConnectionWrapper();
     const rs = await cw.execute(query);
     let hasClosedFired = false;
     rs.on("close", () => (hasClosedFired = true));
@@ -71,7 +74,6 @@ describe("Result stream", () => {
   });
 
   it("closes resource on manual destroy", async () => {
-    const cw = new ConnectionWrapper();
     const rs1 = await cw.execute(query);
     let hasClosedFired = false;
     rs1.on("close", () => (hasClosedFired = true));

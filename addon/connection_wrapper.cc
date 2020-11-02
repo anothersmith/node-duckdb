@@ -1,5 +1,6 @@
 #include "connection_wrapper.h"
 #include "result_wrapper.h"
+#include "database.h"
 #include "duckdb.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "duckdb/main/client_context.hpp"
@@ -30,16 +31,19 @@ Napi::Object ConnectionWrapper::Init(Napi::Env env, Napi::Object exports) {
 ConnectionWrapper::ConnectionWrapper(const Napi::CallbackInfo& info) : Napi::ObjectWrap<ConnectionWrapper>(info) {
   Napi::Env env = info.Env();
 
+  if (!info[0].IsObject() || !info[0].ToObject().InstanceOf(Database::constructor.Value())) {
+    throw Napi::TypeError::New(env, "Must provide a valid Database object");
+  }
+
   bool read_only = false;
   string database_name = "";
 
   duckdb::DBConfig config;
   if (read_only)
     config.access_mode = duckdb::AccessMode::READ_ONLY;
-
-  database = duckdb::make_unique<duckdb::DuckDB>(database_name, &config);
-  database->LoadExtension<duckdb::ParquetExtension>();
-  connection = duckdb::make_shared<duckdb::Connection>(*database);
+  
+  auto unwrappedDb = Database::Unwrap(info[0].ToObject());
+  connection = duckdb::make_shared<duckdb::Connection>(*unwrappedDb->database);
 }
 
 Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {

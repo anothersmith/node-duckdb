@@ -1,0 +1,100 @@
+yarn run v1.22.5
+$ yarn build:ts && jest --testTimeout=60000
+$ rimraf dist && ttsc
+PASS dist/tests/connection.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/csv.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/parquet.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/execute-error-handling.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/describe.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/force-materialized-switch.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/materialized-fetch-row.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/streaming-fetch-row.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/result-stream.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/async.test.js (6.148 s)
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --runInBand --detectOpenHandles to find leaks.
+-----------------------|---------|----------|---------|---------|-------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------------|---------|----------|---------|---------|-------------------
+All files              |   95.12 |    83.33 |   92.31 |   94.44 |                   
+ addon-wrapper.ts      |     100 |      100 |     100 |     100 |                   
+ connection-wrapper.ts |     100 |      100 |     100 |     100 |                   
+ index.ts              |     100 |      100 |      80 |     100 |                   
+ result-stream.ts      |   88.24 |       75 |     100 |   88.24 | 30-31             
+-----------------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 10 passed, 10 total
+Tests:       33 passed, 33 total
+Snapshots:   0 total
+Time:        7.736 s
+Ran all test suites.
+Done in 11.99s.

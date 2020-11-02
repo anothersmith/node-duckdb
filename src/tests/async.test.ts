@@ -1,4 +1,4 @@
-import { ConnectionWrapper } from "../index";
+import { ConnectionWrapper, DuckDB, DuckDBClass } from "../index";
 
 const query1 = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 const query2 = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
@@ -20,9 +20,15 @@ const result1 = [
 ];
 const result2 = [60];
 
+
 describe("Async executeIterator", () => {
+  let db: DuckDBClass;
+  beforeEach(() => {
+    db = new DuckDB();
+  });
+
   it("can do concurrent operations with same ConnectionWrapper", async () => {
-    const cw = new ConnectionWrapper();
+    const cw = new ConnectionWrapper(db);
     const p1 = cw.executeIterator(query1, true);
     const p2 = cw.executeIterator(query2, true);
     const [rw1, rw2] = await Promise.all([p1, p2]);
@@ -31,8 +37,8 @@ describe("Async executeIterator", () => {
   });
 
   it("can do concurrent operations with different ConnectionWrapper", async () => {
-    const cw1 = new ConnectionWrapper();
-    const cw2 = new ConnectionWrapper();
+    const cw1 = new ConnectionWrapper(db);
+    const cw2 = new ConnectionWrapper(db);
     const p1 = cw1.executeIterator(query1, true);
     const p2 = cw2.executeIterator(query2, true);
     const [rw1, rw2] = await Promise.all([p1, p2]);
@@ -41,7 +47,7 @@ describe("Async executeIterator", () => {
   });
 
   it("can do a consequtive operations", async () => {
-    const cw = new ConnectionWrapper();
+    const cw = new ConnectionWrapper(db);
     const rw1 = await cw.executeIterator(query1, true);
     expect(rw1.fetchRow()).toMatchObject(result1);
     const rw2 = await cw.executeIterator(query2, true);
@@ -51,7 +57,7 @@ describe("Async executeIterator", () => {
   jest.setTimeout(60000 * 5);
   // this test is a bit tricky to run on machines of very different specs
   it("does not block thread during a long running execution", async () => {
-    const cw = new ConnectionWrapper();
+    const cw = new ConnectionWrapper(db);
     await cw.executeIterator("CREATE TABLE test (a INTEGER, b INTEGER);", true);
     const operationStartTime = new Date();
     let lastDate = new Date();

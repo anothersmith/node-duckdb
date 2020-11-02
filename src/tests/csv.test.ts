@@ -1,17 +1,24 @@
-import { ConnectionWrapper } from "../index";
+import { DuckDB, ConnectionWrapper, DuckDBClass } from "../index";
 
 describe("executeIterator on csv", () => {
-  it("can do a count", async () => {
-    const cw = new ConnectionWrapper();
+  let db: DuckDBClass;
+  let cw: ConnectionWrapper;
+  beforeEach(() => {
+    db = new DuckDB();
+    cw = new ConnectionWrapper(db);
+  });
 
+  afterEach(() => {
+    // TODO: close
+  });
+
+  it("can do a count", async () => {
     const rw = await cw.executeIterator("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
     expect(rw.fetchRow()).toMatchObject([60]);
     expect(rw.fetchRow()).toBe(null);
   });
 
   it("can do a select all", async () => {
-    const cw = new ConnectionWrapper();
-
     const rw = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
     expect(rw.fetchRow()).toMatchObject([
       1,

@@ -1,6 +1,13 @@
-import { ResultWrapper, ConnectionWrapper, ResultType } from "../index";
+import { ResultWrapper, ConnectionWrapper, ResultType, DuckDB, DuckDBClass } from "../index";
 
 describe("Materialized fetchRow()", () => {
+  let db: DuckDBClass;
+  let cw: ConnectionWrapper;
+  beforeEach(() => {
+    db = new DuckDB();
+    cw = new ConnectionWrapper(db);
+  });
+  
   it("errors when without a result", () => {
     const rw = new ResultWrapper();
 
@@ -10,7 +17,6 @@ describe("Materialized fetchRow()", () => {
   });
 
   it("can read a single record containing all types", async () => {
-    const cw = new ConnectionWrapper();
     const rw = await cw.executeIterator(
       `SELECT 
             null,
@@ -49,7 +55,6 @@ describe("Materialized fetchRow()", () => {
   });
 
   it("is able to close - throws error when reading from closed result", async () => {
-    const cw = new ConnectionWrapper();
     const rw1 = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')", true);
     expect(rw1.type).toBe(ResultType.Materialized);
     expect(rw1.fetchRow()).toBeTruthy();

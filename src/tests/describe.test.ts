@@ -1,6 +1,13 @@
-import { ConnectionWrapper, ResultWrapper } from "../index";
+import { ConnectionWrapper, DuckDB, DuckDBClass, ResultWrapper } from "../index";
 
 describe("description()", () => {
+  let db: DuckDBClass;
+  let cw: ConnectionWrapper;
+  beforeEach(() => {
+    db = new DuckDB();
+    cw = new ConnectionWrapper(db);
+  });
+
   it("errors when without a result", () => {
     const rw = new ResultWrapper();
 
@@ -10,7 +17,6 @@ describe("description()", () => {
   });
 
   it("can read column names", async () => {
-    const cw = new ConnectionWrapper();
     const rw = await cw.executeIterator(`SELECT 
         null AS c_null,
         0,
