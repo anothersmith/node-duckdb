@@ -44,4 +44,15 @@ describe("Streaming capability", () => {
     expect(rw1.isClosed).toBe(true);
     expect(() => rw1.fetchRow()).toThrow("Result closed");
   });
+
+  it("works fine if two streaming operations are done on separate connections to one database", async () => {
+    const cw1 = new ConnectionWrapper(db);
+    const cw2 = new ConnectionWrapper(db);
+    const rw1 = await cw1.executeIterator(query, false);
+    const rw2 = await cw2.executeIterator(query, false);
+    expect(rw1.fetchRow()).toEqual([60]);
+    expect(rw2.fetchRow()).toEqual([60]);
+  });
+
+
 });

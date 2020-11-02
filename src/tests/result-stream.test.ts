@@ -82,4 +82,17 @@ describe("Result stream", () => {
     rs1.destroy();
     expect(hasClosedFired).toBe(true);
   });
+
+  it("is able to read from two streams on separate connections to one database while interleaving", async () => {
+    const cw1 = new ConnectionWrapper(db);
+    const cw2 = new ConnectionWrapper(db);
+    const rs1 = await cw1.execute(query);
+    const rs2 = await cw2.execute(query);
+    
+    const elements1 = await readStream(rs1);
+    expect(elements1.length).toBe(60);
+
+    const elements2 = await readStream(rs2);
+    expect(elements2.length).toBe(60);
+  });
 });
