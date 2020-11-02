@@ -1,6 +1,6 @@
 import { Connection, DuckDB } from "@addon";
 
-const errorMessage = "Must provide a valid Database object";
+const errorMessage = "Must provide a valid DuckDB object";
 
 describe("Connection class", () => {
   it("accepts a database instance", () => {

@@ -1,6 +1,6 @@
 #include "connection.h"
 #include "result_iterator.h"
-#include "database.h"
+#include "duckdb.h"
 #include "duckdb.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "duckdb/main/client_context.hpp"
@@ -34,8 +34,8 @@ namespace NodeDuckDB {
   Connection::Connection(const Napi::CallbackInfo& info) : Napi::ObjectWrap<Connection>(info) {
     Napi::Env env = info.Env();
 
-    if (!info[0].IsObject() || !info[0].ToObject().InstanceOf(Database::constructor.Value())) {
-      throw Napi::TypeError::New(env, "Must provide a valid Database object");
+    if (!info[0].IsObject() || !info[0].ToObject().InstanceOf(DuckDB::constructor.Value())) {
+      throw Napi::TypeError::New(env, "Must provide a valid DuckDB object");
     }
 
     bool read_only = false;
@@ -45,7 +45,7 @@ namespace NodeDuckDB {
     if (read_only)
       config.access_mode = duckdb::AccessMode::READ_ONLY;
     
-    auto unwrappedDb = Database::Unwrap(info[0].ToObject());
+    auto unwrappedDb = DuckDB::Unwrap(info[0].ToObject());
     if (unwrappedDb->IsClosed()) {
       throw Napi::TypeError::New(env, "Database is closed");
     }

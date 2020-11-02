@@ -1,6 +1,6 @@
 #include "connection.h"
 #include "result_iterator.h"
-#include "database.h"
+#include "duckdb.h"
 #include "duckdb.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "duckdb/main/client_context.hpp"
@@ -10,13 +10,13 @@
 using namespace std;
 
 namespace NodeDuckDB {
-  Napi::FunctionReference Database::constructor;
+  Napi::FunctionReference DuckDB::constructor;
 
-  Napi::Object Database::Init(Napi::Env env, Napi::Object exports) {
+  Napi::Object DuckDB::Init(Napi::Env env, Napi::Object exports) {
     Napi::Function func = DefineClass(env, "DuckDB", 
                     {
-                      InstanceMethod("close", &Database::Close),
-                      InstanceAccessor<&Database::IsClosed>("isClosed")
+                      InstanceMethod("close", &DuckDB::Close),
+                      InstanceAccessor<&DuckDB::IsClosed>("isClosed")
                     });
     constructor = Napi::Persistent(func);
     constructor.SuppressDestruct();
@@ -24,7 +24,7 @@ namespace NodeDuckDB {
     return exports;
   }
 
-  Database::Database(const Napi::CallbackInfo& info) : Napi::ObjectWrap<Database>(info) {
+  DuckDB::DuckDB(const Napi::CallbackInfo& info) : Napi::ObjectWrap<DuckDB>(info) {
     Napi::Env env = info.Env();
 
     bool read_only = false;
@@ -38,16 +38,16 @@ namespace NodeDuckDB {
     database->LoadExtension<duckdb::ParquetExtension>();
   }
 
-  Napi::Value Database::Close(const Napi::CallbackInfo& info) {
+  Napi::Value DuckDB::Close(const Napi::CallbackInfo& info) {
     database = nullptr;
     return info.Env().Undefined();
   }
-  Napi::Value Database::IsClosed(const Napi::CallbackInfo &info) {
+  Napi::Value DuckDB::IsClosed(const Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
     return Napi::Boolean::New(env, IsClosed());
   }
 
-  bool Database::IsClosed() {
+  bool DuckDB::IsClosed() {
     return database == nullptr;
   }
 }

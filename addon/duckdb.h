@@ -1,14 +1,14 @@
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef DUCKDB_H
+#define DUCKDB_H
 
 #include <napi.h>
 #include "duckdb.hpp"
 
 namespace NodeDuckDB {
-  class Database : public Napi::ObjectWrap<Database> {
+  class DuckDB : public Napi::ObjectWrap<DuckDB> {
     public:
       static Napi::Object Init(Napi::Env env, Napi::Object exports);
-      Database(const Napi::CallbackInfo& info);
+      DuckDB(const Napi::CallbackInfo& info);
       shared_ptr<duckdb::DuckDB> database;
       static Napi::FunctionReference constructor;
       bool IsClosed(void);
