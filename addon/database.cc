@@ -1,4 +1,4 @@
-#include "connection_wrapper.h"
+#include "connection.h"
 #include "result_wrapper.h"
 #include "database.h"
 #include "duckdb.hpp"

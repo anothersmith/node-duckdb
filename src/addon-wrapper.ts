@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import bindings from "bindings";
 
-const { DuckDB: DuckDBBinding, ConnectionWrapper: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = bindings(
+const { DuckDB: DuckDBBinding, Connection: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = bindings(
   "node-duckdb-addon",
 );
 
@@ -27,7 +27,6 @@ export enum ResultType {
   Materialized = "Materialized",
   Streaming = "Streaming",
 }
-console.log(DuckDBBinding);
 export const DuckDB: typeof DuckDBClass = DuckDBBinding;
 export const ConnectionWrapper: typeof ConnectionWrapperClass = ConnectionWrapperBinding;
 export const ResultWrapper: typeof ResultWrapperClass = ResultWrapperBinding;

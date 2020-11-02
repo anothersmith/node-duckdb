@@ -1,14 +1,14 @@
-#ifndef CONNECTION_WRAPPER_H
-#define CONNECTION_WRAPPER_H
+#ifndef connection_H
+#define connection_H
 
 #include <napi.h>
 #include "duckdb.hpp"
 
 namespace NodeDuckDB {
-  class ConnectionWrapper : public Napi::ObjectWrap<ConnectionWrapper> {
+  class Connection : public Napi::ObjectWrap<Connection> {
     public:
       static Napi::Object Init(Napi::Env env, Napi::Object exports);
-      ConnectionWrapper(const Napi::CallbackInfo& info);
+      Connection(const Napi::CallbackInfo& info);
 
     private:
       static Napi::FunctionReference constructor;

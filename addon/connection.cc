@@ -1,4 +1,4 @@
-#include "connection_wrapper.h"
+#include "connection.h"
 #include "result_wrapper.h"
 #include "database.h"
 #include "duckdb.hpp"
@@ -11,26 +11,26 @@ using namespace std;
 
 
 namespace NodeDuckDB {
-  Napi::FunctionReference ConnectionWrapper::constructor;
+  Napi::FunctionReference Connection::constructor;
 
-  Napi::Object ConnectionWrapper::Init(Napi::Env env, Napi::Object exports) {
+  Napi::Object Connection::Init(Napi::Env env, Napi::Object exports) {
 
     Napi::Function func =
         DefineClass(env,
-                    "ConnectionWrapper",
+                    "Connection",
                     {
-                      InstanceMethod("execute", &ConnectionWrapper::Execute),
-                      InstanceMethod("close", &ConnectionWrapper::Close),
+                      InstanceMethod("execute", &Connection::Execute),
+                      InstanceMethod("close", &Connection::Close),
                     });
 
     constructor = Napi::Persistent(func);
     constructor.SuppressDestruct();
 
-    exports.Set("ConnectionWrapper", func);
+    exports.Set("Connection", func);
     return exports;
   }
 
-  ConnectionWrapper::ConnectionWrapper(const Napi::CallbackInfo& info) : Napi::ObjectWrap<ConnectionWrapper>(info) {
+  Connection::Connection(const Napi::CallbackInfo& info) : Napi::ObjectWrap<Connection>(info) {
     Napi::Env env = info.Env();
 
     if (!info[0].IsObject() || !info[0].ToObject().InstanceOf(Database::constructor.Value())) {
@@ -48,7 +48,7 @@ namespace NodeDuckDB {
     connection = duckdb::make_shared<duckdb::Connection>(*unwrappedDb->database);
   }
 
-  Napi::Value ConnectionWrapper::Execute(const Napi::CallbackInfo& info) {
+  Napi::Value Connection::Execute(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
     try {
@@ -72,7 +72,7 @@ namespace NodeDuckDB {
     return deferred.Promise();
   }
 
-  Napi::Value ConnectionWrapper::Close(const Napi::CallbackInfo& info) {
+  Napi::Value Connection::Close(const Napi::CallbackInfo& info) {
     connection = nullptr;
     database = nullptr;
 

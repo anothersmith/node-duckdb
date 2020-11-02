@@ -9,6 +9,38 @@ PASS dist/tests/connection.test.js
 
       at Object.<anonymous> (src/addon-wrapper.ts:30:9)
 
+PASS dist/tests/result-stream.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/async.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/csv.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
+PASS dist/tests/streaming-fetch-row.test.js
+  ● Console
+
+    console.log
+      [Function: DuckDB]
+
+      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
+
 PASS dist/tests/execute-error-handling.test.js
   ● Console
 
@@ -33,7 +65,7 @@ PASS dist/tests/parquet.test.js
 
       at Object.<anonymous> (src/addon-wrapper.ts:30:9)
 
-PASS dist/tests/csv.test.js
+PASS dist/tests/force-materialized-switch.test.js
   ● Console
 
     console.log
@@ -49,39 +81,6 @@ PASS dist/tests/materialized-fetch-row.test.js
 
       at Object.<anonymous> (src/addon-wrapper.ts:30:9)
 
-PASS dist/tests/force-materialized-switch.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/result-stream.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/streaming-fetch-row.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/async.test.js (6.582 s)
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --runInBand --detectOpenHandles to find leaks.
 -----------------------|---------|----------|---------|---------|-------------------
 File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------|---------|----------|---------|---------|-------------------
@@ -95,6 +94,6 @@ All files              |   95.12 |    83.33 |   92.31 |   94.44 |
 Test Suites: 10 passed, 10 total
 Tests:       35 passed, 35 total
 Snapshots:   0 total
-Time:        8.272 s
+Time:        7.18 s
 Ran all test suites.
-Done in 12.90s.
+Done in 12.39s.
