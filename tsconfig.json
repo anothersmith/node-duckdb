@@ -4,6 +4,12 @@
       "rootDir": "./src",
       "baseUrl": "./src",
       "allowJs": true,
+      "paths": {
+        "@addon": ["addon"],
+        "@addon-bindings": ["addon-bindings"],
+        "@addon-types": ["addon-types"]
+      },
+      "plugins": [{ "transform": "@zerollup/ts-transform-paths" , "exclude": ["*"]}],
 
       /* Basic Options */
       "incremental": false,                     /* Enable incremental compilation */

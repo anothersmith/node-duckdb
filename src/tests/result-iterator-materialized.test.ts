@@ -1,4 +1,5 @@
-import { Connection, ResultType, DuckDB } from "../index";
+import { Connection, DuckDB } from "@addon";
+import { ResultType } from "@addon-types";
 
 describe("Result iterator (materialized)", () => {
   let db: DuckDB;
@@ -47,7 +48,10 @@ describe("Result iterator (materialized)", () => {
   });
 
   it("is able to close - throws error when reading from closed result", async () => {
-    const result1 = await connection.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')", true);
+    const result1 = await connection.executeIterator(
+      "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
+      true,
+    );
     expect(result1.type).toBe(ResultType.Materialized);
     expect(result1.fetchRow()).toBeTruthy();
     result1.close();

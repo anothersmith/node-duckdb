@@ -1,4 +1,4 @@
-import { Connection, DuckDB } from "../index";
+import { Connection, DuckDB } from "@addon";
 
 const errorMessage = "Must provide a valid Database object";
 

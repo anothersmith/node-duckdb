@@ -1,4 +1,4 @@
-import { Connection, DuckDB } from "../index";
+import { Connection, DuckDB } from "@addon";
 
 describe("description()", () => {
   let db: DuckDB;

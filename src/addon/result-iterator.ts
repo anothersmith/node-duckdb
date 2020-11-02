@@ -1,4 +1,4 @@
-import { ResultType } from "../addon-types";
+import { ResultType } from "@addon-types";
 import { ResultIteratorClass } from "../addon-bindings";
 
 export class ResultIterator {

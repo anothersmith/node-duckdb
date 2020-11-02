@@ -1,4 +1,4 @@
-import { Connection, DuckDB, ResultStream } from "../index";
+import { Connection, DuckDB, ResultStream } from "@addon";
 
 const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 

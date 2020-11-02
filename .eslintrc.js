@@ -8,7 +8,6 @@ module.exports = {
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "clean-code/feature-envy": "off",
-    "import/no-relative-parent-imports": "off",
   },
   overrides: [
     {

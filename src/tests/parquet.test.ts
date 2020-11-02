@@ -1,4 +1,4 @@
-import { Connection, DuckDB } from "../index";
+import { Connection, DuckDB } from "@addon";
 
 describe("executeIterator on parquet", () => {
   let db: DuckDB;
@@ -17,7 +17,9 @@ describe("executeIterator on parquet", () => {
   });
 
   it("can do a select all", async () => {
-    const result = await connection.executeIterator("SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')");
+    const result = await connection.executeIterator(
+      "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
+    );
     expect(result.fetchRow()).toMatchObject([4, true, 0, 0, 0, 0, 0, 0, "03/01/09", "0", 1235865600000]);
     expect(result.fetchRow()).toMatchObject([
       5,

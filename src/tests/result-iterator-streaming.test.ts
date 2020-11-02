@@ -1,4 +1,4 @@
-import { Connection, DuckDB } from "../index";
+import { Connection, DuckDB } from "@addon";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
@@ -38,7 +38,9 @@ describe("Result iterator (streaming)", () => {
   });
 
   it("is able to close - throws error when reading from closed result", async () => {
-    const result1 = await connection.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
+    const result1 = await connection.executeIterator(
+      "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
+    );
     expect(result1.fetchRow()).toBeTruthy();
     result1.close();
     expect(result1.isClosed).toBe(true);

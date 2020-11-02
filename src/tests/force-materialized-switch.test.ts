@@ -1,4 +1,5 @@
-import { Connection, DuckDB, ResultType } from "../index";
+import { Connection, DuckDB } from "@addon";
+import { ResultType } from "@addon-types";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 

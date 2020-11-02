@@ -1,4 +1,4 @@
-import { Connection, DuckDB } from "../index";
+import { Connection, DuckDB } from "@addon";
 
 describe("executeIterator method error handling", () => {
   let db: DuckDB;
@@ -9,7 +9,9 @@ describe("executeIterator method error handling", () => {
   });
 
   it("validates parameters", async () => {
-    await expect((<any>connection).executeIterator()).rejects.toMatchObject({ message: "First argument must be a string" });
+    await expect((<any>connection).executeIterator()).rejects.toMatchObject({
+      message: "First argument must be a string",
+    });
   });
   it("correctly handles an invalid query", async () => {
     await expect(connection.executeIterator("an invalid query")).rejects.toMatchObject({
