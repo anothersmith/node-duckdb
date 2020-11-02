@@ -1,10 +1,10 @@
 import bindings from "bindings";
 
+const { DuckDB } = bindings("node-duckdb-addon");
+
 /**
  * Bindings should not be used directly, only through the addon wrappers
  */
-
-const { DuckDB } = bindings("node-duckdb-addon");
 
 export declare class DuckDBClass {}
 

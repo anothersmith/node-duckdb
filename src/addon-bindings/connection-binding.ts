@@ -1,17 +1,17 @@
 import bindings from "bindings";
 
+const { Connection } = bindings("node-duckdb-addon");
+
 /**
  * Bindings should not be used directly, only through the addon wrappers
  */
 
-const { Connection } = bindings("node-duckdb-addon");
-
 import { DuckDBBinding } from "./duckdb-binding";
 import { ResultIteratorBinding } from "./result-iterator-binding";
 
-export declare class ConnectionWrapperClass {
+export declare class ConnectionClass {
   constructor(db: InstanceType<typeof DuckDBBinding>);
   public execute(command: string, forceMaterialized?: boolean): Promise<InstanceType<typeof ResultIteratorBinding>>;
 }
 
-export const ConnectionBinding: typeof ConnectionWrapperClass = Connection;
+export const ConnectionBinding: typeof ConnectionClass = Connection;
