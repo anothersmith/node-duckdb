@@ -94,4 +94,16 @@ describe("Result stream", () => {
     const elements2 = await readStream(rs2);
     expect(elements2.length).toBe(60);
   });
+
+  it("is able to close - in prorgess queries run to the end", async () => {
+    const query1 = "CREATE TABLE test (a INTEGER, b INTEGER);";
+    const query2 = "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 50000000) tbl2(c)";
+    const db = new DuckDB();
+    const connection = new Connection(db);
+    await connection.execute(query1);
+    const p = connection.execute(query2);
+    connection.close();
+    const elements = await readStream(await p);
+    expect(elements).toEqual([ [ 150000000 ] ]);
+  });
 });

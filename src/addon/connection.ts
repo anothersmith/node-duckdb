@@ -10,8 +10,13 @@ export class Connection {
     const resultIteratorBinding = await this.connectionBinding.execute(command, forceMaterialized);
     return new ResultStream(new ResultIterator(resultIteratorBinding));
   }
-
   public async executeIterator(command: string, forceMaterialized?: boolean): Promise<ResultIterator> {
     return new ResultIterator(await this.connectionBinding.execute(command, forceMaterialized));
+  }
+  public close(): void {
+    return this.connectionBinding.close();
+  }
+  public get isClosed(): boolean {
+    return this.connectionBinding.isClosed;
   }
 }

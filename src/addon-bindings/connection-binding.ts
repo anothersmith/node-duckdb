@@ -12,6 +12,8 @@ import { ResultIteratorBinding } from "./result-iterator-binding";
 export declare class ConnectionClass {
   constructor(db: InstanceType<typeof DuckDBBinding>);
   public execute(command: string, forceMaterialized?: boolean): Promise<InstanceType<typeof ResultIteratorBinding>>;
+  public close(): void;
+  public isClosed: boolean;
 }
 
 export const ConnectionBinding: typeof ConnectionClass = Connection;

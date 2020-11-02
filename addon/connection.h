@@ -14,6 +14,7 @@ namespace NodeDuckDB {
       static Napi::FunctionReference constructor;
       Napi::Value Execute(const Napi::CallbackInfo& info);
       Napi::Value Close(const Napi::CallbackInfo& info);
+			Napi::Value IsClosed(const Napi::CallbackInfo &info);
 
       shared_ptr<duckdb::DuckDB> database;
       shared_ptr<duckdb::Connection> connection;

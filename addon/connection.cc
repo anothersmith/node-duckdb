@@ -21,6 +21,7 @@ namespace NodeDuckDB {
                     {
                       InstanceMethod("execute", &Connection::Execute),
                       InstanceMethod("close", &Connection::Close),
+                      InstanceAccessor<&Connection::IsClosed>("isClosed")
                     });
 
     constructor = Napi::Persistent(func);
@@ -45,6 +46,9 @@ namespace NodeDuckDB {
       config.access_mode = duckdb::AccessMode::READ_ONLY;
     
     auto unwrappedDb = Database::Unwrap(info[0].ToObject());
+    if (unwrappedDb->IsClosed()) {
+      throw Napi::TypeError::New(env, "Database is closed");
+    }
     connection = duckdb::make_shared<duckdb::Connection>(*unwrappedDb->database);
   }
 
@@ -59,6 +63,11 @@ namespace NodeDuckDB {
       if (!info[1].IsUndefined() && !info[1].IsBoolean()) {
         throw Napi::TypeError::New(env, "Second argument is an optional boolean");
       }
+
+      if (this->connection == nullptr) {
+        throw Napi::TypeError::New(env, "Connection is closed");
+      }
+
       string query = info[0].ToString();
       bool forceMaterialized = info[1].IsEmpty() ? false : info[1].ToBoolean().Value();
       AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterialized);
@@ -75,7 +84,11 @@ namespace NodeDuckDB {
   Napi::Value Connection::Close(const Napi::CallbackInfo& info) {
     connection = nullptr;
     database = nullptr;
-
     return info.Env().Undefined();
+  }
+  Napi::Value Connection::IsClosed(const Napi::CallbackInfo &info) {
+    Napi::Env env = info.Env();
+    bool isClosed = connection == nullptr || connection->context->is_invalidated;
+    return Napi::Boolean::New(env, isClosed);
   }
 }

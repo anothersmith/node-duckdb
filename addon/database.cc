@@ -13,7 +13,11 @@ namespace NodeDuckDB {
   Napi::FunctionReference Database::constructor;
 
   Napi::Object Database::Init(Napi::Env env, Napi::Object exports) {
-    Napi::Function func = DefineClass(env, "DuckDB", {});
+    Napi::Function func = DefineClass(env, "DuckDB", 
+                    {
+                      InstanceMethod("close", &Database::Close),
+                      InstanceAccessor<&Database::IsClosed>("isClosed")
+                    });
     constructor = Napi::Persistent(func);
     constructor.SuppressDestruct();
     exports.Set("DuckDB", func);
@@ -36,7 +40,14 @@ namespace NodeDuckDB {
 
   Napi::Value Database::Close(const Napi::CallbackInfo& info) {
     database = nullptr;
-
     return info.Env().Undefined();
+  }
+  Napi::Value Database::IsClosed(const Napi::CallbackInfo &info) {
+    Napi::Env env = info.Env();
+    return Napi::Boolean::New(env, IsClosed());
+  }
+
+  bool Database::IsClosed() {
+    return database == nullptr;
   }
 }

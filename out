@@ -1,32 +1,30 @@
 yarn run v1.22.5
-$ yarn build:ts && jest --testTimeout=60000
+$ yarn build:ts && jest --testTimeout=60000 duckdb.test
 $ rimraf dist && ttsc
-PASS dist/tests/describe.test.js
-PASS dist/tests/execute-error-handling.test.js
-PASS dist/tests/connection.test.js
-PASS dist/tests/csv.test.js
-PASS dist/tests/parquet.test.js
-PASS dist/tests/materialized-fetch-row.test.js
-PASS dist/tests/force-materialized-switch.test.js
-PASS dist/tests/streaming-fetch-row.test.js
-PASS dist/tests/result-stream.test.js
-PASS dist/tests/async.test.js (6.098 s)
-A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --runInBand --detectOpenHandles to find leaks.
--------------------|---------|----------|---------|---------|-------------------
-File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
--------------------|---------|----------|---------|---------|-------------------
-All files          |   95.24 |    83.33 |   85.71 |   94.44 |                   
- src               |     100 |      100 |   66.67 |     100 |                   
-  index.ts         |     100 |      100 |   66.67 |     100 |                   
- src/addon         |   93.94 |    83.33 |     100 |   93.94 |                   
-  bindings.ts      |     100 |      100 |     100 |     100 |                   
-  connection.ts    |     100 |      100 |     100 |     100 |                   
-  result-stream.ts |   88.24 |       75 |     100 |   88.24 | 30-31             
--------------------|---------|----------|---------|---------|-------------------
+PASS dist/tests/duckdb.test.js
+  DuckDB
+    ✓ is able to close - pre existing connections are closed (8 ms)
+    ○ skipped is able to close - no new connections can be created
 
-Test Suites: 10 passed, 10 total
-Tests:       35 passed, 35 total
+-----------------------------|---------|----------|---------|---------|-------------------
+File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------------------|---------|----------|---------|---------|-------------------
+All files                    |   59.02 |        0 |   34.78 |   56.14 |                   
+ addon                       |   48.98 |        0 |   34.78 |   44.44 |                   
+  connection.ts              |   72.73 |      100 |      60 |   72.73 | 10-11,17          
+  duckdb.ts                  |   83.33 |      100 |      75 |   83.33 | 9                 
+  index.ts                   |     100 |      100 |      50 |     100 |                   
+  result-iterator.ts         |   14.29 |      100 |       0 |   14.29 | 5-19              
+  result-stream.ts           |   11.76 |        0 |       0 |   11.76 | 6-33              
+ addon-bindings              |     100 |      100 |     100 |     100 |                   
+  connection-binding.ts      |     100 |      100 |     100 |     100 |                   
+  duckdb-binding.ts          |     100 |      100 |     100 |     100 |                   
+  index.ts                   |     100 |      100 |     100 |     100 |                   
+  result-iterator-binding.ts |     100 |      100 |     100 |     100 |                   
+-----------------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       1 skipped, 1 passed, 2 total
 Snapshots:   0 total
-Time:        7.66 s
-Ran all test suites.
-Done in 12.42s.
+Time:        0.808 s, estimated 1 s
+Ran all test suites matching /duckdb.test/i.
+Done in 5.26s.
