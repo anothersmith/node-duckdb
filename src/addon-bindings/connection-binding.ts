@@ -4,13 +4,10 @@ import bindings from "bindings";
  * Bindings should not be used directly, only through the addon wrappers
  */
 
-const { Connection } = bindings(
-  "node-duckdb-addon",
-);
+const { Connection } = bindings("node-duckdb-addon");
 
-import {DuckDBBinding} from "./duckdb-binding";
-
-import {ResultIteratorBinding} from "./result-iterator-binding";
+import { DuckDBBinding } from "./duckdb-binding";
+import { ResultIteratorBinding } from "./result-iterator-binding";
 
 export declare class ConnectionWrapperClass {
   constructor(db: InstanceType<typeof DuckDBBinding>);

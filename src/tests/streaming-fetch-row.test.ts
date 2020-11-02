@@ -53,6 +53,4 @@ describe("Streaming capability", () => {
     expect(rw1.fetchRow()).toEqual([60]);
     expect(rw2.fetchRow()).toEqual([60]);
   });
-
-
 });

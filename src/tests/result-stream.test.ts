@@ -1,5 +1,4 @@
-import { Connection, DuckDB } from "../index";
-import { ResultStream } from "../index";
+import { Connection, DuckDB, ResultStream } from "../index";
 
 const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
@@ -88,7 +87,7 @@ describe("Result stream", () => {
     const cw2 = new Connection(db);
     const rs1 = await cw1.execute(query);
     const rs2 = await cw2.execute(query);
-    
+
     const elements1 = await readStream(rs1);
     expect(elements1.length).toBe(60);
 

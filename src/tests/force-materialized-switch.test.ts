@@ -2,7 +2,6 @@ import { Connection, DuckDB, ResultType } from "../index";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
-
 describe("Streaming/materialized capability", () => {
   let db: DuckDB;
   let cw: Connection;

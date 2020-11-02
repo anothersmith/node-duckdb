@@ -1,6 +1,5 @@
 import { Connection, DuckDB } from "../index";
 
-
 describe("executeIterator method error handling", () => {
   let db: DuckDB;
   let cw: Connection;

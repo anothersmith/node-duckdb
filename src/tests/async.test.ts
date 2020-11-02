@@ -20,7 +20,6 @@ const result1 = [
 ];
 const result2 = [60];
 
-
 describe("Async executeIterator", () => {
   let db: DuckDB;
   beforeEach(() => {

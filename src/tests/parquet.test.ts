@@ -1,6 +1,5 @@
 import { Connection, DuckDB } from "../index";
 
-
 describe("executeIterator on parquet", () => {
   let db: DuckDB;
   let cw: Connection;

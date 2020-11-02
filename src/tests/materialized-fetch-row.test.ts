@@ -7,7 +7,7 @@ describe("Materialized fetchRow()", () => {
     db = new DuckDB();
     cw = new Connection(db);
   });
-  
+
   it("can read a single record containing all types", async () => {
     const rw = await cw.executeIterator(
       `SELECT 
