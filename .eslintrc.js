@@ -8,13 +8,13 @@ module.exports = {
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "clean-code/feature-envy": "off",
+    "import/no-relative-parent-imports": "off",
   },
   overrides: [
     {
       files: ["**/*.test.ts"],
       rules: {
         "max-lines-per-function": "off",
-        "import/no-relative-parent-imports": "off",
       },
     },
   ],
