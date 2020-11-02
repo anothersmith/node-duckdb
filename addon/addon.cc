@@ -4,9 +4,9 @@
 #include "result_wrapper.h"
 
 Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
-  Database::Init(env, exports);
-  ConnectionWrapper::Init(env, exports);
-  ResultWrapper::Init(env, exports);
+  NodeDuckDB::Database::Init(env, exports);
+  NodeDuckDB::ConnectionWrapper::Init(env, exports);
+  NodeDuckDB::ResultWrapper::Init(env, exports);
   return exports;
 }
 
