@@ -1,35 +1,35 @@
 #include <iostream>
-#include "result_wrapper.h"
+#include "result_iterator.h"
 #include "duckdb.hpp"
 using namespace std;
 
 namespace NodeDuckDB {
-  Napi::FunctionReference ResultWrapper::constructor;
+  Napi::FunctionReference ResultIterator::constructor;
 
-  Napi::Object ResultWrapper::Init(Napi::Env env, Napi::Object exports) {
+  Napi::Object ResultIterator::Init(Napi::Env env, Napi::Object exports) {
     Napi::Function func =
         DefineClass(env,
-                    "ResultWrapper",
+                    "ResultIterator",
                     {
-                      InstanceMethod("fetchRow", &ResultWrapper::FetchRow),
-                      InstanceMethod("describe", &ResultWrapper::Describe),
-                      InstanceMethod("close", &ResultWrapper::Close),
-                      InstanceAccessor<&ResultWrapper::GetType>("type"),
-                      InstanceAccessor<&ResultWrapper::IsClosed>("isClosed")
+                      InstanceMethod("fetchRow", &ResultIterator::FetchRow),
+                      InstanceMethod("describe", &ResultIterator::Describe),
+                      InstanceMethod("close", &ResultIterator::Close),
+                      InstanceAccessor<&ResultIterator::GetType>("type"),
+                      InstanceAccessor<&ResultIterator::IsClosed>("isClosed")
                     });
 
     constructor = Napi::Persistent(func);
     constructor.SuppressDestruct();
 
-    exports.Set("ResultWrapper", func);
+    exports.Set("ResultIterator", func);
     return exports;
   }
 
-  ResultWrapper::ResultWrapper(const Napi::CallbackInfo& info) : Napi::ObjectWrap<ResultWrapper>(info) {
+  ResultIterator::ResultIterator(const Napi::CallbackInfo& info) : Napi::ObjectWrap<ResultIterator>(info) {
     Napi::Env env = info.Env();
   }
 
-  Napi::Object ResultWrapper::Create() {
+  Napi::Object ResultIterator::Create() {
     return constructor.New({});
   }
 
@@ -50,7 +50,7 @@ namespace NodeDuckDB {
     return ((int64_t)date - EPOCH_DATE) * SECONDS_PER_DAY;
   }
 
-  Napi::Value ResultWrapper::FetchRow(const Napi::CallbackInfo& info) {
+  Napi::Value ResultIterator::FetchRow(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     if (!result) {
       Napi::RangeError::New(env, "Result closed").ThrowAsJavaScriptException();
@@ -144,7 +144,7 @@ namespace NodeDuckDB {
     return row;
   }
 
-  Napi::Value ResultWrapper::Describe(const Napi::CallbackInfo& info) {
+  Napi::Value ResultIterator::Describe(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     if (!result) {
       Napi::TypeError::New(env, "Result closed").ThrowAsJavaScriptException();
@@ -163,13 +163,13 @@ namespace NodeDuckDB {
     return row;
   }
 
-  Napi::Value ResultWrapper::GetType(const Napi::CallbackInfo &info) {
+  Napi::Value ResultIterator::GetType(const Napi::CallbackInfo &info) {
       Napi::Env env = info.Env();
       string type = this->result->type == duckdb::QueryResultType::STREAM_RESULT ? "Streaming" : "Materialized";
       return Napi::String::New(env, type);
   }
 
-  Napi::Value ResultWrapper::IsClosed(const Napi::CallbackInfo &info) {
+  Napi::Value ResultIterator::IsClosed(const Napi::CallbackInfo &info) {
       Napi::Env env = info.Env();
       bool isClosed = this->result == nullptr;
       return Napi::Boolean::New(env, isClosed);

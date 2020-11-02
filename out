@@ -2,89 +2,20 @@ yarn run v1.22.5
 $ yarn build:ts && jest --testTimeout=60000
 $ rimraf dist && ttsc
 PASS dist/tests/connection.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/result-stream.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/async.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/csv.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/streaming-fetch-row.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/execute-error-handling.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/describe.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
 PASS dist/tests/parquet.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
-PASS dist/tests/force-materialized-switch.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
+PASS dist/tests/execute-error-handling.test.js
 PASS dist/tests/materialized-fetch-row.test.js
-  ● Console
-
-    console.log
-      [Function: DuckDB]
-
-      at Object.<anonymous> (src/addon-wrapper.ts:30:9)
-
+PASS dist/tests/csv.test.js
+PASS dist/tests/force-materialized-switch.test.js
+PASS dist/tests/describe.test.js
+PASS dist/tests/result-stream.test.js
+PASS dist/tests/streaming-fetch-row.test.js
+PASS dist/tests/async.test.js (5.271 s)
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --runInBand --detectOpenHandles to find leaks.
 -----------------------|---------|----------|---------|---------|-------------------
 File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------|---------|----------|---------|---------|-------------------
-All files              |   95.12 |    83.33 |   92.31 |   94.44 |                   
+All files              |      95 |    83.33 |   92.31 |   94.29 |                   
  addon-wrapper.ts      |     100 |      100 |     100 |     100 |                   
  connection-wrapper.ts |     100 |      100 |     100 |     100 |                   
  index.ts              |     100 |      100 |      80 |     100 |                   
@@ -94,6 +25,6 @@ All files              |   95.12 |    83.33 |   92.31 |   94.44 |
 Test Suites: 10 passed, 10 total
 Tests:       35 passed, 35 total
 Snapshots:   0 total
-Time:        7.18 s
+Time:        6.828 s
 Ran all test suites.
-Done in 12.39s.
+Done in 11.16s.

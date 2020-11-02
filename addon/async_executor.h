@@ -1,6 +1,6 @@
 #include <napi.h>
 #include "duckdb.hpp"
-#include "result_wrapper.h"
+#include "result_iterator.h"
 
 namespace NodeDuckDB {
     class AsyncExecutor : public Napi::AsyncWorker

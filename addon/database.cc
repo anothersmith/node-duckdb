@@ -1,5 +1,5 @@
 #include "connection.h"
-#include "result_wrapper.h"
+#include "result_iterator.h"
 #include "database.h"
 #include "duckdb.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"

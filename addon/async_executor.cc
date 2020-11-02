@@ -1,7 +1,7 @@
 #include <napi.h>
 #include <iostream>
 #include "duckdb.hpp"
-#include "result_wrapper.h"
+#include "result_iterator.h"
 #include "async_executor.h"
 
 using namespace duckdb;
@@ -34,10 +34,10 @@ namespace NodeDuckDB {
     void AsyncExecutor::OnOK() 
     {
         Napi::HandleScope scope(Env());
-        Napi::Object result_wrapper = ResultWrapper::Create();
-        ResultWrapper *result_unwrapped = ResultWrapper::Unwrap(result_wrapper);
+        Napi::Object result_iterator = ResultIterator::Create();
+        ResultIterator *result_unwrapped = ResultIterator::Unwrap(result_iterator);
         result_unwrapped->result = std::move(result);
-        deferred.Resolve(result_wrapper);
+        deferred.Resolve(result_iterator);
     }
 
     void AsyncExecutor::OnError(const Napi::Error &e) 

@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import bindings from "bindings";
 
-const { DuckDB: DuckDBBinding, Connection: ConnectionWrapperBinding, ResultWrapper: ResultWrapperBinding } = bindings(
+const { DuckDB: DuckDBBinding, Connection: ConnectionWrapperBinding, ResultIterator: ResultWrapperBinding } = bindings(
   "node-duckdb-addon",
 );
 

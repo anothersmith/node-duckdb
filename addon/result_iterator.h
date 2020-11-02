@@ -1,14 +1,14 @@
-#ifndef RESULT_WRAPPER_H
-#define RESULT_WRAPPER_H
+#ifndef RESULT_ITERATOR_H
+#define RESULT_ITERATOR_H
 
 #include <napi.h>
 #include "duckdb.hpp"
 
 namespace NodeDuckDB {
-	class ResultWrapper : public Napi::ObjectWrap<ResultWrapper> {
+	class ResultIterator : public Napi::ObjectWrap<ResultIterator> {
 		public:
 			static Napi::Object Init(Napi::Env env, Napi::Object exports);
-			ResultWrapper(const Napi::CallbackInfo& info);
+			ResultIterator(const Napi::CallbackInfo& info);
 			static Napi::Object Create();
 			unique_ptr<duckdb::QueryResult> result;
 
