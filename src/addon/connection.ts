@@ -1,4 +1,4 @@
-import { ConnectionWrapper as ConnectionWrapperBinding, ResultWrapperClass, DuckDBClass } from "./addon-wrapper";
+import { ConnectionWrapper as ConnectionWrapperBinding, ResultWrapperClass, DuckDBClass } from "./bindings";
 import { ResultStream } from "./result-stream";
 
 export class ConnectionWrapper {

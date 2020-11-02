@@ -1,5 +1,5 @@
 import { ConnectionWrapper, DuckDB, DuckDBClass } from "../index";
-import { ResultStream } from "../result-stream";
+import { ResultStream } from "../index";
 
 const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 

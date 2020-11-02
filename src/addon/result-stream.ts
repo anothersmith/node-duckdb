@@ -1,6 +1,6 @@
 import { Readable } from "stream";
 
-import { ResultWrapperClass } from "./addon-wrapper";
+import { ResultWrapperClass } from "./bindings";
 
 export class ResultStream extends Readable {
   constructor(private rw: ResultWrapperClass) {
