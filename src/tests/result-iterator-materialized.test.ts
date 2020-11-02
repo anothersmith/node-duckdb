@@ -1,15 +1,15 @@
 import { Connection, ResultType, DuckDB } from "../index";
 
-describe("Materialized fetchRow()", () => {
+describe("Result iterator (materialized)", () => {
   let db: DuckDB;
-  let cw: Connection;
+  let connection: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new Connection(db);
+    connection = new Connection(db);
   });
 
   it("can read a single record containing all types", async () => {
-    const rw = await cw.executeIterator(
+    const result = await connection.executeIterator(
       `SELECT 
             null,
             true,
@@ -27,9 +27,9 @@ describe("Materialized fetchRow()", () => {
           `,
       true,
     );
-    expect(rw.type).toBe(ResultType.Materialized);
+    expect(result.type).toBe(ResultType.Materialized);
 
-    expect(rw.fetchRow()).toMatchObject([
+    expect(result.fetchRow()).toMatchObject([
       null,
       true,
       0,
@@ -47,11 +47,11 @@ describe("Materialized fetchRow()", () => {
   });
 
   it("is able to close - throws error when reading from closed result", async () => {
-    const rw1 = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')", true);
-    expect(rw1.type).toBe(ResultType.Materialized);
-    expect(rw1.fetchRow()).toBeTruthy();
-    rw1.close();
-    expect(rw1.isClosed).toBe(true);
-    expect(() => rw1.fetchRow()).toThrow("Result closed");
+    const result1 = await connection.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')", true);
+    expect(result1.type).toBe(ResultType.Materialized);
+    expect(result1.fetchRow()).toBeTruthy();
+    result1.close();
+    expect(result1.isClosed).toBe(true);
+    expect(() => result1.fetchRow()).toThrow("Result closed");
   });
 });

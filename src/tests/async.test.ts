@@ -2,7 +2,7 @@ import { Connection, DuckDB } from "../index";
 
 const query1 = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 const query2 = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
-const result1 = [
+const expectedResult1 = [
   1,
   "AAAAAAAABAAAAAAA",
   873244800000,
@@ -18,7 +18,7 @@ const result1 = [
   3,
   4,
 ];
-const result2 = [60];
+const expectedResult2 = [60];
 
 describe("Async executeIterator", () => {
   let db: DuckDB;
@@ -27,37 +27,37 @@ describe("Async executeIterator", () => {
   });
 
   it("can do concurrent operations with same Connection", async () => {
-    const cw = new Connection(db);
-    const p1 = cw.executeIterator(query1, true);
-    const p2 = cw.executeIterator(query2, true);
-    const [rw1, rw2] = await Promise.all([p1, p2]);
-    expect(rw1.fetchRow()).toMatchObject(result1);
-    expect(rw2.fetchRow()).toMatchObject(result2);
+    const connection = new Connection(db);
+    const p1 = connection.executeIterator(query1, true);
+    const p2 = connection.executeIterator(query2, true);
+    const [result1, result2] = await Promise.all([p1, p2]);
+    expect(result1.fetchRow()).toMatchObject(expectedResult1);
+    expect(result2.fetchRow()).toMatchObject(expectedResult2);
   });
 
   it("can do concurrent operations with different Connection", async () => {
-    const cw1 = new Connection(db);
-    const cw2 = new Connection(db);
-    const p1 = cw1.executeIterator(query1, true);
-    const p2 = cw2.executeIterator(query2, true);
-    const [rw1, rw2] = await Promise.all([p1, p2]);
-    expect(rw1.fetchRow()).toMatchObject(result1);
-    expect(rw2.fetchRow()).toMatchObject(result2);
+    const connection1 = new Connection(db);
+    const connection2 = new Connection(db);
+    const p1 = connection1.executeIterator(query1, true);
+    const p2 = connection2.executeIterator(query2, true);
+    const [result1, result2] = await Promise.all([p1, p2]);
+    expect(result1.fetchRow()).toMatchObject(expectedResult1);
+    expect(result2.fetchRow()).toMatchObject(expectedResult2);
   });
 
   it("can do a consequtive operations", async () => {
-    const cw = new Connection(db);
-    const rw1 = await cw.executeIterator(query1, true);
-    expect(rw1.fetchRow()).toMatchObject(result1);
-    const rw2 = await cw.executeIterator(query2, true);
-    expect(rw2.fetchRow()).toMatchObject(result2);
+    const connection = new Connection(db);
+    const result1 = await connection.executeIterator(query1, true);
+    expect(result1.fetchRow()).toMatchObject(expectedResult1);
+    const result2 = await connection.executeIterator(query2, true);
+    expect(result2.fetchRow()).toMatchObject(expectedResult2);
   });
 
   jest.setTimeout(60000 * 5);
   // this test is a bit tricky to run on machines of very different specs
   it("does not block thread during a long running execution", async () => {
-    const cw = new Connection(db);
-    await cw.executeIterator("CREATE TABLE test (a INTEGER, b INTEGER);", true);
+    const connection = new Connection(db);
+    await connection.executeIterator("CREATE TABLE test (a INTEGER, b INTEGER);", true);
     const operationStartTime = new Date();
     let lastDate = new Date();
     let didEventLoopBlock = false;
@@ -69,7 +69,7 @@ describe("Async executeIterator", () => {
       }
       lastDate = currentDate;
     }, 0);
-    await cw.executeIterator(
+    await connection.executeIterator(
       "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 60000000) tbl2(c)",
       true,
     );

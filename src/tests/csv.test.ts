@@ -2,10 +2,10 @@ import { DuckDB, Connection } from "../index";
 
 describe("executeIterator on csv", () => {
   let db: DuckDB;
-  let cw: Connection;
+  let connection: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new Connection(db);
+    connection = new Connection(db);
   });
 
   afterEach(() => {
@@ -13,14 +13,14 @@ describe("executeIterator on csv", () => {
   });
 
   it("can do a count", async () => {
-    const rw = await cw.executeIterator("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
-    expect(rw.fetchRow()).toMatchObject([60]);
-    expect(rw.fetchRow()).toBe(null);
+    const result = await connection.executeIterator("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
+    expect(result.fetchRow()).toMatchObject([60]);
+    expect(result.fetchRow()).toBe(null);
   });
 
   it("can do a select all", async () => {
-    const rw = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
-    expect(rw.fetchRow()).toMatchObject([
+    const result = await connection.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
+    expect(result.fetchRow()).toMatchObject([
       1,
       "AAAAAAAABAAAAAAA",
       873244800000,

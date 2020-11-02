@@ -2,21 +2,21 @@ import { Connection, DuckDB } from "../index";
 
 describe("description()", () => {
   let db: DuckDB;
-  let cw: Connection;
+  let connection: Connection;
   beforeEach(() => {
     db = new DuckDB();
-    cw = new Connection(db);
+    connection = new Connection(db);
   });
 
   it("can read column names", async () => {
-    const rw = await cw.executeIterator(`SELECT 
+    const result = await connection.executeIterator(`SELECT 
         null AS c_null,
         0,
         'something',
         'something' AS something
       `);
 
-    expect(rw.describe()).toMatchObject([
+    expect(result.describe()).toMatchObject([
       ["c_null", "INTEGER"],
       ["0", "INTEGER"],
       ["something", "VARCHAR"],
