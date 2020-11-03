@@ -2,29 +2,48 @@
 import { Connection, DuckDB } from "@addon"
 import { AccessMode, OrderByNullType, OrderType } from "@addon-types";
 import { join } from "path";
+import {unlink, stat} from "fs";
+import {promisify} from "util";
+const unlinkAsync = promisify(unlink);
+const statAsync = promisify(stat);
 
+const dbPath = join(__dirname, "./mydb");
 describe("DuckDB configuration", () => {
-    it.skip("allows to open database in memory", () => {
-        const db = new DuckDB();
+    it("allows to create database on disk", async () => {
+        const db = new DuckDB({path: dbPath});
         db.close();
-    });
-    it.skip("allows to open existing database from file", () => {
-        const db = new DuckDB({path: join(__dirname, "./mydb")});
-        db.close();
-        // TODO: read from it
+        const fd = await statAsync(dbPath);
+        expect(fd.isFile()).toBe(true);
+        await unlinkAsync(dbPath)
     });
 
-    it("allows to specify access mode - read only", async () => {
-        const db1 = new DuckDB({path: join(__dirname, "./mydb")});
-        const connection1 = new Connection(db1);
-        await connection1.executeIterator("CREATE TABLE test1 (a INTEGER);");
-        await connection1.executeIterator("INSERT INTO test1 SELECT 1;");
+    it("allows to specify access mode - read only write operation rejects", async () => {
+        const db1 = new DuckDB({path: dbPath});
         db1.close();
-        const db2 = new DuckDB({path: join(__dirname, "./mydb"), options: {accessMode: AccessMode.ReadOnly}});
+        const fd = await statAsync(dbPath);
+        expect(fd.isFile()).toBe(true);
+        const db2 = new DuckDB({path: dbPath, options: {accessMode: AccessMode.ReadOnly}});
         expect(db2.accessMode).toBe(AccessMode.ReadOnly);
         const connection2 = new Connection(db2);
         await expect(connection2.executeIterator("CREATE TABLE test2 (a INTEGER);")).rejects.toMatchObject({message: `Cannot execute statement of type "CREATE" in read-only mode!`});
         db2.close();
+    });
+
+    it("allows to specify access mode - read only read operation succeedes", async () => {
+        const db1 = new DuckDB({path: dbPath});
+        const connection1 = new Connection(db1);
+        await connection1.executeIterator("CREATE TABLE test2 (a INTEGER);")
+        await connection1.executeIterator("INSERT INTO test2 SELECT 1;")
+        db1.close();
+        const fd = await statAsync(dbPath);
+        expect(fd.isFile()).toBe(true);
+        const db2 = new DuckDB({path: dbPath, options: {accessMode: AccessMode.ReadOnly}});
+        expect(db2.accessMode).toBe(AccessMode.ReadOnly);
+        const connection2 = new Connection(db2);
+        const iterator = await connection2.executeIterator("SELECT * FROM test2;");
+        expect(iterator.fetchRow()).toEqual([1]);
+        db2.close();
+        await unlinkAsync(dbPath)
     });
 
     it("allows to specify checkpoint WAL size", async () => {
@@ -39,10 +58,9 @@ describe("DuckDB configuration", () => {
         db.close();
     });
 
-    // FIXME: why doesn't work?
-    it.only("allows to specify whether to use temp dir", async () => {
+    it("allows to specify whether to use temp dir", async () => {
         const db = new DuckDB({options: {useTemporaryDirectory: false, temporaryDirectory: __dirname}});
-        expect(db.useTemporaryDirectory).toBe(false);
+        expect(db.temporaryDirectory).toBeFalsy();
         db.close();
     });
 
