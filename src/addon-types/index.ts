@@ -1,1 +1,2 @@
-export { ResultType } from "./result-type";
+export * from "./result-type";
+export * from "./duckdb-config";
