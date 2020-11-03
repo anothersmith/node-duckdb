@@ -8,6 +8,11 @@ describe("executeIterator on parquet", () => {
     connection = new Connection(db);
   });
 
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
   it("can do a count", async () => {
     const result = await connection.executeIterator(
       "SELECT count(*) FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",

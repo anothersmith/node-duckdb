@@ -9,6 +9,11 @@ describe("Result iterator (materialized)", () => {
     connection = new Connection(db);
   });
 
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
   it("can read a single record containing all types", async () => {
     const result = await connection.executeIterator(
       `SELECT 

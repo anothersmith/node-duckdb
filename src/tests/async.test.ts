@@ -26,6 +26,10 @@ describe("Async executeIterator", () => {
     db = new DuckDB();
   });
 
+  afterEach(() => {
+    db.close();
+  });
+
   it("can do concurrent operations with same Connection", async () => {
     const connection = new Connection(db);
     const p1 = connection.executeIterator(query1, true);

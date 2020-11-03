@@ -9,7 +9,8 @@ describe("executeIterator on csv", () => {
   });
 
   afterEach(() => {
-    // TODO: close
+    connection.close();
+    db.close();
   });
 
   it("can do a count", async () => {

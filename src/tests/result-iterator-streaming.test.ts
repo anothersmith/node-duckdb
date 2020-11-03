@@ -10,6 +10,11 @@ describe("Result iterator (streaming)", () => {
     connection = new Connection(db);
   });
 
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
   it("gracefully handles inactive stream", async () => {
     const result1 = await connection.executeIterator(query, false);
     const result2 = await connection.executeIterator(query, false);

@@ -19,6 +19,11 @@ describe("Result stream", () => {
     connection = new Connection(db);
   });
 
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
   it("reads a csv", async () => {
     const rs = await connection.execute(query);
     const elements = await readStream(rs);

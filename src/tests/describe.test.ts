@@ -8,6 +8,11 @@ describe("description()", () => {
     connection = new Connection(db);
   });
 
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
   it("can read column names", async () => {
     const result = await connection.executeIterator(`SELECT 
         null AS c_null,

@@ -11,6 +11,11 @@ describe("Streaming/materialized capability", () => {
     connection = new Connection(db);
   });
 
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
   it("allows streaming", async () => {
     const result = await connection.executeIterator(query, false);
     expect(result.fetchRow()).toMatchObject([60]);

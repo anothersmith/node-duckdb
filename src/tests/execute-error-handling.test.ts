@@ -8,6 +8,11 @@ describe("executeIterator method error handling", () => {
     connection = new Connection(db);
   });
 
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
   it("validates parameters", async () => {
     await expect((<any>connection).executeIterator()).rejects.toMatchObject({
       message: "First argument must be a string",
