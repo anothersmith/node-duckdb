@@ -58,15 +58,19 @@ describe("Result iterator (streaming)", () => {
 
   it("works fine if two streaming operations are done on separate databases", async () => {
     const query1 = "CREATE TABLE test (a INTEGER, b INTEGER);";
-    const query2 = "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 3000000) tbl2(c)";
-    const query3 = "SELECT * FROM test ORDER BY a ASC;"
+    const query2 =
+      "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 3000000) tbl2(c)";
+    const query3 = "SELECT * FROM test ORDER BY a ASC;";
     const db1 = new DuckDB();
     const db2 = new DuckDB();
     const connection1 = new Connection(db1);
     const connection2 = new Connection(db2);
     await Promise.all([connection1.executeIterator(query1, false), connection2.executeIterator(query1, false)]);
     await Promise.all([connection1.executeIterator(query2, false), connection2.executeIterator(query2, false)]);
-    const [result1, result2] = await Promise.all([connection1.executeIterator(query3, false), connection2.executeIterator(query3, false)]);
+    const [result1, result2] = await Promise.all([
+      connection1.executeIterator(query3, false),
+      connection2.executeIterator(query3, false),
+    ]);
     expect(result1.fetchRow()).toEqual([11, 22]);
     expect(result2.fetchRow()).toEqual([11, 22]);
   });

@@ -7,8 +7,8 @@ const { DuckDB } = bindings("node-duckdb-addon");
  */
 
 export declare class DuckDBClass {
-    public close(): void;
-    public isClosed: boolean;
+  public close(): void;
+  public isClosed: boolean;
 }
 
 export const DuckDBBinding: typeof DuckDBClass = DuckDB;

@@ -1,7 +1,6 @@
 import { ResultType } from "@addon-types";
 import bindings from "bindings";
 
-
 const { ResultIterator } = bindings("node-duckdb-addon");
 
 /**

@@ -5,4 +5,5 @@ module.exports = {
   coverageReporters: ["lcov", "text"],
   roots: ["<rootDir>"],
   testMatch: ["<rootDir>/dist/**/?(*.)+(test).js"],
+  setupFilesAfterEnv: ["jest-extended"],
 };
