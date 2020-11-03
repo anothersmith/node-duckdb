@@ -6,6 +6,7 @@ describe("Connection class", () => {
   it("accepts a database instance", () => {
     const db = new DuckDB();
     expect(() => new Connection(db)).not.toThrow();
+    db.close();
   });
 
   it("throws if not given a database", () => {
@@ -33,6 +34,8 @@ describe("Connection class", () => {
     expect(connection2.isClosed).toBe(false);
     const result = await connection2.executeIterator("SELECT 1");
     expect(result.fetchRow()).toEqual([1]);
+    connection2.close();
+    db.close();
   });
 
   // TODO: We probably want to stop queries when we close connection?
@@ -48,5 +51,7 @@ describe("Connection class", () => {
     const resultIterator = await p;
     expect(resultIterator.fetchRow()).not.toBeFalsy();
     expect(connection.isClosed).toBe(true);
+    connection.close();
+    db.close();
   });
 });

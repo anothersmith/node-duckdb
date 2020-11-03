@@ -78,5 +78,9 @@ describe("Result iterator (streaming)", () => {
     ]);
     expect(result1.fetchRow()).toEqual([11, 22]);
     expect(result2.fetchRow()).toEqual([11, 22]);
+    connection1.close();
+    connection2.close();
+    db1.close();
+    db2.close();
   });
 });
