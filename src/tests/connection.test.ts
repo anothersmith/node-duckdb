@@ -42,7 +42,7 @@ describe("Connection class", () => {
   it("is able to close - in progress queries run to the end", async () => {
     const query1 = "CREATE TABLE test (a INTEGER, b INTEGER);";
     const query2 =
-      "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 3000000) tbl2(c)";
+      "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 30000) tbl2(c)";
     const db = new DuckDB();
     const connection = new Connection(db);
     await connection.executeIterator(query1);
