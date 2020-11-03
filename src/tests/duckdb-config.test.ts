@@ -14,7 +14,7 @@ describe("DuckDB configuration", () => {
         // TODO: read from it
     });
 
-    it.skip("allows to specify access mode - read only", async () => {
+    it("allows to specify access mode - read only", async () => {
         const db1 = new DuckDB({path: join(__dirname, "./mydb")});
         const connection1 = new Connection(db1);
         await connection1.executeIterator("CREATE TABLE test1 (a INTEGER);");
@@ -34,13 +34,14 @@ describe("DuckDB configuration", () => {
     });
 
     it("allows to specify maximum memory", async () => {
-        const db = new DuckDB({options: {checkPointWALSize: 1 << 30}});
+        const db = new DuckDB({options: {maximumMemory: 5e+8}});
         expect(db.maximumMemory).toBe(5e+8);
         db.close();
     });
 
-    it("allows to specify whether to use temp dir", async () => {
-        const db = new DuckDB({options: {useTemporaryDirectory: false}});
+    // FIXME: why doesn't work?
+    it.only("allows to specify whether to use temp dir", async () => {
+        const db = new DuckDB({options: {useTemporaryDirectory: false, temporaryDirectory: __dirname}});
         expect(db.useTemporaryDirectory).toBe(false);
         db.close();
     });

@@ -9,11 +9,11 @@ export class DuckDB {
     public close(): void {
         return this.duckdb.close();
     }
-    public get isClosed(): boolean {
-        return this.duckdb.isClosed;
-    }
     public get db() {
         return this.duckdb;
+    }
+    public get isClosed(): boolean {
+        return this.duckdb.isClosed;
     }
     public get accessMode() {
         return this.duckdb.accessMode;
