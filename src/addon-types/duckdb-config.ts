@@ -1,15 +1,20 @@
 export enum AccessMode {
+    Undefined = 0,
     Automatic = 1,
     ReadOnly = 2,
     ReadWrite = 3
 }
 
 export enum OrderType {
+    Invalid = 0,
+    Default = 1,
     Ascending = 2,
     Descending = 3
 }
 
 export enum OrderByNullType {
+    Invalid = 0,
+    Default = 1,
     NullsFirst = 2,
     NullsLast = 3
 }
