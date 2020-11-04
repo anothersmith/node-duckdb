@@ -16,7 +16,16 @@ namespace NodeDuckDB {
     private:
       Napi::Value Close(const Napi::CallbackInfo& info);
 			Napi::Value IsClosed(const Napi::CallbackInfo &info);
-
+      Napi::Value GetAccessMode(const Napi::CallbackInfo &info);
+      Napi::Value GetCheckPointWALSize(const Napi::CallbackInfo &info);
+      Napi::Value GetUseDirectIO(const Napi::CallbackInfo &info);
+      Napi::Value GetMaximumMemory(const Napi::CallbackInfo &info);
+      Napi::Value GetUseTemporaryDirectory(const Napi::CallbackInfo &info);
+      Napi::Value GetTemporaryDirectory(const Napi::CallbackInfo &info);
+      Napi::Value GetCollation(const Napi::CallbackInfo &info);
+      Napi::Value GetDefaultOrderType(const Napi::CallbackInfo &info);
+      Napi::Value GetDefaultNullOrder(const Napi::CallbackInfo &info);
+      Napi::Value GetEnableCopy(const Napi::CallbackInfo &info);
   };
 }
 
