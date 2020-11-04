@@ -44,6 +44,49 @@ namespace NodeDuckDB {
       return value;
   }
 
+  void setDBConfig(const Napi::Env &env, const Napi::Object &config, duckdb::DBConfig &nativeConfig) {
+    if (!config.Get("options").IsObject()) {
+      throw Napi::TypeError::New(env, "Invalid options: must be an object");
+    }
+    auto optionsObject = config.Get("options").ToObject();
+
+    if (!optionsObject.Get("accessMode").IsUndefined()) {
+      nativeConfig.access_mode = static_cast<duckdb::AccessMode>(convertEnum(env, optionsObject, "accessMode", static_cast<int>(duckdb::AccessMode::UNDEFINED), static_cast<int>(duckdb::AccessMode::READ_WRITE)));
+    }
+
+    if (!optionsObject.Get("checkPointWALSize").IsUndefined()) {
+      nativeConfig.checkpoint_wal_size = convertNumber(env, optionsObject, "checkPointWALSize");
+    }
+    
+    if (!optionsObject.Get("maximumMemory").IsUndefined()) {
+      nativeConfig.maximum_memory = convertNumber(env, optionsObject, "maximumMemory");
+    }
+    
+    if (!optionsObject.Get("useTemporaryDirectory").IsUndefined()) {
+      nativeConfig.use_temporary_directory = convertBoolean(env, optionsObject, "useTemporaryDirectory");
+    }
+
+    if (!optionsObject.Get("temporaryDirectory").IsUndefined()) {
+      nativeConfig.temporary_directory = convertString(env, optionsObject, "temporaryDirectory");
+    }
+
+    if (!optionsObject.Get("collation").IsUndefined()) {
+      nativeConfig.collation = convertString(env, optionsObject, "collation");
+    }
+
+    if (!optionsObject.Get("defaultOrderType").IsUndefined()) {
+      nativeConfig.default_order_type = static_cast<duckdb::OrderType>(convertEnum(env, optionsObject, "defaultOrderType", static_cast<int>(duckdb::OrderType::INVALID), static_cast<int>(duckdb::OrderType::DESCENDING)));
+    }
+
+    if (!optionsObject.Get("defaultNullOrder").IsUndefined()) {
+      nativeConfig.default_null_order = static_cast<duckdb::OrderByNullType>(convertEnum(env, optionsObject, "defaultNullOrder", static_cast<int>(duckdb::OrderByNullType::INVALID), static_cast<int>(duckdb::OrderByNullType::NULLS_LAST)));
+    }
+
+    if (!optionsObject.Get("enableCopy").IsUndefined()) {
+      nativeConfig.enable_copy = convertBoolean(env, optionsObject, "enableCopy");
+    }
+  }
+
   Napi::FunctionReference DuckDB::constructor;
 
   Napi::Object DuckDB::Init(Napi::Env env, Napi::Object exports) {
@@ -78,7 +121,6 @@ namespace NodeDuckDB {
       if (!info[0].IsObject()) {
         throw Napi::TypeError::New(env, "Invalid argument: must be an object");
       }
-
       auto config = info[0].ToObject();
 
       if (!config.Get("path").IsUndefined()) {
@@ -86,48 +128,8 @@ namespace NodeDuckDB {
       }
 
       if (!config.Get("options").IsUndefined()) {
-        if (!config.Get("options").IsObject()) {
-          throw Napi::TypeError::New(env, "Invalid options: must be an object");
-        }
-        auto optionsObject = config.Get("options").ToObject();
-
-        if (!optionsObject.Get("accessMode").IsUndefined()) {
-          nativeConfig.access_mode = static_cast<duckdb::AccessMode>(convertEnum(env, optionsObject, "accessMode", static_cast<int>(duckdb::AccessMode::UNDEFINED), static_cast<int>(duckdb::AccessMode::READ_WRITE)));
-        }
-
-        if (!optionsObject.Get("checkPointWALSize").IsUndefined()) {
-          nativeConfig.checkpoint_wal_size = convertNumber(env, optionsObject, "checkPointWALSize");
-        }
-        
-        if (!optionsObject.Get("maximumMemory").IsUndefined()) {
-          nativeConfig.maximum_memory = convertNumber(env, optionsObject, "maximumMemory");
-        }
-        
-        if (!optionsObject.Get("useTemporaryDirectory").IsUndefined()) {
-          nativeConfig.use_temporary_directory = convertBoolean(env, optionsObject, "useTemporaryDirectory");
-        }
-
-        if (!optionsObject.Get("temporaryDirectory").IsUndefined()) {
-          nativeConfig.temporary_directory = convertString(env, optionsObject, "temporaryDirectory");
-        }
-
-        if (!optionsObject.Get("collation").IsUndefined()) {
-          nativeConfig.collation = convertString(env, optionsObject, "collation");
-        }
-
-        if (!optionsObject.Get("defaultOrderType").IsUndefined()) {
-          nativeConfig.default_order_type = static_cast<duckdb::OrderType>(convertEnum(env, optionsObject, "defaultOrderType", static_cast<int>(duckdb::OrderType::INVALID), static_cast<int>(duckdb::OrderType::DESCENDING)));
-        }
-
-        if (!optionsObject.Get("defaultNullOrder").IsUndefined()) {
-          nativeConfig.default_null_order = static_cast<duckdb::OrderByNullType>(convertEnum(env, optionsObject, "defaultNullOrder", static_cast<int>(duckdb::OrderByNullType::INVALID), static_cast<int>(duckdb::OrderByNullType::NULLS_LAST)));
-        }
-
-        if (!optionsObject.Get("enableCopy").IsUndefined()) {
-          nativeConfig.enable_copy = convertBoolean(env, optionsObject, "enableCopy");
-        }
+        setDBConfig(env, config, nativeConfig);
       }
-      
     }
     database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
     database->LoadExtension<duckdb::ParquetExtension>();
