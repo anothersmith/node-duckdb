@@ -10,7 +10,6 @@
 using namespace std;
 
 namespace NodeDuckDB {
-
   string convertString(const Napi::Env &env, const Napi::Object &options, const string propertyName) {
     if (!options.Get(propertyName).IsString()) {
       throw Napi::TypeError::New(env, "Invalid " + propertyName + ": must be a string");
