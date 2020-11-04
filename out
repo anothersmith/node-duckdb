@@ -1,65 +1,46 @@
 yarn run v1.22.5
-$ yarn build:ts && jest --runInBand --testTimeout=60000 duckdb-config.test
+$ yarn build:ts && jest --testTimeout=60000 csv
 $ rimraf dist && ttsc
+aaaa
+bbb
+ccc
 1
-0
+c1111
+
+fff
+ggg
+aaaa
+bbb
+ccc
 1
+c1111
 
-FAIL dist/tests/duckdb-config.test.js
-  DuckDB configuration
-    ✕ allows to specify whether to use temp dir (8 ms)
-    ○ skipped allows to open database in memory
-    ○ skipped allows to open existing database from file
-    ○ skipped allows to specify access mode - read only
-    ○ skipped allows to specify checkpoint WAL size
-    ○ skipped allows to specify maximum memory
-    ○ skipped allows to specify temp dir
-    ○ skipped allows to specify collation
-    ○ skipped allows to specify default order type
-    ○ skipped allows to specify default null order type
-    ○ skipped allows to specify enable copy
-
-  ● DuckDB configuration › allows to specify whether to use temp dir
-
-    expect(received).toBe(expected) // Object.is equality
-
-    Expected: false
-    Received: true
-
-      42 |     it.only("allows to specify whether to use temp dir", async () => {
-      43 |         const db = new DuckDB({options: {useTemporaryDirectory: false, temporaryDirectory: __dirname}});
-    > 44 |         expect(db.useTemporaryDirectory).toBe(false);
-         |                                          ^
-      45 |         db.close();
-      46 |     });
-      47 | 
-
-      at Object.<anonymous> (src/tests/duckdb-config.test.ts:44:42)
+fff
+ggg
+PASS dist/tests/csv.test.js
+  executeIterator on csv
+    ✓ can do a count (15 ms)
+    ✓ can do a select all (8 ms)
 
 -----------------------------|---------|----------|---------|---------|-------------------
 File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------------|---------|----------|---------|---------|-------------------
-All files                    |   54.12 |    61.54 |   19.44 |   51.85 |                   
- addon                       |   32.76 |        0 |    9.38 |   27.78 |                   
-  connection.ts              |   36.36 |      100 |       0 |   36.36 | 7-20              
-  duckdb.ts                  |   26.67 |        0 |   15.38 |   26.67 | 10-25,31-43       
-  index.ts                   |     100 |      100 |      25 |     100 |                   
-  result-iterator.ts         |   14.29 |      100 |       0 |   14.29 | 5-19              
+All files                    |   54.29 |       20 |   31.25 |   51.52 |                   
+ addon                       |   44.83 |       20 |   31.25 |   40.74 |                   
+  connection.ts              |   72.73 |      100 |      60 |   72.73 | 10-11,20          
+  duckdb.ts                  |   33.33 |      100 |   23.08 |   33.33 | 16-43             
+  index.ts                   |     100 |      100 |      50 |     100 |                   
+  result-iterator.ts         |   42.86 |      100 |   33.33 |   42.86 | 10-19             
   result-stream.ts           |   11.76 |        0 |       0 |   11.76 | 6-33              
  addon-bindings              |     100 |      100 |     100 |     100 |                   
   connection-binding.ts      |     100 |      100 |     100 |     100 |                   
   duckdb-binding.ts          |     100 |      100 |     100 |     100 |                   
   index.ts                   |     100 |      100 |     100 |     100 |                   
   result-iterator-binding.ts |     100 |      100 |     100 |     100 |                   
- addon-types                 |     100 |      100 |     100 |     100 |                   
-  duckdb-config.ts           |     100 |      100 |     100 |     100 |                   
-  index.ts                   |     100 |      100 |     100 |     100 |                   
-  result-type.ts             |     100 |      100 |     100 |     100 |                   
 -----------------------------|---------|----------|---------|---------|-------------------
-Test Suites: 1 failed, 1 total
-Tests:       1 failed, 10 skipped, 11 total
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
 Snapshots:   0 total
-Time:        0.821 s, estimated 1 s
-Ran all test suites matching /duckdb-config.test/i.
-error Command failed with exit code 1.
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Time:        1.058 s
+Ran all test suites matching /csv/i.
+Done in 5.32s.

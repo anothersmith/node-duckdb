@@ -44,12 +44,12 @@ namespace NodeDuckDB {
 
     string path;
     duckdb::DBConfig nativeConfig;
-    cout << nativeConfig.use_temporary_directory << endl;
 
-    if (config.IsObject()) {
+
+    if (!config.IsUndefined()) {
       // TODO: validation
       auto configObject = config.ToObject();
-      path = configObject.Get("path").ToString().Utf8Value();
+      path = !configObject.Get("path").IsUndefined() ? configObject.Get("path").ToString().Utf8Value() : "";
 
       if (!configObject.Get("options").IsUndefined()) {
         auto optionsObject = configObject.Get("options").ToObject();
@@ -66,7 +66,6 @@ namespace NodeDuckDB {
       }
       
     }
-    cout << nativeConfig.use_temporary_directory << endl;
     database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
     database->LoadExtension<duckdb::ParquetExtension>();
   }
@@ -102,8 +101,6 @@ namespace NodeDuckDB {
   }
   Napi::Value DuckDB::GetUseTemporaryDirectory(const Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
-    cout << database->config.use_temporary_directory << endl;
-    cout << database->config.temporary_directory << endl;
     return Napi::Boolean::New(env, database->config.use_temporary_directory);
   }
   Napi::Value DuckDB::GetTemporaryDirectory(const Napi::CallbackInfo &info) {
