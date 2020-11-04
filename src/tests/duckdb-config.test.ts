@@ -46,6 +46,10 @@ describe("DuckDB configuration", () => {
         await unlinkAsync(dbPath)
     });
 
+    it("does not allow to specify invalid access mode", async () => {
+        expect(() => new DuckDB(<any>{options: {accessMode: 10}})).toThrow("Invalid accessMode: must be of type AccessMode enum");
+    });
+
     it("does not allow to to specify invalid options object", async () => {
         expect(() => new DuckDB(<any>{options: 1})).toThrow("Invalid options: must be an object");
     });
@@ -70,7 +74,7 @@ describe("DuckDB configuration", () => {
         expect(() => new DuckDB(<any>{options: {maximumMemory: "invalid"}})).toThrow("Invalid maximumMemory: must be a number");
     });
 
-    // Note: looks like duckdb bug: sets useTemporaryDirectory to true (although at the same time removes temporaryDirectory value)
+    // Note: looks like a duckdb bug: sets useTemporaryDirectory to true (although at the same time removes temporaryDirectory value)
     it("allows to specify whether to use temp dir", async () => {
         const db = new DuckDB({options: {useTemporaryDirectory: false, temporaryDirectory: __dirname}});
         expect(db.temporaryDirectory).toBeFalsy();
@@ -118,7 +122,7 @@ describe("DuckDB configuration", () => {
     });
 
     it("does not allow to specify invalid default null order type", async () => {
-        expect(() => new DuckDB(<any>{options: {defaultNullOrder: 10}})).toThrow("Invalid defaultNullOrder: must be of type OrderType enum");
+        expect(() => new DuckDB(<any>{options: {defaultNullOrder: 10}})).toThrow("Invalid defaultNullOrder: must be of type OrderByNullType enum");
     });
 
     it("allows to specify enable copy", async () => {

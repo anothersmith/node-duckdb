@@ -45,24 +45,90 @@ namespace NodeDuckDB {
     string path;
     duckdb::DBConfig nativeConfig;
 
-
     if (!config.IsUndefined()) {
-      // TODO: validation
       auto configObject = config.ToObject();
       path = !configObject.Get("path").IsUndefined() ? configObject.Get("path").ToString().Utf8Value() : "";
 
       if (!configObject.Get("options").IsUndefined()) {
+        if (!configObject.Get("options").IsObject()) {
+          throw Napi::TypeError::New(env, "Invalid options: must be an object");
+        }
         auto optionsObject = configObject.Get("options").ToObject();
 
-        nativeConfig.access_mode = !optionsObject.Get("accessMode").IsUndefined() ? static_cast<duckdb::AccessMode>(optionsObject.Get("accessMode").ToNumber().Int32Value()) : nativeConfig.access_mode;
-        nativeConfig.checkpoint_wal_size = !optionsObject.Get("checkPointWALSize").IsUndefined() ? optionsObject.Get("checkPointWALSize").ToNumber().Int32Value() : nativeConfig.checkpoint_wal_size;
-        nativeConfig.maximum_memory = !optionsObject.Get("maximumMemory").IsUndefined() ? optionsObject.Get("maximumMemory").ToNumber().Int32Value() : nativeConfig.maximum_memory;
-        nativeConfig.use_temporary_directory = !optionsObject.Get("useTemporaryDirectory").IsUndefined() ? optionsObject.Get("useTemporaryDirectory").ToBoolean().Value() : nativeConfig.use_temporary_directory;
-        nativeConfig.temporary_directory = !optionsObject.Get("temporaryDirectory").IsUndefined() ? optionsObject.Get("temporaryDirectory").ToString().Utf8Value() : nativeConfig.temporary_directory;
-        nativeConfig.collation = !optionsObject.Get("collation").IsUndefined() ? optionsObject.Get("collation").ToString().Utf8Value() : nativeConfig.collation;
-        nativeConfig.default_order_type = !optionsObject.Get("defaultOrderType").IsUndefined() ? static_cast<duckdb::OrderType>(optionsObject.Get("defaultOrderType").ToNumber().Int32Value()) : nativeConfig.default_order_type;
-        nativeConfig.default_null_order = !optionsObject.Get("defaultNullOrder").IsUndefined() ? static_cast<duckdb::OrderByNullType>(optionsObject.Get("defaultNullOrder").ToNumber().Int32Value()) : nativeConfig.default_null_order;
-        nativeConfig.enable_copy = !optionsObject.Get("enableCopy").IsUndefined() ? optionsObject.Get("enableCopy").ToBoolean().Value() : nativeConfig.enable_copy;
+        if (!optionsObject.Get("accessMode").IsUndefined()) {
+          if (!optionsObject.Get("accessMode").IsNumber()) {
+            throw Napi::TypeError::New(env, "Invalid accessMode: must be of type AccessMode enum");
+          }
+          auto accessModeValue = optionsObject.Get("accessMode").ToNumber().Int32Value();
+          if (accessModeValue < static_cast<int>(duckdb::AccessMode::UNDEFINED) || accessModeValue > static_cast<int>(duckdb::AccessMode::READ_WRITE)) {
+            throw Napi::TypeError::New(env, "Invalid accessMode: must be of type AccessMode enum");
+          }
+          nativeConfig.access_mode = static_cast<duckdb::AccessMode>(accessModeValue);
+        }
+
+        if (!optionsObject.Get("checkPointWALSize").IsUndefined()) {
+          if (!optionsObject.Get("checkPointWALSize").IsNumber()) {
+            throw Napi::TypeError::New(env, "Invalid checkPointWALSize: must be a number");
+          }
+          nativeConfig.checkpoint_wal_size = optionsObject.Get("checkPointWALSize").ToNumber().Int32Value();
+        }
+        
+        if (!optionsObject.Get("maximumMemory").IsUndefined()) {
+          if (!optionsObject.Get("maximumMemory").IsNumber()) {
+            throw Napi::TypeError::New(env, "Invalid maximumMemory: must be a number");
+          }
+          nativeConfig.maximum_memory = optionsObject.Get("maximumMemory").ToNumber().Int32Value();
+        }
+        
+        if (!optionsObject.Get("useTemporaryDirectory").IsUndefined()) {
+          if (!optionsObject.Get("useTemporaryDirectory").IsBoolean()) {
+            throw Napi::TypeError::New(env, "Invalid useTemporaryDirectory: must be a boolean");
+          }
+          nativeConfig.use_temporary_directory = optionsObject.Get("useTemporaryDirectory").ToBoolean().Value();
+        }
+
+        if (!optionsObject.Get("temporaryDirectory").IsUndefined()) {
+          if (!optionsObject.Get("temporaryDirectory").IsString()) {
+            throw Napi::TypeError::New(env, "Invalid temporaryDirectory: must be a string");
+          }
+          nativeConfig.temporary_directory = optionsObject.Get("temporaryDirectory").ToString().Utf8Value();
+        }
+
+        if (!optionsObject.Get("collation").IsUndefined()) {
+          if (!optionsObject.Get("collation").IsString()) {
+            throw Napi::TypeError::New(env, "Invalid collation: must be a string");
+          }
+          nativeConfig.collation = optionsObject.Get("collation").ToString().Utf8Value();
+        }
+
+        if (!optionsObject.Get("defaultOrderType").IsUndefined()) {
+          if (!optionsObject.Get("defaultOrderType").IsNumber()) {
+            throw Napi::TypeError::New(env, "Invalid defaultOrderType: must be of type OrderType enum");
+          }
+          auto defaultOrderTypeValue = optionsObject.Get("defaultOrderType").ToNumber().Int32Value();
+          if (defaultOrderTypeValue < static_cast<int>(duckdb::OrderType::INVALID) || defaultOrderTypeValue > static_cast<int>(duckdb::OrderType::DESCENDING)) {
+            throw Napi::TypeError::New(env, "Invalid defaultOrderType: must be of type OrderType enum");
+          }
+          nativeConfig.default_order_type = static_cast<duckdb::OrderType>(defaultOrderTypeValue);
+        }
+
+        if (!optionsObject.Get("defaultNullOrder").IsUndefined()) {
+          if (!optionsObject.Get("defaultNullOrder").IsNumber()) {
+            throw Napi::TypeError::New(env, "Invalid defaultNullOrder: must be of type OrderByNullType enum");
+          }
+          auto defaultNullOrderValue = optionsObject.Get("defaultNullOrder").ToNumber().Int32Value();
+          if (defaultNullOrderValue < static_cast<int>(duckdb::OrderByNullType::INVALID) || defaultNullOrderValue > static_cast<int>(duckdb::OrderByNullType::NULLS_LAST)) {
+            throw Napi::TypeError::New(env, "Invalid defaultNullOrder: must be of type OrderByNullType enum");
+          }
+          nativeConfig.default_null_order = static_cast<duckdb::OrderByNullType>(defaultNullOrderValue);
+        }
+
+        if (!optionsObject.Get("enableCopy").IsUndefined()) {
+          if (!optionsObject.Get("enableCopy").IsBoolean()) {
+            throw Napi::TypeError::New(env, "Invalid enableCopy: must be a boolean");
+          }
+          nativeConfig.enable_copy = optionsObject.Get("enableCopy").ToBoolean().Value();
+        }
       }
       
     }
