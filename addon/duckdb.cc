@@ -38,16 +38,24 @@ namespace NodeDuckDB {
     Napi::Env env = info.Env();
 
     auto config = info[0];
-    if (!config.IsUndefined() && !config.IsObject()) {
-      throw Napi::TypeError::New(env, "First argument is an optional config object");
-    }
+
 
     string path;
     duckdb::DBConfig nativeConfig;
 
     if (!config.IsUndefined()) {
+      if (!config.IsObject()) {
+        throw Napi::TypeError::New(env, "Invalid argument: must be an object");
+      }
+
       auto configObject = config.ToObject();
-      path = !configObject.Get("path").IsUndefined() ? configObject.Get("path").ToString().Utf8Value() : "";
+
+      if (!configObject.Get("path").IsUndefined()) {
+        if (!configObject.Get("path").IsString()) {
+          throw Napi::TypeError::New(env, "Invalid path: must be a string");
+        }
+        path = configObject.Get("path").ToString().Utf8Value();
+      }
 
       if (!configObject.Get("options").IsUndefined()) {
         if (!configObject.Get("options").IsObject()) {

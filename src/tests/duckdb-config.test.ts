@@ -46,12 +46,20 @@ describe("DuckDB configuration", () => {
         await unlinkAsync(dbPath)
     });
 
-    it("does not allow to specify invalid access mode", async () => {
-        expect(() => new DuckDB(<any>{options: {accessMode: 10}})).toThrow("Invalid accessMode: must be of type AccessMode enum");
+    it("does not allow to specify invalid argument", async () => {
+        expect(() => new DuckDB(<any>1)).toThrow("Invalid argument: must be an object");
     });
 
-    it("does not allow to to specify invalid options object", async () => {
+    it("does not allow to specify invalid path", async () => {
+        expect(() => new DuckDB(<any>{path: 1})).toThrow("Invalid path: must be a string");
+    });
+
+    it("does not allow to specify invalid options object", async () => {
         expect(() => new DuckDB(<any>{options: 1})).toThrow("Invalid options: must be an object");
+    });
+
+    it("does not allow to specify invalid access mode", async () => {
+        expect(() => new DuckDB(<any>{options: {accessMode: 10}})).toThrow("Invalid accessMode: must be of type AccessMode enum");
     });
 
     it("allows to specify checkpoint WAL size", async () => {
