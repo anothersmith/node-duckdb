@@ -10,6 +10,40 @@
 using namespace std;
 
 namespace NodeDuckDB {
+
+  string convertString(const Napi::Env &env, const Napi::Object &options, const string propertyName) {
+    if (!options.Get(propertyName).IsString()) {
+      throw Napi::TypeError::New(env, "Invalid " + propertyName + ": must be a string");
+    }
+    return options.Get(propertyName).ToString().Utf8Value();
+  }
+
+  int32_t convertNumber(const Napi::Env &env, const Napi::Object &options, const string propertyName) {
+    if (!options.Get(propertyName).IsNumber()) {
+      throw Napi::TypeError::New(env, "Invalid " + propertyName + ": must be a number");
+    }
+    return options.Get(propertyName).ToNumber().Int32Value();
+  }
+
+  bool convertBoolean(const Napi::Env &env, const Napi::Object &options, const string propertyName) {
+    if (!options.Get(propertyName).IsBoolean()) {
+      throw Napi::TypeError::New(env, "Invalid " + propertyName + ": must be a boolean");
+    }
+    return options.Get(propertyName).ToBoolean().Value();
+  }
+
+  int32_t convertEnum(const Napi::Env &env, const Napi::Object &options, const string propertyName, const int min, const int max) {
+      const string errorMessage = "Invalid " + propertyName + ": must be of appropriate enum type";
+      if (!options.Get(propertyName).IsNumber()) {
+        throw Napi::TypeError::New(env, errorMessage);
+      }
+      auto value = options.Get(propertyName).ToNumber().Int32Value();
+      if (value < min || value > max) {
+        throw Napi::TypeError::New(env, errorMessage);
+      }
+      return value;
+  }
+
   Napi::FunctionReference DuckDB::constructor;
 
   Napi::Object DuckDB::Init(Napi::Env env, Napi::Object exports) {
@@ -37,105 +71,60 @@ namespace NodeDuckDB {
   DuckDB::DuckDB(const Napi::CallbackInfo& info) : Napi::ObjectWrap<DuckDB>(info) {
     Napi::Env env = info.Env();
 
-    auto config = info[0];
-
-
     string path;
     duckdb::DBConfig nativeConfig;
 
-    if (!config.IsUndefined()) {
-      if (!config.IsObject()) {
+    if (!info[0].IsUndefined()) {
+      if (!info[0].IsObject()) {
         throw Napi::TypeError::New(env, "Invalid argument: must be an object");
       }
 
-      auto configObject = config.ToObject();
+      auto config = info[0].ToObject();
 
-      if (!configObject.Get("path").IsUndefined()) {
-        if (!configObject.Get("path").IsString()) {
-          throw Napi::TypeError::New(env, "Invalid path: must be a string");
-        }
-        path = configObject.Get("path").ToString().Utf8Value();
+      if (!config.Get("path").IsUndefined()) {
+          path = convertString(env, config, "path");
       }
 
-      if (!configObject.Get("options").IsUndefined()) {
-        if (!configObject.Get("options").IsObject()) {
+      if (!config.Get("options").IsUndefined()) {
+        if (!config.Get("options").IsObject()) {
           throw Napi::TypeError::New(env, "Invalid options: must be an object");
         }
-        auto optionsObject = configObject.Get("options").ToObject();
+        auto optionsObject = config.Get("options").ToObject();
 
         if (!optionsObject.Get("accessMode").IsUndefined()) {
-          if (!optionsObject.Get("accessMode").IsNumber()) {
-            throw Napi::TypeError::New(env, "Invalid accessMode: must be of type AccessMode enum");
-          }
-          auto accessModeValue = optionsObject.Get("accessMode").ToNumber().Int32Value();
-          if (accessModeValue < static_cast<int>(duckdb::AccessMode::UNDEFINED) || accessModeValue > static_cast<int>(duckdb::AccessMode::READ_WRITE)) {
-            throw Napi::TypeError::New(env, "Invalid accessMode: must be of type AccessMode enum");
-          }
-          nativeConfig.access_mode = static_cast<duckdb::AccessMode>(accessModeValue);
+          nativeConfig.access_mode = static_cast<duckdb::AccessMode>(convertEnum(env, optionsObject, "accessMode", static_cast<int>(duckdb::AccessMode::UNDEFINED), static_cast<int>(duckdb::AccessMode::READ_WRITE)));
         }
 
         if (!optionsObject.Get("checkPointWALSize").IsUndefined()) {
-          if (!optionsObject.Get("checkPointWALSize").IsNumber()) {
-            throw Napi::TypeError::New(env, "Invalid checkPointWALSize: must be a number");
-          }
-          nativeConfig.checkpoint_wal_size = optionsObject.Get("checkPointWALSize").ToNumber().Int32Value();
+          nativeConfig.checkpoint_wal_size = convertNumber(env, optionsObject, "checkPointWALSize");
         }
         
         if (!optionsObject.Get("maximumMemory").IsUndefined()) {
-          if (!optionsObject.Get("maximumMemory").IsNumber()) {
-            throw Napi::TypeError::New(env, "Invalid maximumMemory: must be a number");
-          }
-          nativeConfig.maximum_memory = optionsObject.Get("maximumMemory").ToNumber().Int32Value();
+          nativeConfig.maximum_memory = convertNumber(env, optionsObject, "maximumMemory");
         }
         
         if (!optionsObject.Get("useTemporaryDirectory").IsUndefined()) {
-          if (!optionsObject.Get("useTemporaryDirectory").IsBoolean()) {
-            throw Napi::TypeError::New(env, "Invalid useTemporaryDirectory: must be a boolean");
-          }
-          nativeConfig.use_temporary_directory = optionsObject.Get("useTemporaryDirectory").ToBoolean().Value();
+          nativeConfig.use_temporary_directory = convertBoolean(env, optionsObject, "useTemporaryDirectory");
         }
 
         if (!optionsObject.Get("temporaryDirectory").IsUndefined()) {
-          if (!optionsObject.Get("temporaryDirectory").IsString()) {
-            throw Napi::TypeError::New(env, "Invalid temporaryDirectory: must be a string");
-          }
-          nativeConfig.temporary_directory = optionsObject.Get("temporaryDirectory").ToString().Utf8Value();
+          nativeConfig.temporary_directory = convertString(env, optionsObject, "temporaryDirectory");
         }
 
         if (!optionsObject.Get("collation").IsUndefined()) {
-          if (!optionsObject.Get("collation").IsString()) {
-            throw Napi::TypeError::New(env, "Invalid collation: must be a string");
-          }
-          nativeConfig.collation = optionsObject.Get("collation").ToString().Utf8Value();
+          nativeConfig.collation = convertString(env, optionsObject, "collation");
         }
 
         if (!optionsObject.Get("defaultOrderType").IsUndefined()) {
-          if (!optionsObject.Get("defaultOrderType").IsNumber()) {
-            throw Napi::TypeError::New(env, "Invalid defaultOrderType: must be of type OrderType enum");
-          }
-          auto defaultOrderTypeValue = optionsObject.Get("defaultOrderType").ToNumber().Int32Value();
-          if (defaultOrderTypeValue < static_cast<int>(duckdb::OrderType::INVALID) || defaultOrderTypeValue > static_cast<int>(duckdb::OrderType::DESCENDING)) {
-            throw Napi::TypeError::New(env, "Invalid defaultOrderType: must be of type OrderType enum");
-          }
-          nativeConfig.default_order_type = static_cast<duckdb::OrderType>(defaultOrderTypeValue);
+          nativeConfig.default_order_type = static_cast<duckdb::OrderType>(convertEnum(env, optionsObject, "defaultOrderType", static_cast<int>(duckdb::OrderType::INVALID), static_cast<int>(duckdb::OrderType::DESCENDING)));
         }
 
         if (!optionsObject.Get("defaultNullOrder").IsUndefined()) {
-          if (!optionsObject.Get("defaultNullOrder").IsNumber()) {
-            throw Napi::TypeError::New(env, "Invalid defaultNullOrder: must be of type OrderByNullType enum");
-          }
-          auto defaultNullOrderValue = optionsObject.Get("defaultNullOrder").ToNumber().Int32Value();
-          if (defaultNullOrderValue < static_cast<int>(duckdb::OrderByNullType::INVALID) || defaultNullOrderValue > static_cast<int>(duckdb::OrderByNullType::NULLS_LAST)) {
-            throw Napi::TypeError::New(env, "Invalid defaultNullOrder: must be of type OrderByNullType enum");
-          }
-          nativeConfig.default_null_order = static_cast<duckdb::OrderByNullType>(defaultNullOrderValue);
+          nativeConfig.default_null_order = static_cast<duckdb::OrderByNullType>(convertEnum(env, optionsObject, "defaultNullOrder", static_cast<int>(duckdb::OrderByNullType::INVALID), static_cast<int>(duckdb::OrderByNullType::NULLS_LAST)));
         }
 
         if (!optionsObject.Get("enableCopy").IsUndefined()) {
-          if (!optionsObject.Get("enableCopy").IsBoolean()) {
-            throw Napi::TypeError::New(env, "Invalid enableCopy: must be a boolean");
-          }
-          nativeConfig.enable_copy = optionsObject.Get("enableCopy").ToBoolean().Value();
+          nativeConfig.enable_copy = convertBoolean(env, optionsObject, "enableCopy");
         }
       }
       

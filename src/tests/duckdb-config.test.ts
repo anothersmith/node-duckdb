@@ -59,7 +59,7 @@ describe("DuckDB configuration", () => {
     });
 
     it("does not allow to specify invalid access mode", async () => {
-        expect(() => new DuckDB(<any>{options: {accessMode: 10}})).toThrow("Invalid accessMode: must be of type AccessMode enum");
+        expect(() => new DuckDB(<any>{options: {accessMode: 10}})).toThrow("Invalid accessMode: must be of appropriate enum type");
     });
 
     it("allows to specify checkpoint WAL size", async () => {
@@ -120,7 +120,7 @@ describe("DuckDB configuration", () => {
     });
 
     it("does not allow to specify invalid default order type", async () => {
-        expect(() => new DuckDB(<any>{options: {defaultOrderType: 10}})).toThrow("Invalid defaultOrderType: must be of type OrderType enum");
+        expect(() => new DuckDB(<any>{options: {defaultOrderType: 10}})).toThrow("Invalid defaultOrderType: must be of appropriate enum type");
     });
 
     it("allows to specify default null order type", async () => {
@@ -130,7 +130,7 @@ describe("DuckDB configuration", () => {
     });
 
     it("does not allow to specify invalid default null order type", async () => {
-        expect(() => new DuckDB(<any>{options: {defaultNullOrder: 10}})).toThrow("Invalid defaultNullOrder: must be of type OrderByNullType enum");
+        expect(() => new DuckDB(<any>{options: {defaultNullOrder: 10}})).toThrow("Invalid defaultNullOrder: must be of appropriate enum type");
     });
 
     it("allows to specify enable copy", async () => {
