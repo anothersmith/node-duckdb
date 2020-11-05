@@ -17,6 +17,7 @@
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
+    "prepublishOnly": "yarn install && yarn build",
     "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.1.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.1 duckdb && rm duckdb.tar.gz",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
