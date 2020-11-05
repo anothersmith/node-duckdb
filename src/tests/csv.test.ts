@@ -1,19 +1,31 @@
-import { ConnectionWrapper } from "../index";
+import { DuckDB, Connection } from "@addon";
 
 describe("executeIterator on csv", () => {
-  it("can do a count", async () => {
-    const cw = new ConnectionWrapper();
+  let db: DuckDB;
+  let connection: Connection;
+  beforeEach(() => {
+    db = new DuckDB();
+    connection = new Connection(db);
+  });
 
-    const rw = await cw.executeIterator("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
-    expect(rw.fetchRow()).toMatchObject([60]);
-    expect(rw.fetchRow()).toBe(null);
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
+  it("can do a count", async () => {
+    const result = await connection.executeIterator(
+      "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
+    );
+    expect(result.fetchRow()).toMatchObject([60]);
+    expect(result.fetchRow()).toBe(null);
   });
 
   it("can do a select all", async () => {
-    const cw = new ConnectionWrapper();
-
-    const rw = await cw.executeIterator("SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
-    expect(rw.fetchRow()).toMatchObject([
+    const result = await connection.executeIterator(
+      "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
+    );
+    expect(result.fetchRow()).toMatchObject([
       1,
       "AAAAAAAABAAAAAAA",
       873244800000,

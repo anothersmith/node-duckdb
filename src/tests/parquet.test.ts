@@ -1,22 +1,32 @@
-import { ConnectionWrapper } from "../index";
+import { Connection, DuckDB } from "@addon";
 
 describe("executeIterator on parquet", () => {
-  it("can do a count", async () => {
-    const cw = new ConnectionWrapper();
+  let db: DuckDB;
+  let connection: Connection;
+  beforeEach(() => {
+    db = new DuckDB();
+    connection = new Connection(db);
+  });
 
-    const rw = await cw.executeIterator(
+  afterEach(() => {
+    connection.close();
+    db.close();
+  });
+
+  it("can do a count", async () => {
+    const result = await connection.executeIterator(
       "SELECT count(*) FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
     );
-    expect(rw.fetchRow()).toMatchObject([8]);
-    expect(rw.fetchRow()).toBe(null);
+    expect(result.fetchRow()).toMatchObject([8]);
+    expect(result.fetchRow()).toBe(null);
   });
 
   it("can do a select all", async () => {
-    const cw = new ConnectionWrapper();
-
-    const rw = await cw.executeIterator("SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')");
-    expect(rw.fetchRow()).toMatchObject([4, true, 0, 0, 0, 0, 0, 0, "03/01/09", "0", 1235865600000]);
-    expect(rw.fetchRow()).toMatchObject([
+    const result = await connection.executeIterator(
+      "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
+    );
+    expect(result.fetchRow()).toMatchObject([4, true, 0, 0, 0, 0, 0, 0, "03/01/09", "0", 1235865600000]);
+    expect(result.fetchRow()).toMatchObject([
       5,
       false,
       1,

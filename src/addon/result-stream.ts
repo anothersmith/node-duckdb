@@ -1,15 +1,15 @@
 import { Readable } from "stream";
 
-import { ResultWrapperClass } from "./addon-wrapper";
+import { ResultIterator } from "./result-iterator";
 
 export class ResultStream extends Readable {
-  constructor(private rw: ResultWrapperClass) {
+  constructor(private resultIterator: ResultIterator) {
     super({ objectMode: true });
   }
 
   public _read(): void {
     try {
-      const element = this.rw.fetchRow();
+      const element = this.resultIterator.fetchRow();
       this.push(element);
       if (element === null) {
         this.close();
@@ -25,8 +25,8 @@ export class ResultStream extends Readable {
   }
 
   private close(): void {
-    this.rw.close();
-    if (!this.rw.isClosed) {
+    this.resultIterator.close();
+    if (!this.resultIterator.isClosed) {
       this.emit("error", new Error("Close wasn't successful"));
       return;
     }

@@ -1,24 +1,27 @@
-import { ConnectionWrapper, ResultWrapper } from "../index";
+import { Connection, DuckDB } from "@addon";
 
 describe("description()", () => {
-  it("errors when without a result", () => {
-    const rw = new ResultWrapper();
+  let db: DuckDB;
+  let connection: Connection;
+  beforeEach(() => {
+    db = new DuckDB();
+    connection = new Connection(db);
+  });
 
-    expect(rw).toBeInstanceOf(ResultWrapper);
-
-    expect(() => rw.describe()).toThrow("Result closed");
+  afterEach(() => {
+    connection.close();
+    db.close();
   });
 
   it("can read column names", async () => {
-    const cw = new ConnectionWrapper();
-    const rw = await cw.executeIterator(`SELECT 
+    const result = await connection.executeIterator(`SELECT 
         null AS c_null,
         0,
         'something',
         'something' AS something
       `);
 
-    expect(rw.describe()).toMatchObject([
+    expect(result.describe()).toMatchObject([
       ["c_null", "INTEGER"],
       ["0", "INTEGER"],
       ["something", "VARCHAR"],

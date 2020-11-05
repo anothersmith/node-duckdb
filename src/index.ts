@@ -1,2 +1,2 @@
-export { ResultWrapper, ResultType } from "./addon-wrapper";
-export { ConnectionWrapper } from "./connection-wrapper";
+export { DuckDB, Connection, ResultIterator, ResultStream } from "./addon";
+export { ResultType } from "./addon-types";
