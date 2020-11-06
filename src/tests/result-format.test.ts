@@ -16,19 +16,19 @@ describe("Result format", () => {
     db.close();
   });
 
-  it("is selected as JSON by default", async () => {
+  it.only("is selected as JSON by default", async () => {
     const result = await connection.executeIterator(query);
-    expect(result.fetchRow()).toMatchObject({});
+    expect(result.fetchRow()).toEqual({});
   });
 
   it("can be specified explicitly as JSON", async () => {
     const result = await connection.executeIterator(query, { rowResultFormat: RowResultFormat.JSON });
-    expect(result.fetchRow()).toMatchObject({});
+    expect(result.fetchRow()).toEqual({});
   });
 
   it("can be specified explicitly as array", async () => {
     const result = await connection.executeIterator(query, { rowResultFormat: RowResultFormat.Array });
-    expect(result.fetchRow()).toMatchObject({});
+    expect(result.fetchRow()).toEqual({});
   });
 
   it("throws when the parameter is of wrong type", async () => {

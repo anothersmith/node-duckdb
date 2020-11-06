@@ -25,6 +25,7 @@ namespace NodeDuckDB {
 			Napi::Value IsClosed(const Napi::CallbackInfo &info);
 			unique_ptr<duckdb::DataChunk> current_chunk;
 			uint64_t chunk_offset = 0;
+			Napi::Value getCellValue(Napi::Env env, duckdb::idx_t col_idx);
 	};
 }
 
