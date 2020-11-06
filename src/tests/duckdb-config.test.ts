@@ -32,7 +32,7 @@ describe("DuckDB configuration", () => {
     db2.close();
   });
 
-  it("allows to specify access mode - read only read operation succeedes", async () => {
+  it("allows to specify access mode - read only read operation succeeds", async () => {
     const db1 = new DuckDB({ path: dbPath });
     const connection1 = new Connection(db1);
     await connection1.executeIterator("CREATE TABLE test2 (a INTEGER);");
