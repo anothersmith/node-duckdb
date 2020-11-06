@@ -3,7 +3,7 @@ import { ResultIteratorClass } from "../addon-bindings";
 
 export class ResultIterator {
     constructor(private resultInterator: ResultIteratorClass) {}
-    public fetchRow(): unknown[] {
+    public fetchRow(): unknown {
         return this.resultInterator.fetchRow();
     }
     public describe(): string[][] {
