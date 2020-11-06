@@ -1,9 +1,8 @@
 import { Connection, DuckDB } from "@addon";
 
-const invalidQueryError =
-`Parser Error: syntax error at or near "an"
+const invalidQueryError = `Parser Error: syntax error at or near "an"
 LINE 1: an invalid query
-        ^`
+        ^`;
 
 describe("executeIterator method error handling", () => {
   let db: DuckDB;

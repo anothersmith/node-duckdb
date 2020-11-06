@@ -4,8 +4,6 @@
 using namespace std;
 
 namespace NodeDuckDB {
-
-
   Napi::FunctionReference ResultIterator::constructor;
 
   Napi::Object ResultIterator::Init(Napi::Env env, Napi::Object exports) {
