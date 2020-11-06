@@ -7,6 +7,7 @@
 #include "parquet-extension.hpp"
 #include "async_executor.h"
 #include <iostream>
+#include "duckdb-type-converters.h"
 using namespace std;
 
 
@@ -60,17 +61,34 @@ namespace NodeDuckDB {
         throw Napi::TypeError::New(env, "First argument must be a string");
       }
 
-      if (!info[1].IsUndefined() && !info[1].IsBoolean()) {
-        throw Napi::TypeError::New(env, "Second argument is an optional boolean");
+      if (!info[1].IsUndefined() && !info[1].IsObject()) {
+        throw Napi::TypeError::New(env, "Second argument is an optional object");
       }
 
       if (this->connection == nullptr) {
         throw Napi::TypeError::New(env, "Connection is closed");
       }
 
-      string query = info[0].ToString();
-      bool forceMaterialized = info[1].IsEmpty() ? false : info[1].ToBoolean().Value();
-      AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterialized);
+      auto query = info[0].ToString().Utf8Value();
+      auto forceMaterializedValue = false;
+      string rowResultFormatValue = "json";
+      if (!info[1].IsUndefined()) {
+        auto options = info[1].ToObject();
+        auto forceMaterialized = options.Get("forceMaterialized");
+        if (!forceMaterialized.IsUndefined()) {
+          forceMaterializedValue = TypeConverters::convertBoolean(env, options, "forceMaterialized");
+        } 
+
+        auto rowResultFormat = options.Get("rowResultFormat");
+        if (!rowResultFormat.IsUndefined()) {
+          rowResultFormatValue = TypeConverters::convertString(env, options, "rowResultFormat");
+          if (rowResultFormatValue != "json" && rowResultFormatValue != "array") {
+            throw Napi::TypeError::New(env, "rowResultFormat is an optional enum");
+          }
+        } 
+      }
+
+      AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterializedValue, rowResultFormatValue);
       wk->Queue();
     } catch (Napi::Error& e) {
       deferred.Reject(e.Value());

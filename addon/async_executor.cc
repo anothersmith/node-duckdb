@@ -3,11 +3,12 @@
 #include "duckdb.hpp"
 #include "result_iterator.h"
 #include "async_executor.h"
+#include <string>
 
 using namespace duckdb;
 
 namespace NodeDuckDB {
-    AsyncExecutor::AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred, bool forceMaterialized) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred), forceMaterialized(forceMaterialized) {}
+    AsyncExecutor::AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred, bool forceMaterialized, std::string &rowResultFormat) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred), forceMaterialized(forceMaterialized), rowResultFormat(rowResultFormat) {}
 
     AsyncExecutor::~AsyncExecutor() {}
 
@@ -37,6 +38,7 @@ namespace NodeDuckDB {
         Napi::Object result_iterator = ResultIterator::Create();
         ResultIterator *result_unwrapped = ResultIterator::Unwrap(result_iterator);
         result_unwrapped->result = std::move(result);
+        result_unwrapped->rowResultFormat = rowResultFormat;
         deferred.Resolve(result_iterator);
     }
 

@@ -39,7 +39,7 @@ describe("Streaming/materialized capability", () => {
   });
   it("validates type parameter", async () => {
     await expect((<any>connection).executeIterator(query, "i break you")).rejects.toMatchObject({
-      message: "Second argument is an optional boolean",
+      message: "Second argument is an optional object",
     });
   });
 });

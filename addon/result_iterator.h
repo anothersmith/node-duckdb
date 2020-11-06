@@ -11,6 +11,7 @@ namespace NodeDuckDB {
 			ResultIterator(const Napi::CallbackInfo& info);
 			static Napi::Object Create();
 			unique_ptr<duckdb::QueryResult> result;
+			std::string rowResultFormat;
 
 		private:
 			static Napi::FunctionReference constructor;
