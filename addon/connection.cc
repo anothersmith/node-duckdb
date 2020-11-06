@@ -71,20 +71,15 @@ namespace NodeDuckDB {
 
       auto query = info[0].ToString().Utf8Value();
       auto forceMaterializedValue = false;
-      string rowResultFormatValue = "json";
+      ResultFormat rowResultFormatValue = ResultFormat::JSON;
       if (!info[1].IsUndefined()) {
         auto options = info[1].ToObject();
-        auto forceMaterialized = options.Get("forceMaterialized");
-        if (!forceMaterialized.IsUndefined()) {
+        if (!options.Get("forceMaterialized").IsUndefined()) {
           forceMaterializedValue = TypeConverters::convertBoolean(env, options, "forceMaterialized");
         } 
 
-        auto rowResultFormat = options.Get("rowResultFormat");
-        if (!rowResultFormat.IsUndefined()) {
-          rowResultFormatValue = TypeConverters::convertString(env, options, "rowResultFormat");
-          if (rowResultFormatValue != "json" && rowResultFormatValue != "array") {
-            throw Napi::TypeError::New(env, "rowResultFormat is an optional enum");
-          }
+        if (!options.Get("rowResultFormat").IsUndefined()) {
+          rowResultFormatValue = static_cast<ResultFormat>(TypeConverters::convertEnum(env, options, "rowResultFormat", static_cast<int>(ResultFormat::JSON), static_cast<int>(ResultFormat::ARRAY)));
         } 
       }
 

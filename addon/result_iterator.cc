@@ -70,7 +70,7 @@ namespace NodeDuckDB {
       return env.Null();
     }
     Napi::Value row;
-    if (rowResultFormat == "json") {
+    if (rowResultFormat == ResultFormat::JSON) {
       row = getRowObject(env);
     } else {
       row = getRowArray(env);

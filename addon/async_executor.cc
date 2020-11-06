@@ -8,7 +8,7 @@
 using namespace duckdb;
 
 namespace NodeDuckDB {
-    AsyncExecutor::AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred, bool forceMaterialized, std::string &rowResultFormat) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred), forceMaterialized(forceMaterialized), rowResultFormat(rowResultFormat) {}
+    AsyncExecutor::AsyncExecutor(Napi::Env &env, std::string &query, std::shared_ptr<duckdb::Connection> &connection, Napi::Promise::Deferred &deferred, bool forceMaterialized, ResultFormat &rowResultFormat) : Napi::AsyncWorker(env), query(query), connection(connection), deferred(deferred), forceMaterialized(forceMaterialized), rowResultFormat(rowResultFormat) {}
 
     AsyncExecutor::~AsyncExecutor() {}
 

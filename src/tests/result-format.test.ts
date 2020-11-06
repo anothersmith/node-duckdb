@@ -47,14 +47,14 @@ describe("Result format", () => {
   });
 
   it("throws when the parameter is of wrong type", async () => {
-    await expect(connection.executeIterator(query, <any>{ rowResultFormat: 1 })).rejects.toMatchObject({
-      message: "rowResultFormat must be of RowResultFormat type",
+    await expect(connection.executeIterator(query, <any>{ rowResultFormat: 10 })).rejects.toMatchObject({
+      message: "Invalid rowResultFormat: must be of appropriate enum type",
     });
   });
 
   it("throws when the parameter is of wrong value", async () => {
     await expect(connection.executeIterator(query, <any>{ rowResultFormat: "invalid" })).rejects.toMatchObject({
-      message: "rowResultFormat must be of RowResultFormat type",
+      message: "Invalid rowResultFormat: must be of appropriate enum type",
     });
   });
 });

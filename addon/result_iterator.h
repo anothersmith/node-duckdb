@@ -5,13 +5,15 @@
 #include "duckdb.hpp"
 
 namespace NodeDuckDB {
+	enum class ResultFormat : uint8_t { JSON = 0, ARRAY = 1 };
+
 	class ResultIterator : public Napi::ObjectWrap<ResultIterator> {
 		public:
 			static Napi::Object Init(Napi::Env env, Napi::Object exports);
 			ResultIterator(const Napi::CallbackInfo& info);
 			static Napi::Object Create();
 			unique_ptr<duckdb::QueryResult> result;
-			std::string rowResultFormat;
+			ResultFormat rowResultFormat;
 
 		private:
 			static Napi::FunctionReference constructor;

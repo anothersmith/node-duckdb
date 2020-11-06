@@ -20,8 +20,8 @@ export enum OrderByNullType {
 }
 
 export enum RowResultFormat {
-  JSON = "json",
-  Array = "array",
+  JSON = 0,
+  Array = 1,
 }
 
 export interface IDuckDBOptionsConfig {
