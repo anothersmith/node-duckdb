@@ -1,5 +1,7 @@
 import { Connection, DuckDB } from "@addon";
-import { ResultType } from "@addon-types";
+import { IExecuteOptions, ResultType } from "@addon-types";
+
+const executeOptions: IExecuteOptions = { rowResultFormat: "array", forceMaterialized: true };
 
 describe("Result iterator (materialized)", () => {
   let db: DuckDB;
@@ -30,7 +32,7 @@ describe("Result iterator (materialized)", () => {
             TIMESTAMP '1971-02-02 01:01:01.001',
             DATE '1971-02-02'
           `,
-      true,
+      executeOptions,
     );
     expect(result.type).toBe(ResultType.Materialized);
 
@@ -69,7 +71,7 @@ describe("Result iterator (materialized)", () => {
             DATE '1971-02-02',
             TIME '01:01:01.001'
           `,
-      true,
+      executeOptions,
     );
     expect(result.type).toBe(ResultType.Materialized);
 
@@ -93,7 +95,7 @@ describe("Result iterator (materialized)", () => {
   it("is able to close - throws error when reading from closed result", async () => {
     const result1 = await connection.executeIterator(
       "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
-      true,
+      executeOptions,
     );
     expect(result1.type).toBe(ResultType.Materialized);
     expect(result1.fetchRow()).toBeTruthy();

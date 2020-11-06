@@ -17,17 +17,17 @@ describe("Streaming/materialized capability", () => {
   });
 
   it("allows streaming", async () => {
-    const result = await connection.executeIterator(query, false);
+    const result = await connection.executeIterator(query, { rowResultFormat: "array", forceMaterialized: false });
     expect(result.fetchRow()).toMatchObject([60]);
     expect(result.type).toBe(ResultType.Streaming);
   });
   it("streams by default", async () => {
-    const result = await connection.executeIterator(query);
+    const result = await connection.executeIterator(query, { rowResultFormat: "array" });
     expect(result.fetchRow()).toMatchObject([60]);
     expect(result.type).toBe(ResultType.Streaming);
   });
   it("allows materialized", async () => {
-    const result = await connection.executeIterator(query, true);
+    const result = await connection.executeIterator(query, { rowResultFormat: "array", forceMaterialized: true });
     expect(result.fetchRow()).toMatchObject([60]);
     expect(result.type).toBe(ResultType.Materialized);
   });

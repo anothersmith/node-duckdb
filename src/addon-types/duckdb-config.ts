@@ -36,3 +36,8 @@ export interface IDuckDBConfig {
   path?: string;
   options?: IDuckDBOptionsConfig;
 }
+
+export interface IExecuteOptions {
+  forceMaterialized?: boolean;
+  rowResultFormat?: "json" | "array";
+}

@@ -43,7 +43,7 @@ describe("DuckDB configuration", () => {
     const db2 = new DuckDB({ path: dbPath, options: { accessMode: AccessMode.ReadOnly } });
     expect(db2.accessMode).toBe(AccessMode.ReadOnly);
     const connection2 = new Connection(db2);
-    const iterator = await connection2.executeIterator("SELECT * FROM test2;");
+    const iterator = await connection2.executeIterator("SELECT * FROM test2;", { rowResultFormat: "array" });
     expect(iterator.fetchRow()).toEqual([1]);
     db2.close();
     await unlinkAsync(dbPath);

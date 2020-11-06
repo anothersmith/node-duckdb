@@ -1,6 +1,9 @@
 import { Connection, DuckDB } from "@addon";
+import { IExecuteOptions } from "@addon-types";
 
 const errorMessage = "Must provide a valid DuckDB object";
+
+const executeOptions: IExecuteOptions = { rowResultFormat: "array" };
 
 describe("Connection class", () => {
   it("accepts a database instance", () => {
@@ -32,7 +35,7 @@ describe("Connection class", () => {
     expect(db.isClosed).toBe(false);
     const connection2 = new Connection(db);
     expect(connection2.isClosed).toBe(false);
-    const result = await connection2.executeIterator("SELECT 1");
+    const result = await connection2.executeIterator("SELECT 1", executeOptions);
     expect(result.fetchRow()).toEqual([1]);
     connection2.close();
     db.close();
@@ -45,8 +48,8 @@ describe("Connection class", () => {
       "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 30000) tbl2(c)";
     const db = new DuckDB();
     const connection = new Connection(db);
-    await connection.executeIterator(query1);
-    const p = connection.executeIterator(query2);
+    await connection.executeIterator(query1, executeOptions);
+    const p = connection.executeIterator(query2, executeOptions);
     connection.close();
     const resultIterator = await p;
     expect(resultIterator.fetchRow()).not.toBeFalsy();

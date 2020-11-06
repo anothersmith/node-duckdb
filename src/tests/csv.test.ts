@@ -1,4 +1,7 @@
 import { DuckDB, Connection } from "@addon";
+import { IExecuteOptions } from "@addon-types";
+
+const executeOptions: IExecuteOptions = { rowResultFormat: "array" };
 
 describe("executeIterator on csv", () => {
   let db: DuckDB;
@@ -16,6 +19,7 @@ describe("executeIterator on csv", () => {
   it("can do a count", async () => {
     const result = await connection.executeIterator(
       "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
+      executeOptions,
     );
     expect(result.fetchRow()).toMatchObject([60]);
     expect(result.fetchRow()).toBe(null);
@@ -24,6 +28,7 @@ describe("executeIterator on csv", () => {
   it("can do a select all", async () => {
     const result = await connection.executeIterator(
       "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
+      executeOptions,
     );
     expect(result.fetchRow()).toMatchObject([
       1,

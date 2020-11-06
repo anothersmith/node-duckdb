@@ -1,4 +1,5 @@
 import { Connection, DuckDB } from "@addon";
+import { IExecuteOptions } from "@addon-types";
 
 const query1 = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 const query2 = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
@@ -20,6 +21,8 @@ const expectedResult1 = [
 ];
 const expectedResult2 = [60];
 
+const executeOptions: IExecuteOptions = { forceMaterialized: true, rowResultFormat: "array" };
+
 describe("Async executeIterator", () => {
   let db: DuckDB;
   beforeEach(() => {
@@ -32,8 +35,8 @@ describe("Async executeIterator", () => {
 
   it("can do concurrent operations with same Connection", async () => {
     const connection = new Connection(db);
-    const p1 = connection.executeIterator(query1, true);
-    const p2 = connection.executeIterator(query2, true);
+    const p1 = connection.executeIterator(query1, executeOptions);
+    const p2 = connection.executeIterator(query2, executeOptions);
     const [result1, result2] = await Promise.all([p1, p2]);
     expect(result1.fetchRow()).toMatchObject(expectedResult1);
     expect(result2.fetchRow()).toMatchObject(expectedResult2);
@@ -42,8 +45,8 @@ describe("Async executeIterator", () => {
   it("can do concurrent operations with different Connection", async () => {
     const connection1 = new Connection(db);
     const connection2 = new Connection(db);
-    const p1 = connection1.executeIterator(query1, true);
-    const p2 = connection2.executeIterator(query2, true);
+    const p1 = connection1.executeIterator(query1, executeOptions);
+    const p2 = connection2.executeIterator(query2, executeOptions);
     const [result1, result2] = await Promise.all([p1, p2]);
     expect(result1.fetchRow()).toMatchObject(expectedResult1);
     expect(result2.fetchRow()).toMatchObject(expectedResult2);
@@ -51,9 +54,9 @@ describe("Async executeIterator", () => {
 
   it("can do a consequtive operations", async () => {
     const connection = new Connection(db);
-    const result1 = await connection.executeIterator(query1, true);
+    const result1 = await connection.executeIterator(query1, executeOptions);
     expect(result1.fetchRow()).toMatchObject(expectedResult1);
-    const result2 = await connection.executeIterator(query2, true);
+    const result2 = await connection.executeIterator(query2, executeOptions);
     expect(result2.fetchRow()).toMatchObject(expectedResult2);
   });
 
@@ -61,7 +64,7 @@ describe("Async executeIterator", () => {
   // this test is a bit tricky to run on machines of very different specs
   it("does not block thread during a long running execution", async () => {
     const connection = new Connection(db);
-    await connection.executeIterator("CREATE TABLE test (a INTEGER, b INTEGER);", true);
+    await connection.executeIterator("CREATE TABLE test (a INTEGER, b INTEGER);", executeOptions);
     const operationStartTime = new Date();
     let lastDate = new Date();
     let didEventLoopBlock = false;
@@ -75,7 +78,7 @@ describe("Async executeIterator", () => {
     }, 0);
     await connection.executeIterator(
       "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 60000000) tbl2(c)",
-      true,
+      executeOptions,
     );
     const operationEndTime = new Date();
     // operation must take longer than 2 secs

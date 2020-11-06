@@ -1,4 +1,7 @@
 import { Connection, DuckDB } from "@addon";
+import { IExecuteOptions } from "@addon-types";
+
+const executeOptions: IExecuteOptions = { rowResultFormat: "array" };
 
 describe("executeIterator on parquet", () => {
   let db: DuckDB;
@@ -16,6 +19,7 @@ describe("executeIterator on parquet", () => {
   it("can do a count", async () => {
     const result = await connection.executeIterator(
       "SELECT count(*) FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
+      executeOptions,
     );
     expect(result.fetchRow()).toMatchObject([8]);
     expect(result.fetchRow()).toBe(null);
@@ -24,6 +28,7 @@ describe("executeIterator on parquet", () => {
   it("can do a select all", async () => {
     const result = await connection.executeIterator(
       "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
+      executeOptions,
     );
     expect(result.fetchRow()).toMatchObject([4, true, 0, 0, 0, 0, 0, 0, "03/01/09", "0", 1235865600000]);
     expect(result.fetchRow()).toMatchObject([
