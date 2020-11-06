@@ -1,5 +1,10 @@
 import { Connection, DuckDB } from "@addon";
 
+const invalidQueryError =
+`Parser Error: syntax error at or near "an"
+LINE 1: an invalid query
+        ^`
+
 describe("executeIterator method error handling", () => {
   let db: DuckDB;
   let connection: Connection;
@@ -20,7 +25,7 @@ describe("executeIterator method error handling", () => {
   });
   it("correctly handles an invalid query", async () => {
     await expect(connection.executeIterator("an invalid query")).rejects.toMatchObject({
-      message: `LINE 1: an invalid query`,
+      message: invalidQueryError,
     });
   });
   it("correctly handles a failing query - file does not exist", async () => {
