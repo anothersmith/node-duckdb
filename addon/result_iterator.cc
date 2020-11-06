@@ -69,12 +69,11 @@ namespace NodeDuckDB {
     if (current_chunk->size() == 0) {
       return env.Null();
     }
-    idx_t col_count = result->types.size();
-    Napi::Array row = Napi::Array::New(env, col_count);
-
-    for (idx_t col_idx = 0; col_idx < col_count; col_idx++) {
-      auto cellValue = getCellValue(env, col_idx);
-      row.Set(col_idx, cellValue);
+    Napi::Value row;
+    if (rowResultFormat == "json") {
+      row = getRowObject(env);
+    } else {
+      row = getRowArray(env);
     }
     chunk_offset++;
     return row;
@@ -111,6 +110,27 @@ namespace NodeDuckDB {
       return Napi::Boolean::New(env, isClosed);
   }
 
+  Napi::Value ResultIterator::getRowArray(Napi::Env env) {
+    idx_t col_count = result->types.size();
+    Napi::Array row = Napi::Array::New(env, col_count);
+
+    for (idx_t col_idx = 0; col_idx < col_count; col_idx++) {
+      auto cellValue = getCellValue(env, col_idx);
+      row.Set(col_idx, cellValue);
+    }
+    return row;
+  }
+
+  Napi::Value ResultIterator::getRowObject(Napi::Env env) {
+    idx_t col_count = result->types.size();
+    Napi::Object row = Napi::Object::New(env);
+
+    for (idx_t col_idx = 0; col_idx < col_count; col_idx++) {
+      auto cellValue = getCellValue(env, col_idx);
+      row.Set(result->names[col_idx], cellValue);
+    }
+    return row;
+  }
 
   Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
       auto &nullmask = duckdb::FlatVector::Nullmask(current_chunk->data[col_idx]);
