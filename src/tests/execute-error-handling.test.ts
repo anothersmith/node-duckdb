@@ -20,12 +20,12 @@ describe("executeIterator method error handling", () => {
   });
   it("correctly handles an invalid query", async () => {
     await expect(connection.executeIterator("an invalid query")).rejects.toMatchObject({
-      message: `Parser: syntax error at or near "an" [1]`,
+      message: `LINE 1: an invalid query`,
     });
   });
   it("correctly handles a failing query - file does not exist", async () => {
     await expect(connection.executeIterator("SELECT * FROM read_csv_auto('/idontexist.csv')")).rejects.toMatchObject({
-      message: `IO: File "/idontexist.csv" not found`,
+      message: `IO Error: No files found that match the pattern "/idontexist.csv"`,
     });
   });
 });
