@@ -1,9 +1,9 @@
 import { Connection, DuckDB, ResultStream } from "@addon";
-import { IExecuteOptions } from "@addon-types";
+import { IExecuteOptions, RowResultFormat } from "@addon-types";
 
 const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
-const executeOptions: IExecuteOptions = { rowResultFormat: "array" };
+const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array };
 
 function readStream(rs: ResultStream): Promise<any[]> {
   return new Promise((resolve, reject) => {

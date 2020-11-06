@@ -1,5 +1,5 @@
 import { Connection, DuckDB } from "@addon";
-import { ResultType } from "@addon-types";
+import { ResultType, RowResultFormat } from "@addon-types";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
@@ -17,17 +17,23 @@ describe("Streaming/materialized capability", () => {
   });
 
   it("allows streaming", async () => {
-    const result = await connection.executeIterator(query, { rowResultFormat: "array", forceMaterialized: false });
+    const result = await connection.executeIterator(query, {
+      rowResultFormat: RowResultFormat.Array,
+      forceMaterialized: false,
+    });
     expect(result.fetchRow()).toMatchObject([60]);
     expect(result.type).toBe(ResultType.Streaming);
   });
   it("streams by default", async () => {
-    const result = await connection.executeIterator(query, { rowResultFormat: "array" });
+    const result = await connection.executeIterator(query, { rowResultFormat: RowResultFormat.Array });
     expect(result.fetchRow()).toMatchObject([60]);
     expect(result.type).toBe(ResultType.Streaming);
   });
   it("allows materialized", async () => {
-    const result = await connection.executeIterator(query, { rowResultFormat: "array", forceMaterialized: true });
+    const result = await connection.executeIterator(query, {
+      rowResultFormat: RowResultFormat.Array,
+      forceMaterialized: true,
+    });
     expect(result.fetchRow()).toMatchObject([60]);
     expect(result.type).toBe(ResultType.Materialized);
   });

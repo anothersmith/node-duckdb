@@ -19,6 +19,11 @@ export enum OrderByNullType {
   NullsLast = 3,
 }
 
+export enum RowResultFormat {
+  JSON = "json",
+  Array = "array",
+}
+
 export interface IDuckDBOptionsConfig {
   accessMode?: AccessMode;
   checkPointWALSize?: number;
@@ -39,5 +44,5 @@ export interface IDuckDBConfig {
 
 export interface IExecuteOptions {
   forceMaterialized?: boolean;
-  rowResultFormat?: "json" | "array";
+  rowResultFormat?: RowResultFormat;
 }

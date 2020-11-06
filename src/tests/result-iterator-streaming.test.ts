@@ -1,9 +1,9 @@
 import { Connection, DuckDB } from "@addon";
-import { IExecuteOptions } from "@addon-types";
+import { IExecuteOptions, RowResultFormat } from "@addon-types";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
-const executeOptions: IExecuteOptions = { rowResultFormat: "array", forceMaterialized: false };
+const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array, forceMaterialized: false };
 
 describe("Result iterator (streaming)", () => {
   let db: DuckDB;
@@ -30,7 +30,10 @@ describe("Result iterator (streaming)", () => {
 
   it("gracefully handles inactive stream - second query is materialized", async () => {
     const result1 = await connection.executeIterator(query, executeOptions);
-    const result2 = await connection.executeIterator(query, { rowResultFormat: "array", forceMaterialized: true });
+    const result2 = await connection.executeIterator(query, {
+      rowResultFormat: RowResultFormat.Array,
+      forceMaterialized: true,
+    });
 
     expect(() => result1.fetchRow()).toThrow(
       "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",

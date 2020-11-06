@@ -1,7 +1,7 @@
 import { Connection, DuckDB } from "@addon";
-import { IExecuteOptions } from "@addon-types";
+import { IExecuteOptions, RowResultFormat } from "@addon-types";
 
-const executeOptions: IExecuteOptions = { rowResultFormat: "array" };
+const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array };
 
 describe("executeIterator on parquet", () => {
   let db: DuckDB;

@@ -1,9 +1,9 @@
 import { Connection, DuckDB } from "@addon";
-import { IExecuteOptions } from "@addon-types";
+import { IExecuteOptions, RowResultFormat } from "@addon-types";
 
 const errorMessage = "Must provide a valid DuckDB object";
 
-const executeOptions: IExecuteOptions = { rowResultFormat: "array" };
+const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array };
 
 describe("Connection class", () => {
   it("accepts a database instance", () => {

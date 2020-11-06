@@ -1,7 +1,7 @@
 import { Connection, DuckDB } from "@addon";
-import { IExecuteOptions, ResultType } from "@addon-types";
+import { IExecuteOptions, ResultType, RowResultFormat } from "@addon-types";
 
-const executeOptions: IExecuteOptions = { rowResultFormat: "array", forceMaterialized: true };
+const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array, forceMaterialized: true };
 
 describe("Result iterator (materialized)", () => {
   let db: DuckDB;
