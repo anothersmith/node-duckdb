@@ -1,6 +1,6 @@
 {
   "name": "@deepcrawl/node-duckdb",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": false,
   "repository": {
     "type": "git",
@@ -17,24 +17,26 @@
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
-    "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
+    "postinstall": "yarn download-duckdb && yarn build:duckdb && yarn build:addon",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
-    "prepublishOnly": "yarn install && yarn build",
+    "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
     "bindings": "^1.5.0",
-    "node-addon-api": "^3.0.2"
+    "cmake-js": "^6.1.0",
+    "node-addon-api": "^3.0.2",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@types/bindings": "^1.3.0",
     "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
-    "cmake-js": "^6.1.0",
     "eslint": "^7.10.0",
     "eslint-config-deepcrawl": "^5.6.0",
     "eslint-config-prettier": "^6.11.0",
@@ -53,7 +55,6 @@
     "jest-extended": "^0.11.5",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
-    "rimraf": "^3.0.2",
     "ttypescript": "^1.5.12",
     "typescript": "^4.0.3"
   },
