@@ -6,8 +6,8 @@ export class ResultIterator {
     public fetchRow(): unknown | unknown[] {
         return this.resultInterator.fetchRow();
     }
-    public fetchAllRows(): unknown[][] {
-        const allRows: unknown[][] = [];
+    public fetchAllRows(): unknown[] | unknown[][] {
+        const allRows = [];
         for (let element = this.fetchRow(); element !== null; element = this.fetchRow()) {
             allRows.push(element);
           }
