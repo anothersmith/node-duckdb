@@ -1,6 +1,9 @@
 import { Connection, DuckDB } from "@addon";
+import { IExecuteOptions, RowResultFormat } from "@addon-types";
 
 const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
+
+const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array, forceMaterialized: false };
 
 describe("Result iterator (streaming)", () => {
   let db: DuckDB;
@@ -16,8 +19,8 @@ describe("Result iterator (streaming)", () => {
   });
 
   it("gracefully handles inactive stream", async () => {
-    const result1 = await connection.executeIterator(query, false);
-    const result2 = await connection.executeIterator(query, false);
+    const result1 = await connection.executeIterator(query, executeOptions);
+    const result2 = await connection.executeIterator(query, executeOptions);
 
     expect(() => result1.fetchRow()).toThrow(
       "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
@@ -26,8 +29,11 @@ describe("Result iterator (streaming)", () => {
   });
 
   it("gracefully handles inactive stream - second query is materialized", async () => {
-    const result1 = await connection.executeIterator(query, false);
-    const result2 = await connection.executeIterator(query, true);
+    const result1 = await connection.executeIterator(query, executeOptions);
+    const result2 = await connection.executeIterator(query, {
+      rowResultFormat: RowResultFormat.Array,
+      forceMaterialized: true,
+    });
 
     expect(() => result1.fetchRow()).toThrow(
       "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
@@ -36,9 +42,9 @@ describe("Result iterator (streaming)", () => {
   });
 
   it("works fine if done one after another", async () => {
-    const result1 = await connection.executeIterator(query, false);
+    const result1 = await connection.executeIterator(query, executeOptions);
     expect(result1.fetchRow()).toEqual([60]);
-    const result2 = await connection.executeIterator(query, false);
+    const result2 = await connection.executeIterator(query, executeOptions);
     expect(result2.fetchRow()).toEqual([60]);
   });
 
@@ -55,8 +61,8 @@ describe("Result iterator (streaming)", () => {
   it("works fine if two streaming operations are done on separate connections to one database", async () => {
     const connection1 = new Connection(db);
     const connection2 = new Connection(db);
-    const result1 = await connection1.executeIterator(query, false);
-    const result2 = await connection2.executeIterator(query, false);
+    const result1 = await connection1.executeIterator(query, executeOptions);
+    const result2 = await connection2.executeIterator(query, executeOptions);
     expect(result1.fetchRow()).toEqual([60]);
     expect(result2.fetchRow()).toEqual([60]);
   });
@@ -70,11 +76,17 @@ describe("Result iterator (streaming)", () => {
     const db2 = new DuckDB();
     const connection1 = connection;
     const connection2 = new Connection(db2);
-    await Promise.all([connection1.executeIterator(query1, false), connection2.executeIterator(query1, false)]);
-    await Promise.all([connection1.executeIterator(query2, false), connection2.executeIterator(query2, false)]);
+    await Promise.all([
+      connection1.executeIterator(query1, executeOptions),
+      connection2.executeIterator(query1, executeOptions),
+    ]);
+    await Promise.all([
+      connection1.executeIterator(query2, executeOptions),
+      connection2.executeIterator(query2, executeOptions),
+    ]);
     const [result1, result2] = await Promise.all([
-      connection1.executeIterator(query3, false),
-      connection2.executeIterator(query3, false),
+      connection1.executeIterator(query3, executeOptions),
+      connection2.executeIterator(query3, executeOptions),
     ]);
     expect(result1.fetchRow()).toEqual([11, 22]);
     expect(result2.fetchRow()).toEqual([11, 22]);

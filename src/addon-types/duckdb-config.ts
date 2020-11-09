@@ -19,6 +19,11 @@ export enum OrderByNullType {
   NullsLast = 3,
 }
 
+export enum RowResultFormat {
+  Object = 0,
+  Array = 1,
+}
+
 export interface IDuckDBOptionsConfig {
   accessMode?: AccessMode;
   checkPointWALSize?: number;
@@ -35,4 +40,9 @@ export interface IDuckDBOptionsConfig {
 export interface IDuckDBConfig {
   path?: string;
   options?: IDuckDBOptionsConfig;
+}
+
+export interface IExecuteOptions {
+  forceMaterialized?: boolean;
+  rowResultFormat?: RowResultFormat;
 }

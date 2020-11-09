@@ -1,6 +1,6 @@
 {
   "name": "@deepcrawl/node-duckdb",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "private": false,
   "repository": {
     "type": "git",
@@ -17,9 +17,10 @@
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
-    "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.1.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.1 duckdb && rm duckdb.tar.gz",
+    "postinstall": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
+    "prepublishOnly": "yarn install && yarn build",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000"

@@ -7,6 +7,7 @@
 #include "parquet-extension.hpp"
 #include "async_executor.h"
 #include <iostream>
+#include "type-converters.h"
 using namespace std;
 
 
@@ -60,17 +61,29 @@ namespace NodeDuckDB {
         throw Napi::TypeError::New(env, "First argument must be a string");
       }
 
-      if (!info[1].IsUndefined() && !info[1].IsBoolean()) {
-        throw Napi::TypeError::New(env, "Second argument is an optional boolean");
+      if (!info[1].IsUndefined() && !info[1].IsObject()) {
+        throw Napi::TypeError::New(env, "Second argument is an optional object");
       }
 
       if (this->connection == nullptr) {
         throw Napi::TypeError::New(env, "Connection is closed");
       }
 
-      string query = info[0].ToString();
-      bool forceMaterialized = info[1].IsEmpty() ? false : info[1].ToBoolean().Value();
-      AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterialized);
+      auto query = info[0].ToString().Utf8Value();
+      auto forceMaterializedValue = false;
+      ResultFormat rowResultFormatValue = ResultFormat::OBJECT;
+      if (!info[1].IsUndefined()) {
+        auto options = info[1].ToObject();
+        if (!options.Get("forceMaterialized").IsUndefined()) {
+          forceMaterializedValue = TypeConverters::convertBoolean(env, options, "forceMaterialized");
+        } 
+
+        if (!options.Get("rowResultFormat").IsUndefined()) {
+          rowResultFormatValue = static_cast<ResultFormat>(TypeConverters::convertEnum(env, options, "rowResultFormat", static_cast<int>(ResultFormat::OBJECT), static_cast<int>(ResultFormat::ARRAY)));
+        } 
+      }
+
+      AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterializedValue, rowResultFormatValue);
       wk->Queue();
     } catch (Napi::Error& e) {
       deferred.Reject(e.Value());

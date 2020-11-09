@@ -3,8 +3,15 @@ import { ResultIteratorClass } from "../addon-bindings";
 
 export class ResultIterator {
     constructor(private resultInterator: ResultIteratorClass) {}
-    public fetchRow(): unknown[] {
+    public fetchRow(): unknown | unknown[] {
         return this.resultInterator.fetchRow();
+    }
+    public fetchAllRows(): unknown[] | unknown[][] {
+        const allRows = [];
+        for (let element = this.fetchRow(); element !== null; element = this.fetchRow()) {
+            allRows.push(element);
+          }
+        return allRows;
     }
     public describe(): string[][] {
         return this.resultInterator.describe();

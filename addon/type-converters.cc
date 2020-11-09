@@ -1,6 +1,6 @@
 #include "duckdb.h"
 #include "duckdb.hpp"
-#include "duckdb-type-converters.h"
+#include "type-converters.h"
 
 string NodeDuckDB::TypeConverters::convertString(const Napi::Env &env, const Napi::Object &options, const string propertyName)
 {

@@ -8,7 +8,7 @@ const { ResultIterator } = bindings("node-duckdb-addon");
  */
 
 export declare class ResultIteratorClass {
-  public fetchRow(): unknown[];
+  public fetchRow(): unknown | unknown[];
   public describe(): string[][];
   public close(): void;
   public type: ResultType;
