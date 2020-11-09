@@ -6,6 +6,13 @@ export class ResultIterator {
     public fetchRow(): unknown | unknown[] {
         return this.resultInterator.fetchRow();
     }
+    public fetchAllRows(): unknown[][] {
+        const allRows: unknown[][] = [];
+        for (let element = this.fetchRow(); element !== null; element = this.fetchRow()) {
+            allRows.push(element);
+          }
+        return allRows;
+    }
     public describe(): string[][] {
         return this.resultInterator.describe();
     }
