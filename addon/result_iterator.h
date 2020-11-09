@@ -5,7 +5,7 @@
 #include "duckdb.hpp"
 
 namespace NodeDuckDB {
-	enum class ResultFormat : uint8_t { JSON = 0, ARRAY = 1 };
+	enum class ResultFormat : uint8_t { OBJECT = 0, ARRAY = 1 };
 
 	class ResultIterator : public Napi::ObjectWrap<ResultIterator> {
 		public:

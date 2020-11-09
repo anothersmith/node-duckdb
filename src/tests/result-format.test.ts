@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Connection, DuckDB } from "@addon";
 import { RowResultFormat } from "@addon-types";
 
@@ -37,7 +36,7 @@ describe("Result format", () => {
   });
 
   it("can be specified explicitly as JSON", async () => {
-    const result = await connection.executeIterator(query, { rowResultFormat: RowResultFormat.JSON });
+    const result = await connection.executeIterator(query, { rowResultFormat: RowResultFormat.Object });
     expect(result.fetchRow()).toEqual(jsonResult);
   });
 

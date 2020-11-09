@@ -20,7 +20,7 @@ export enum OrderByNullType {
 }
 
 export enum RowResultFormat {
-  JSON = 0,
+  Object = 0,
   Array = 1,
 }
 

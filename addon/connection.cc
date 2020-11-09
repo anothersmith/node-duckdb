@@ -71,7 +71,7 @@ namespace NodeDuckDB {
 
       auto query = info[0].ToString().Utf8Value();
       auto forceMaterializedValue = false;
-      ResultFormat rowResultFormatValue = ResultFormat::JSON;
+      ResultFormat rowResultFormatValue = ResultFormat::OBJECT;
       if (!info[1].IsUndefined()) {
         auto options = info[1].ToObject();
         if (!options.Get("forceMaterialized").IsUndefined()) {
@@ -79,7 +79,7 @@ namespace NodeDuckDB {
         } 
 
         if (!options.Get("rowResultFormat").IsUndefined()) {
-          rowResultFormatValue = static_cast<ResultFormat>(TypeConverters::convertEnum(env, options, "rowResultFormat", static_cast<int>(ResultFormat::JSON), static_cast<int>(ResultFormat::ARRAY)));
+          rowResultFormatValue = static_cast<ResultFormat>(TypeConverters::convertEnum(env, options, "rowResultFormat", static_cast<int>(ResultFormat::OBJECT), static_cast<int>(ResultFormat::ARRAY)));
         } 
       }
 
