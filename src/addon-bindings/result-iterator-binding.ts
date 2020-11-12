@@ -1,7 +1,8 @@
 import { ResultType } from "@addon-types";
-import bindings from "bindings";
 
-const { ResultIterator } = bindings("node-duckdb-addon");
+// the reason for this kind of import is ncc: https://github.com/vercel/ncc/pull/93
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { ResultIterator } = require("bindings")("node-duckdb-addon");
 
 /**
  * Bindings should not be used directly, only through the addon wrappers

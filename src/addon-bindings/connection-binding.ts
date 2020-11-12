@@ -1,7 +1,8 @@
 import { IExecuteOptions } from "@addon-types";
-import bindings from "bindings";
 
-const { Connection } = bindings("node-duckdb-addon");
+// the reason for this kind of import is ncc: https://github.com/vercel/ncc/pull/93
+// eslint-disable-next-line import/order
+const { Connection } = require("bindings")("node-duckdb-addon");
 
 /**
  * Bindings should not be used directly, only through the addon wrappers
