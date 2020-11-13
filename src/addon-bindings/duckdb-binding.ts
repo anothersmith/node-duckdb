@@ -1,8 +1,8 @@
 import { AccessMode, IDuckDBConfig, OrderByNullType, OrderType } from "@addon-types";
 
-// the reason for this kind of import is ncc: https://github.com/vercel/ncc/pull/93
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { DuckDB } = require("bindings")("node-duckdb-addon");
+// lambda doesn't work with npm module bindings
+// eslint-disable-next-line node/no-unpublished-require, @typescript-eslint/no-var-requires
+const { DuckDB } = require("../../build/Release/node-duckdb-addon.node");
 
 /**
  * Bindings should not be used directly, only through the addon wrappers
