@@ -1,7 +1,4 @@
 import { IExecuteOptions } from "@addon-types";
-import bindings from "bindings";
-
-const { Connection } = bindings("node-duckdb-addon");
 
 /**
  * Bindings should not be used directly, only through the addon wrappers
@@ -9,6 +6,10 @@ const { Connection } = bindings("node-duckdb-addon");
 
 import { DuckDBBinding } from "./duckdb-binding";
 import { ResultIteratorBinding } from "./result-iterator-binding";
+
+// lambda doesn't work with npm module bindings
+// eslint-disable-next-line node/no-unpublished-require, @typescript-eslint/no-var-requires
+const { Connection } = require("../../build/Release/node-duckdb-addon.node");
 
 export declare class ConnectionClass {
   constructor(db: InstanceType<typeof DuckDBBinding>);

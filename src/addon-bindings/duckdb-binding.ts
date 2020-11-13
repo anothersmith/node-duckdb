@@ -1,7 +1,8 @@
 import { AccessMode, IDuckDBConfig, OrderByNullType, OrderType } from "@addon-types";
-import bindings from "bindings";
 
-const { DuckDB } = bindings("node-duckdb-addon");
+// lambda doesn't work with npm module bindings
+// eslint-disable-next-line node/no-unpublished-require, @typescript-eslint/no-var-requires
+const { DuckDB } = require("../../build/Release/node-duckdb-addon.node");
 
 /**
  * Bindings should not be used directly, only through the addon wrappers

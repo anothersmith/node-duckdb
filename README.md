@@ -2,17 +2,28 @@
 
 ## Developing
 
-- `yarn install`
-- `yarn build` - builds everything, including duckdb, duckdb node bindings and the typescript wrapper
-  - `yarn build:[addon|duckdb|ts]` to build one one of those things
-- `yarn test` to run unit tests
-- `yarn lint` to lint
+First build:
+
+1. `yarn install` - installs deps including duckdb, builds duckdb and addon plugin
+2. `yarn build:ts` - builds typescript
+3. `yarn test` - runs all tests
+
+Other useful scripts:
+
+- `yarn add [package] --ignore-scripts` - adds package without redownloading/rebuilding duckdb
+- `yarn login --registry=https://npm.pkg.github.com && yarn publish` - login and publish to github packages
+- `yarn build` - builds everything
+- `yarn build:[addon|duckdb|ts]` - to build one one of those things
+- `yarn lint` - to lint
 
 ## Using as a dependency
 
 ```
-import { ConnectionWrapper, ResultWrapper } from "node-duckdb";
-const cw = new ConnectionWrapper();
-const rw = cw.execute("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
-rw.fetchRow()
+import { Connection, DuckDB } from "@deepcrawl/node-duckdb";
+let db: DuckDB = new DuckDB();
+let connection: Connection = new Connection(db);
+const result = await connection.executeIterator("SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')");
+console.log(result.fetchAllRows());
+connection.close();
+db.close();
 ```
