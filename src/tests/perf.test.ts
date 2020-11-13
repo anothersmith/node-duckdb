@@ -11,8 +11,8 @@ describe.skip("Perfomance test suite", () => {
   let connection: Connection;
   beforeEach(async () => {
     db = new DuckDB();
-    connection = new Connection(db);        
-    await connection.executeIterator("PRAGMA threads=4;")
+    connection = new Connection(db);
+    await connection.executeIterator("PRAGMA threads=4;");
   });
 
   afterEach(() => {
@@ -180,7 +180,7 @@ describe.skip("Perfomance test suite", () => {
           "SELECT count(url) FROM parquet_scan('src/tests/test-fixtures/data/crawl_urls') WHERE ((http_status_code = 200 AND meta_redirect = FALSE AND primary_page = TRUE AND indexable = TRUE AND canonicalized_page = FALSE AND (paginated_page = FALSE OR (paginated_page = TRUE AND page_1 = TRUE))) AND ((css != TRUE AND js != TRUE AND is_image != TRUE AND internal = TRUE) AND (header_content_type = 'text/html' OR header_content_type = ''))) ORDER BY count(url) DESC",
         );
         console.log(result.fetchAllRows());
-      })()
-    ])
+      })(),
+    ]);
   });
 });

@@ -1,6 +1,5 @@
 import { IExecuteOptions } from "@addon-types";
 
-
 /**
  * Bindings should not be used directly, only through the addon wrappers
  */
