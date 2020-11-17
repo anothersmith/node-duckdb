@@ -11,6 +11,11 @@
   "author": "DeepCrawl",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "binary": {
+    "napi_versions": [
+      4
+    ]
+  },
   "scripts": {
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
     "build:addon": "rimraf build && cmake-js compile",
@@ -18,17 +23,19 @@
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
     "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
-    "postinstall": "yarn download-duckdb && yarn build:duckdb && yarn build:addon",
+    "postinstall": "yarn download-duckdb && yarn build:duckdb",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
     "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
+    "test": "yarn build:ts && jest --runInBand --testTimeout=60000",
+    "build2": "yarn prebuild --all --backend cmake-js -r napi"
   },
   "dependencies": {
     "cmake-js": "^6.1.0",
     "node-addon-api": "^3.0.2",
+    "prebuild-install": "^6.0.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
@@ -52,6 +59,7 @@
     "jest": "^26.2.2",
     "jest-extended": "^0.11.5",
     "nodemon": "^2.0.4",
+    "prebuild": "^10.0.1",
     "prettier": "^2.0.5",
     "ttypescript": "^1.5.12",
     "typescript": "^4.0.3"

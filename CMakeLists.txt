@@ -22,4 +22,4 @@ string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_ADDON_API_DIR})
 
 # define NPI_VERSION
-add_definitions(-DNAPI_VERSION=4)
+add_compile_definitions(NAPI_VERSION=${napi_build_version})
