@@ -33,6 +33,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn lint
           yarn build:ts
+          ls -la
           yarn test
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
