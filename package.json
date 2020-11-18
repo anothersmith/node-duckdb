@@ -1,6 +1,6 @@
 {
   "name": "@deepcrawl/node-duckdb",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "private": false,
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
     "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
-    "install": "prebuild-install --verbose -d -r napi -T ${GITHUB_TOKEN} || (yarn download-duckdb && yarn build:duckdb && yarn build:addon)",
+    "install": "prebuild-install --verbose -d -r napi || (yarn download-duckdb && yarn build:duckdb && yarn build:addon)",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
     "prebuild:all-targets": "yarn prebuild:current-target && yarn prebuild:linux",
@@ -33,7 +33,6 @@
     "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "postpublish": "yarn prebuild:all-targets && yarn prebuild:upload",
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
