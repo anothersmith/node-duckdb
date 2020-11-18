@@ -9,12 +9,13 @@ First build:
 3. `yarn test` - runs all tests
 
 Other useful scripts:
+
 - `yarn build:[addon|duckdb|ts]` - to build one one of those things
 - `yarn lint` - to lint
 
 ## Publishing
-- `yarn login --registry=https://npm.pkg.github.com && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
 
+- `yarn login --registry=https://npm.pkg.github.com && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
 
 ## Using as a dependency
 
