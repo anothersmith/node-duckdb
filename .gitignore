@@ -4,3 +4,4 @@ dist
 coverage
 duckdb
 duckdb.tar.gz
+prebuilds

@@ -3,10 +3,14 @@ cmake_policy(SET CMP0042 NEW)
 project(node-duckdb-addon)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
+file(GLOB DUCKDBIN
+  "./duckdb/build/release/src/libduckdb.dylib"
+  "./duckdb/build/release/src/libduckdb.so"
+  "./duckdb/build/release/extension/parquet/libparquet_extension.a"
+)
+file(COPY ${DUCKDBIN}  DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 include_directories(${CMAKE_JS_INC} ./duckdb/src/include ./duckdb/extension/parquet/include)
-link_directories(./duckdb/build/release/src)
-link_directories(./duckdb/build/release/extension/parquet)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/Release)
 file(GLOB SOURCE_FILES "./addon/*")
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")

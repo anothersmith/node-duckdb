@@ -14,7 +14,7 @@ services:
       - node-modules:/node_modules
       - yarn-cache:/yarn_cache
     entrypoint: ["sh", "-c"]
-    command: ["yarn install && yarn build2"]
+    command: ["yarn install && yarn prebuild:current-target"]
 
 volumes:
   node-modules:
