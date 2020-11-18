@@ -22,6 +22,7 @@
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
+    "cleanup:binaries": "rm -rf build prebuilds duckdb",
     "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
     "install": "prebuild-install --verbose -d -r napi || (yarn download-duckdb && yarn build:duckdb && yarn prebuild:current-target)",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
@@ -34,8 +35,7 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn cleanup:binaries && yarn prebuild:all-targets && yarn prebuild:upload",
-    "test": "yarn build:ts && jest --runInBand --testTimeout=60000",
-    "cleanup:binaries": "rm -rf build prebuilds duckdb"
+    "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
     "cmake-js": "^6.1.0",
