@@ -8,6 +8,7 @@ services:
     image: 059037012730.dkr.ecr.us-east-1.amazonaws.com/deepcrawl/odin-api:latest
     environment:
       YARN_CACHE_FOLDER: /yarn_cache
+      GITHUB_TOKEN: $GITHUB_TOKEN
     volumes:
       - .:/root/node-duckdb
       - ~/.npmrc:/root/.npmrc
