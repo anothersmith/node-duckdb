@@ -1,6 +1,6 @@
 {
   "name": "@deepcrawl/node-duckdb",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "private": false,
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
+    "postpublish": "yarn prebuild:upload",
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
