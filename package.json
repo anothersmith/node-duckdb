@@ -1,6 +1,6 @@
 {
   "name": "@deepcrawl/node-duckdb",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "private": false,
   "repository": {
     "type": "git",
@@ -18,12 +18,12 @@
   },
   "scripts": {
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
-    "build:addon": "rimraf build && cmake-js compile",
+    "build:addon": "rimraf build && cmake-js compile --CDnapi_build_version=4",
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
     "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
-    "install": "prebuild-install --verbose -d -r napi -T ${GITHUB_TOKEN} || yarn download-duckdb && yarn build:duckdb && yarn build:addon",
+    "install": "prebuild-install --verbose -d -r napi -T ${GITHUB_TOKEN} || (yarn download-duckdb && yarn build:duckdb && yarn build:addon)",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
     "prepublishOnly": "yarn build:ts",
@@ -32,7 +32,7 @@
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000",
     "prebuild:current-target": "yarn prebuild --all --backend cmake-js -r napi --include-regex \"((libduckdb)|(libparquet_extension)|(node-duckdb-addon.node))\" --verbose",
     "prebuild:linux": "docker-compose up",
-    "prebuild:all-targets": "prebuild:current-target && yarn prebuild:linux",
+    "prebuild:all-targets": "yarn prebuild:current-target && yarn prebuild:linux",
     "prebuild:upload": "yarn prebuild --upload-all ${GITHUB_TOKEN}",
     "postpublish": "yarn prebuild:all-targets && yarn prebuild:upload"
   },
