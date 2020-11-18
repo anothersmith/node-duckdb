@@ -14,7 +14,7 @@ Other useful scripts:
 - `yarn lint` - to lint
 
 ## Publishing
-
+- `export GITHUB_TOKEN=<your PAT>` - create a PAT in github that allows uploading artifacts to github releases
 - `yarn login --registry=https://npm.pkg.github.com && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
 
 ## Using as a dependency
