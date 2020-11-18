@@ -35,4 +35,3 @@ jobs:
           yarn test
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
-          GITHUB_TOKEN: ${{secrets.GIT_RELEASES_TOKEN}}
