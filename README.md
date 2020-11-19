@@ -10,11 +10,13 @@ First build:
 
 Other useful scripts:
 
-- `yarn add [package] --ignore-scripts` - adds package without redownloading/rebuilding duckdb
-- `yarn login --registry=https://npm.pkg.github.com && yarn publish` - login and publish to github packages
-- `yarn build` - builds everything
 - `yarn build:[addon|duckdb|ts]` - to build one one of those things
 - `yarn lint` - to lint
+
+## Publishing
+
+- `export GITHUB_TOKEN=<your PAT>` - create a PAT in github that allows uploading artifacts to github releases
+- `yarn login --registry=https://npm.pkg.github.com && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
 
 ## Using as a dependency
 

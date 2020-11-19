@@ -3,14 +3,19 @@ cmake_policy(SET CMP0042 NEW)
 project(node-duckdb-addon)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
+file(GLOB DUCKDBIN
+  "./duckdb/build/release/src/libduckdb.dylib"
+  "./duckdb/build/release/src/libduckdb.so"
+  "./duckdb/build/release/extension/parquet/libparquet_extension.a"
+)
+file(COPY ${DUCKDBIN}  DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 include_directories(${CMAKE_JS_INC} ./duckdb/src/include ./duckdb/extension/parquet/include)
-link_directories(./duckdb/build/release/src)
-link_directories(./duckdb/build/release/extension/parquet)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/Release)
 file(GLOB SOURCE_FILES "./addon/*")
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB} duckdb parquet_extension)
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-Wl,-rpath,'$ORIGIN'")
 
 # Include N-API wrappers
 execute_process(COMMAND node -p "require('node-addon-api').include"
@@ -22,4 +27,4 @@ string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_ADDON_API_DIR})
 
 # define NPI_VERSION
-add_definitions(-DNAPI_VERSION=4)
+add_compile_definitions(NAPI_VERSION=${napi_build_version})
