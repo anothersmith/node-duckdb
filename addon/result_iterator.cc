@@ -161,6 +161,7 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::DECIMAL:
         return  Napi::Number::New(env, val.CastAs(duckdb::LogicalType::DOUBLE).GetValue<double>());
       case duckdb::LogicalTypeId::VARCHAR:
+      case duckdb::LogicalTypeId::BLOB:
         return  Napi::String::New(env, val.GetValue<string>());
 
       case duckdb::LogicalTypeId::TIMESTAMP: {
