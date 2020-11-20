@@ -45,20 +45,18 @@ describe("Data type mapping", () => {
     expect(result.fetchRow()).toMatchObject([1]);
   });
 
-  // TODO: return as BigInt (napi v5+)
+  // TODO: possibly return as BigInt (napi v5+)
   it("supports BIGINT", async () => {
-    // FIXME: this is supposed to work, but getting some rounding bug -- probably JS Number issue (uses double under the hood)
-    // const bigInt = "9223372036854775807";
-    const bigInt = "-922337203685477";
+    const bigInt = "9223372036854775807";
 
     const result = await connection.executeIterator(`SELECT CAST (${bigInt} AS BIGINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
     const resultValue = (<number[]>result.fetchRow())[0];
-    expect(resultValue.toString()).toEqual(bigInt);
+    expect(resultValue).toEqual(bigInt);
   });
 
-  // TODO: return as BigInt (napi v5+)
+  // TODO: possibly return as BigInt (napi v5+)
   it("supports HUGEINT", async () => {
     const hugeInt = "-170141183460469231731687303715884105727";
     const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
@@ -77,7 +75,6 @@ describe("Data type mapping", () => {
               CAST(1 AS TINYINT),
               CAST(8 AS SMALLINT),
               10000,
-              9223372036854775807,
               1.1,        
               CAST(1.1 AS DOUBLE),
               'stringy',
@@ -94,7 +91,6 @@ describe("Data type mapping", () => {
       1,
       8,
       10000,
-      9223372036854776000, // Note: not a BigInt (yet)
       1.1,
       1.1,
       "stringy",
