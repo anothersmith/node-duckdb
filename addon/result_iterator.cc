@@ -148,12 +148,10 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::INTEGER:
         return  Napi::Number::New(env, val.GetValue<int32_t>());
       case duckdb::LogicalTypeId::BIGINT:
+        return  Napi::Number::New(env, val.GetValue<int64_t>());
       case duckdb::LogicalTypeId::HUGEINT:
-        #ifdef NAPI_EXPERIMENTAL
-          return  Napi::BigInt::New(env, val.GetValue<int64_t>());
-        #else
-          return  Napi::Number::New(env, val.GetValue<int64_t>());
-        #endif
+        // for now return as string: BigInt is supported by Napi v5+
+        return  Napi::String::New(env, val.ToString());
       case duckdb::LogicalTypeId::FLOAT:
         return  Napi::Number::New(env, val.GetValue<float>());
       case duckdb::LogicalTypeId::DOUBLE:
