@@ -125,6 +125,7 @@ namespace NodeDuckDB {
 
     for (idx_t col_idx = 0; col_idx < col_count; col_idx++) {
       auto cellValue = getCellValue(env, col_idx);
+      cout << result->names[col_idx] << endl;
       row.Set(result->names[col_idx], cellValue);
     }
     return row;
@@ -147,6 +148,7 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::INTEGER:
         return  Napi::Number::New(env, val.GetValue<int32_t>());
       case duckdb::LogicalTypeId::BIGINT:
+      case duckdb::LogicalTypeId::HUGEINT:
         #ifdef NAPI_EXPERIMENTAL
           return  Napi::BigInt::New(env, val.GetValue<int64_t>());
         #else
