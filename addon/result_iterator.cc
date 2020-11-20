@@ -182,7 +182,7 @@ namespace NodeDuckDB {
         if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT32) {
           throw runtime_error("expected int32 for time");
         }
-        int64_t tval = val.GetValue<int64_t>();      
+        int64_t tval = val.GetValue<int32_t>();      
         return  Napi::Number::New(env, GetTime(tval));
       }
 
