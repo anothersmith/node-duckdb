@@ -83,7 +83,7 @@ describe("Data type mapping", () => {
 
 
 
-  it.only("BLOB", async () => {
+  it("BLOB", async () => {
     const result = await connection.executeIterator(
       `SELECT  CAST('\\x3131' AS BLOB)
       
@@ -91,5 +91,15 @@ describe("Data type mapping", () => {
     );
 
     expect(result.fetchRow()).toMatchObject(["\\x3131"]);
+  });
+
+  // TODO: either create a JS/TS object representing an interval or possibly convert to number
+  it.only("interval", async () => {
+    const result = await connection.executeIterator(
+      `SELECT INTERVAL '1' MONTH;
+          `, { rowResultFormat: RowResultFormat.Array}
+    );
+
+    expect(result.fetchRow()).toMatchObject(["1 month"]);
   });
 })

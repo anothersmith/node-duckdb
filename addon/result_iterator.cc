@@ -186,7 +186,9 @@ namespace NodeDuckDB {
         int64_t tval = val.GetValue<int32_t>();      
         return  Napi::Number::New(env, GetTime(tval));
       }
-
+      case duckdb::LogicalTypeId::INTERVAL: {
+        return  Napi::String::New(env, val.ToString());
+      }
       default:
         throw runtime_error("unsupported type: " + result->types[col_idx].ToString());
       }
