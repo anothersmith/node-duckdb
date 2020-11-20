@@ -125,7 +125,6 @@ namespace NodeDuckDB {
 
     for (idx_t col_idx = 0; col_idx < col_count; col_idx++) {
       auto cellValue = getCellValue(env, col_idx);
-      cout << result->names[col_idx] << endl;
       row.Set(result->names[col_idx], cellValue);
     }
     return row;
@@ -188,7 +187,8 @@ namespace NodeDuckDB {
         return  Napi::String::New(env, val.ToString());
       }
       default:
-        throw runtime_error("unsupported type: " + result->types[col_idx].ToString());
+        // default to getting string representation
+        return Napi::String::New(env, val.ToString());
       }
   }
 }
