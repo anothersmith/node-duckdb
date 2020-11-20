@@ -99,7 +99,7 @@ describe("Data type mapping", () => {
     ]);
   });
 
-  // Note: even though there is a CHAR type in the source code, seems to be an alias to VARCHAR
+  // Note: even though there is a CHAR type in the source code, it is simply an alias to VARCHAR
   it("supports CHAR", async () => {
     const result = await connection.executeIterator(`SELECT CAST('a' AS CHAR)`, {
       rowResultFormat: RowResultFormat.Array,
