@@ -3,12 +3,12 @@ import { ResultIteratorClass } from "../addon-bindings";
 
 export class ResultIterator {
     constructor(private resultInterator: ResultIteratorClass) {}
-    public fetchRow(): unknown | unknown[] {
-        return this.resultInterator.fetchRow();
+    public fetchRow<T>(): T {
+        return this.resultInterator.fetchRow<T>();
     }
-    public fetchAllRows(): unknown[] | unknown[][] {
-        const allRows = [];
-        for (let element = this.fetchRow(); element !== null; element = this.fetchRow()) {
+    public fetchAllRows<T>(): T[] {
+        const allRows: T[] = [];
+        for (let element = this.fetchRow<T>(); element !== null; element = this.fetchRow<T>()) {
             allRows.push(element);
           }
         return allRows;

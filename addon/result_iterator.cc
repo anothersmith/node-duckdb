@@ -159,9 +159,13 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::DECIMAL:
         return  Napi::Number::New(env, val.CastAs(duckdb::LogicalType::DOUBLE).GetValue<double>());
       case duckdb::LogicalTypeId::VARCHAR:
-      case duckdb::LogicalTypeId::BLOB:
         return  Napi::String::New(env, val.GetValue<string>());
-
+      case duckdb::LogicalTypeId::BLOB: {
+        int array_length = val.str_value.length();
+        char char_array[array_length + 1];
+        strcpy(char_array, val.str_value.c_str());
+        return  Napi::Buffer<char>::Copy(env, char_array, array_length);
+      }
       case duckdb::LogicalTypeId::TIMESTAMP: {
         if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT64) {
           throw runtime_error("expected int64 for timestamp");

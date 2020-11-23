@@ -8,7 +8,7 @@ const { ResultIterator } = require("../../build/Release/node-duckdb-addon.node")
  */
 
 export declare class ResultIteratorClass {
-  public fetchRow(): unknown | unknown[];
+  public fetchRow<T>(): T;
   public describe(): string[][];
   public close(): void;
   public type: ResultType;

@@ -114,12 +114,16 @@ describe("Data type mapping", () => {
     expect(result.fetchRow()).toMatchObject([1 + 1000 + 60000 + 60000 * 60]);
   });
 
-  // TODO: use typed arrays or blobs?
   it("supports BLOB", async () => {
-    const result = await connection.executeIterator(`SELECT CAST('\\x3131' AS BLOB)`, {
+    const result = await connection.executeIterator(`SELECT 'AB'::BLOB;`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    expect(result.fetchRow()).toMatchObject(["\\x3131"]);
+    const resultBuffer = result.fetchRow<Buffer[]>()[0];
+    const view = new Int8Array(resultBuffer);
+    // ASCII "a"
+    expect(view[0]).toBe(65);
+    // ASCII "b"
+    expect(view[1]).toBe(66);
   });
 
   // TODO: either create a JS/TS object representing an interval or possibly convert to number
