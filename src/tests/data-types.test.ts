@@ -47,7 +47,7 @@ describe("Data type mapping", () => {
 
   // TODO: possibly return as BigInt (napi v5+)
   it("supports BIGINT", async () => {
-    const bigInt = "9223372036854775807";
+    const bigInt = 9223372036854775807n;
 
     const result = await connection.executeIterator(`SELECT CAST (${bigInt} AS BIGINT)`, {
       rowResultFormat: RowResultFormat.Array,
@@ -57,8 +57,28 @@ describe("Data type mapping", () => {
   });
 
   // TODO: possibly return as BigInt (napi v5+)
+  it.only("supports HUGEINT - positive max", async () => {
+    const hugeInt = 170141183460469231731687303715884105727n;
+    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+    const resultValue = (<number[]>result.fetchRow())[0];
+    expect(resultValue).toEqual(hugeInt);
+  });
+
+  // TODO: possibly return as BigInt (napi v5+)
+  it("supports HUGEINT - regular number", async () => {
+    const hugeInt = 132142n;
+    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+    const resultValue = (<number[]>result.fetchRow())[0];
+    expect(resultValue).toEqual(hugeInt);
+  });
+
+  // TODO: possibly return as BigInt (napi v5+)
   it("supports HUGEINT", async () => {
-    const hugeInt = "-170141183460469231731687303715884105727";
+    const hugeInt = -170141183460469231731687303715884105727n;
     const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });

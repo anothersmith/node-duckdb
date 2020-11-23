@@ -1,6 +1,7 @@
 #include <iostream>
 #include "result_iterator.h"
 #include "duckdb.hpp"
+#include "duckdb/common/types/hugeint.hpp"
 using namespace std;
 
 namespace NodeDuckDB {
@@ -147,11 +148,15 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::INTEGER:
         return  Napi::Number::New(env, val.GetValue<int32_t>());
       case duckdb::LogicalTypeId::BIGINT:
-        // for now return as string: BigInt is supported by Napi v5+
-        return  Napi::String::New(env, val.ToString());
-      case duckdb::LogicalTypeId::HUGEINT:
-        // for now return as string: BigInt is supported by Napi v5+
-        return  Napi::String::New(env, val.ToString());
+        return  Napi::BigInt::New(env, val.GetValue<int64_t>());
+      case duckdb::LogicalTypeId::HUGEINT: {
+        auto huge_int = val.GetValue<duckdb::hugeint_t>();
+        int negative = huge_int.upper < 0;
+        uint64_t upper = (uint64_t)huge_int.upper;
+
+        uint64_t arr[2] {huge_int.lower, upper};
+        return  Napi::BigInt::New(env, negative, 2, &arr[0]);
+      }
       case duckdb::LogicalTypeId::FLOAT:
         return  Napi::Number::New(env, val.GetValue<float>());
       case duckdb::LogicalTypeId::DOUBLE:
