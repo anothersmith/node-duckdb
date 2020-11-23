@@ -150,6 +150,9 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::BIGINT:
         return  Napi::BigInt::New(env, val.GetValue<int64_t>());
       case duckdb::LogicalTypeId::HUGEINT: {
+        // hugeint_t represents a signed 128 bit integer in two's complement notation
+        // napi's BigInt is basically a regular signed integer (MSB)
+        // so we want to make sure we pass the absolute value of the huge int into napi plus the sign bit
         auto huge_int = val.GetValue<duckdb::hugeint_t>();
         int is_negative = huge_int.upper < 0;
         duckdb::hugeint_t positive_huge_int = is_negative ? huge_int * duckdb::hugeint_t(-1) : huge_int;
@@ -167,6 +170,7 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::BLOB: {
         int array_length = val.str_value.length();
         char char_array[array_length + 1];
+        // TODO: multiple copies, improve
         strcpy(char_array, val.str_value.c_str());
         return  Napi::Buffer<char>::Copy(env, char_array, array_length);
       }
