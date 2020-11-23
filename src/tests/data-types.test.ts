@@ -45,44 +45,66 @@ describe("Data type mapping", () => {
     expect(result.fetchRow()).toMatchObject([1]);
   });
 
-  // TODO: possibly return as BigInt (napi v5+)
   it("supports BIGINT", async () => {
     const bigInt = 9223372036854775807n;
-
     const result = await connection.executeIterator(`SELECT CAST (${bigInt} AS BIGINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = (<number[]>result.fetchRow())[0];
+    const resultValue = result.fetchRow<number[]>()[0];
     expect(resultValue).toEqual(bigInt);
   });
 
-  // TODO: possibly return as BigInt (napi v5+)
-  it.only("supports HUGEINT - positive max", async () => {
+  it("supports HUGEINT - positive max", async () => {
     const hugeInt = 170141183460469231731687303715884105727n;
     const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = (<number[]>result.fetchRow())[0];
+    const resultValue = result.fetchRow<number[]>()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
-  // TODO: possibly return as BigInt (napi v5+)
-  it("supports HUGEINT - regular number", async () => {
+  it("supports HUGEINT - large negative", async () => {
+    const hugeInt = -4565365654654345325455654365n;
+    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+    const resultValue = result.fetchRow<number[]>()[0];
+    expect(resultValue).toEqual(hugeInt);
+  });
+
+  it("supports HUGEINT - small positive number", async () => {
     const hugeInt = 132142n;
     const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = (<number[]>result.fetchRow())[0];
+    const resultValue = result.fetchRow<number[]>()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
-  // TODO: possibly return as BigInt (napi v5+)
-  it("supports HUGEINT", async () => {
+  it("supports HUGEINT - negative 1", async () => {
+    const hugeInt = -1n;
+    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+    const resultValue = result.fetchRow<number[]>()[0];
+    expect(resultValue).toEqual(hugeInt);
+  });
+
+  it("supports HUGEINT - large negative number", async () => {
+    const hugeInt = -354235423543264236543654n;
+    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+    const resultValue = result.fetchRow<number[]>()[0];
+    expect(resultValue).toEqual(hugeInt);
+  });
+
+  it("supports HUGEINT - negative max", async () => {
     const hugeInt = -170141183460469231731687303715884105727n;
     const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = (<number[]>result.fetchRow())[0];
+    const resultValue = result.fetchRow<number[]>()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 

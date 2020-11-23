@@ -151,11 +151,10 @@ namespace NodeDuckDB {
         return  Napi::BigInt::New(env, val.GetValue<int64_t>());
       case duckdb::LogicalTypeId::HUGEINT: {
         auto huge_int = val.GetValue<duckdb::hugeint_t>();
-        int negative = huge_int.upper < 0;
-        uint64_t upper = (uint64_t)huge_int.upper;
-
-        uint64_t arr[2] {huge_int.lower, upper};
-        return  Napi::BigInt::New(env, negative, 2, &arr[0]);
+        int is_negative = huge_int.upper < 0;
+        duckdb::hugeint_t positive_huge_int = is_negative ? huge_int * duckdb::hugeint_t(-1) : huge_int;
+        uint64_t arr[2] {positive_huge_int.lower, (uint64_t)positive_huge_int.upper};        
+        return  Napi::BigInt::New(env, is_negative, 2, &arr[0]);
       }
       case duckdb::LogicalTypeId::FLOAT:
         return  Napi::Number::New(env, val.GetValue<float>());

@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
-    "build:addon": "rimraf build && cmake-js compile --CDnapi_build_version=4",
+    "build:addon": "rimraf build && cmake-js compile --CDnapi_build_version=6",
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",

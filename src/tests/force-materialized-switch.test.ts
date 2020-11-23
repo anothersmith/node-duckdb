@@ -21,12 +21,12 @@ describe("Streaming/materialized capability", () => {
       rowResultFormat: RowResultFormat.Array,
       forceMaterialized: false,
     });
-    expect(result.fetchRow()).toMatchObject(["60"]);
+    expect(result.fetchRow()).toMatchObject([60n]);
     expect(result.type).toBe(ResultType.Streaming);
   });
   it("streams by default", async () => {
     const result = await connection.executeIterator(query, { rowResultFormat: RowResultFormat.Array });
-    expect(result.fetchRow()).toMatchObject(["60"]);
+    expect(result.fetchRow()).toMatchObject([60n]);
     expect(result.type).toBe(ResultType.Streaming);
   });
   it("allows materialized", async () => {
@@ -34,7 +34,7 @@ describe("Streaming/materialized capability", () => {
       rowResultFormat: RowResultFormat.Array,
       forceMaterialized: true,
     });
-    expect(result.fetchRow()).toMatchObject(["60"]);
+    expect(result.fetchRow()).toMatchObject([60n]);
     expect(result.type).toBe(ResultType.Materialized);
   });
   it("validates type parameter", async () => {

@@ -112,6 +112,6 @@ describe("Result stream", () => {
     const p = connection.execute(query2, executeOptions);
     connection.close();
     const elements = await readStream(await p);
-    expect(elements).toEqual([["15000"]]);
+    expect(elements).toEqual([[15000n]]);
   });
 });
