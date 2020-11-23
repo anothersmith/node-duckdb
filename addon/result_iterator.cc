@@ -1,6 +1,7 @@
 #include <iostream>
 #include "result_iterator.h"
 #include "duckdb.hpp"
+#include "duckdb/common/types/hugeint.hpp"
 using namespace std;
 
 namespace NodeDuckDB {
@@ -147,11 +148,17 @@ namespace NodeDuckDB {
       case duckdb::LogicalTypeId::INTEGER:
         return  Napi::Number::New(env, val.GetValue<int32_t>());
       case duckdb::LogicalTypeId::BIGINT:
-        #ifdef NAPI_EXPERIMENTAL
-          return  Napi::BigInt::New(env, val.GetValue<int64_t>());
-        #else
-          return  Napi::Number::New(env, val.GetValue<int64_t>());
-        #endif
+        return  Napi::BigInt::New(env, val.GetValue<int64_t>());
+      case duckdb::LogicalTypeId::HUGEINT: {
+        // hugeint_t represents a signed 128 bit integer in two's complement notation
+        // napi's BigInt is basically a regular signed integer (MSB)
+        // so we want to make sure we pass the absolute value of the huge int into napi plus the sign bit
+        auto huge_int = val.GetValue<duckdb::hugeint_t>();
+        int is_negative = huge_int.upper < 0;
+        duckdb::hugeint_t positive_huge_int = is_negative ? huge_int * duckdb::hugeint_t(-1) : huge_int;
+        uint64_t arr[2] {positive_huge_int.lower, (uint64_t)positive_huge_int.upper};        
+        return  Napi::BigInt::New(env, is_negative, 2, &arr[0]);
+      }
       case duckdb::LogicalTypeId::FLOAT:
         return  Napi::Number::New(env, val.GetValue<float>());
       case duckdb::LogicalTypeId::DOUBLE:
@@ -160,7 +167,13 @@ namespace NodeDuckDB {
         return  Napi::Number::New(env, val.CastAs(duckdb::LogicalType::DOUBLE).GetValue<double>());
       case duckdb::LogicalTypeId::VARCHAR:
         return  Napi::String::New(env, val.GetValue<string>());
-
+      case duckdb::LogicalTypeId::BLOB: {
+        int array_length = val.str_value.length();
+        char char_array[array_length + 1];
+        // TODO: multiple copies, improve
+        strcpy(char_array, val.str_value.c_str());
+        return  Napi::Buffer<char>::Copy(env, char_array, array_length);
+      }
       case duckdb::LogicalTypeId::TIMESTAMP: {
         if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT64) {
           throw runtime_error("expected int64 for timestamp");
@@ -180,12 +193,15 @@ namespace NodeDuckDB {
         if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT32) {
           throw runtime_error("expected int32 for time");
         }
-        int64_t tval = val.GetValue<int64_t>();      
+        int64_t tval = val.GetValue<int32_t>();      
         return  Napi::Number::New(env, GetTime(tval));
       }
-
+      case duckdb::LogicalTypeId::INTERVAL: {
+        return  Napi::String::New(env, val.ToString());
+      }
       default:
-        throw runtime_error("unsupported type: " + result->types[col_idx].ToString());
+        // default to getting string representation
+        return Napi::String::New(env, val.ToString());
       }
   }
 }

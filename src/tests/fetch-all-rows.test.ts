@@ -1,7 +1,7 @@
 import { Connection, DuckDB } from "@addon";
 
 const jsonResult = {
-  bigint_col: 0,
+  bigint_col: 0n,
   bool_col: true,
   date_string_col: "03/01/09",
   double_col: 0,

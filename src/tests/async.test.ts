@@ -19,7 +19,7 @@ const expectedResult1 = [
   3,
   4,
 ];
-const expectedResult2 = [60];
+const expectedResult2 = [60n];
 
 const executeOptions: IExecuteOptions = { forceMaterialized: true, rowResultFormat: RowResultFormat.Array };
 

@@ -7,8 +7,8 @@ const { ResultIterator } = require("../../build/Release/node-duckdb-addon.node")
  * Bindings should not be used directly, only through the addon wrappers
  */
 
-export declare class ResultIteratorClass {
-  public fetchRow(): unknown | unknown[];
+export declare class ResultIteratorClass<T> {
+  public fetchRow(): T;
   public describe(): string[][];
   public close(): void;
   public type: ResultType;
