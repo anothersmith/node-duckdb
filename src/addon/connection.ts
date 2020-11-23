@@ -7,12 +7,12 @@ import { IExecuteOptions } from "@addon-types";
 export class Connection {
   constructor(private duckdb: DuckDB) {}
   private connectionBinding = new ConnectionBinding(this.duckdb.db);
-  public async execute(command: string, options?: IExecuteOptions): Promise<ResultStream> {
-    const resultIteratorBinding = await this.connectionBinding.execute(command, options);
+  public async execute<T>(command: string, options?: IExecuteOptions): Promise<ResultStream<T>> {
+    const resultIteratorBinding = await this.connectionBinding.execute<T>(command, options);
     return new ResultStream(new ResultIterator(resultIteratorBinding));
   }
-  public async executeIterator(command: string, options?: IExecuteOptions): Promise<ResultIterator> {
-    return new ResultIterator(await this.connectionBinding.execute(command, options));
+  public async executeIterator<T>(command: string, options?: IExecuteOptions): Promise<ResultIterator<T>> {
+    return new ResultIterator(await this.connectionBinding.execute<T>(command, options));
   }
   public close(): void {
     return this.connectionBinding.close();

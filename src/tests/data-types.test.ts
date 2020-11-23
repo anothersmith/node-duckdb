@@ -25,21 +25,21 @@ describe("Data type mapping", () => {
   });
 
   it("supports TINYINT", async () => {
-    const result = await connection.executeIterator(`SELECT CAST(1 AS TINYINT)`, {
+    const result = await connection.executeIterator<number[]>(`SELECT CAST(1 AS TINYINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
     expect(result.fetchRow()).toMatchObject([1]);
   });
 
   it("supports SMALLINT", async () => {
-    const result = await connection.executeIterator(`SELECT CAST(1 AS SMALLINT)`, {
+    const result = await connection.executeIterator<number[]>(`SELECT CAST(1 AS SMALLINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
     expect(result.fetchRow()).toMatchObject([1]);
   });
 
   it("supports INTEGER", async () => {
-    const result = await connection.executeIterator(`SELECT CAST(1 AS INTEGER)`, {
+    const result = await connection.executeIterator<number[]>(`SELECT CAST(1 AS INTEGER)`, {
       rowResultFormat: RowResultFormat.Array,
     });
     expect(result.fetchRow()).toMatchObject([1]);
@@ -47,69 +47,69 @@ describe("Data type mapping", () => {
 
   it("supports BIGINT", async () => {
     const bigInt = 9223372036854775807n;
-    const result = await connection.executeIterator(`SELECT CAST (${bigInt} AS BIGINT)`, {
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${bigInt} AS BIGINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = result.fetchRow<number[]>()[0];
+    const resultValue = result.fetchRow()[0];
     expect(resultValue).toEqual(bigInt);
   });
 
   it("supports HUGEINT - positive max", async () => {
     const hugeInt = 170141183460469231731687303715884105727n;
-    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = result.fetchRow<number[]>()[0];
+    const resultValue = result.fetchRow()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
   it("supports HUGEINT - large negative", async () => {
     const hugeInt = -4565365654654345325455654365n;
-    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = result.fetchRow<number[]>()[0];
+    const resultValue = result.fetchRow()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
   it("supports HUGEINT - small positive number", async () => {
     const hugeInt = 132142n;
-    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = result.fetchRow<number[]>()[0];
+    const resultValue = result.fetchRow()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
   it("supports HUGEINT - negative 1", async () => {
     const hugeInt = -1n;
-    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = result.fetchRow<number[]>()[0];
+    const resultValue = result.fetchRow()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
   it("supports HUGEINT - large negative number", async () => {
     const hugeInt = -354235423543264236543654n;
-    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = result.fetchRow<number[]>()[0];
+    const resultValue = result.fetchRow()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
   it("supports HUGEINT - negative max", async () => {
     const hugeInt = -170141183460469231731687303715884105727n;
-    const result = await connection.executeIterator(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultValue = result.fetchRow<number[]>()[0];
+    const resultValue = result.fetchRow()[0];
     expect(resultValue).toEqual(hugeInt);
   });
 
   it("supports common types", async () => {
-    const result = await connection.executeIterator(
+    const result = await connection.executeIterator<any[]>(
       `SELECT 
               null,
               true,
@@ -143,24 +143,24 @@ describe("Data type mapping", () => {
 
   // Note: even though there is a CHAR type in the source code, it is simply an alias to VARCHAR
   it("supports CHAR", async () => {
-    const result = await connection.executeIterator(`SELECT CAST('a' AS CHAR)`, {
+    const result = await connection.executeIterator<string[]>(`SELECT CAST('a' AS CHAR)`, {
       rowResultFormat: RowResultFormat.Array,
     });
     expect(result.fetchRow()).toMatchObject(["a"]);
   });
 
   it("supports TIME", async () => {
-    const result = await connection.executeIterator(`SELECT TIME '01:01:01.001'`, {
+    const result = await connection.executeIterator<number[]>(`SELECT TIME '01:01:01.001'`, {
       rowResultFormat: RowResultFormat.Array,
     });
     expect(result.fetchRow()).toMatchObject([1 + 1000 + 60000 + 60000 * 60]);
   });
 
   it("supports BLOB", async () => {
-    const result = await connection.executeIterator(`SELECT 'AB'::BLOB;`, {
+    const result = await connection.executeIterator<Buffer[]>(`SELECT 'AB'::BLOB;`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    const resultBuffer = result.fetchRow<Buffer[]>()[0];
+    const resultBuffer = result.fetchRow()[0];
     const view = new Int8Array(resultBuffer);
     // ASCII "a"
     expect(view[0]).toBe(65);
@@ -170,7 +170,7 @@ describe("Data type mapping", () => {
 
   // TODO: either create a JS/TS object representing an interval or possibly convert to number
   it("supports INTERVAL", async () => {
-    const result = await connection.executeIterator(`SELECT INTERVAL '1' MONTH;`, {
+    const result = await connection.executeIterator<string[]>(`SELECT INTERVAL '1' MONTH;`, {
       rowResultFormat: RowResultFormat.Array,
     });
     expect(result.fetchRow()).toMatchObject(["1 month"]);

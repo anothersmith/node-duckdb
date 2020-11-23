@@ -5,9 +5,9 @@ const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv
 
 const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array };
 
-function readStream(rs: ResultStream): Promise<any[]> {
+function readStream<T>(rs: ResultStream<T>): Promise<T[]> {
   return new Promise((resolve, reject) => {
-    const elements: any[] = [];
+    const elements: T[] = [];
     rs.on("data", (el: any) => elements.push(el));
     rs.on("error", reject);
     rs.on("end", () => resolve(elements));

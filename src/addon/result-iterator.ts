@@ -1,14 +1,14 @@
 import { ResultType } from "@addon-types";
 import { ResultIteratorClass } from "../addon-bindings";
 
-export class ResultIterator {
-    constructor(private resultInterator: ResultIteratorClass) {}
-    public fetchRow<T>(): T {
-        return this.resultInterator.fetchRow<T>();
+export class ResultIterator<T> {
+    constructor(private resultInterator: ResultIteratorClass<T>) {}
+    public fetchRow(): T {
+        return this.resultInterator.fetchRow();
     }
-    public fetchAllRows<T>(): T[] {
+    public fetchAllRows(): T[] {
         const allRows: T[] = [];
-        for (let element = this.fetchRow<T>(); element !== null; element = this.fetchRow<T>()) {
+        for (let element = this.fetchRow(); element !== null; element = this.fetchRow()) {
             allRows.push(element);
           }
         return allRows;

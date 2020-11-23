@@ -2,8 +2,8 @@ import { Readable } from "stream";
 
 import { ResultIterator } from "./result-iterator";
 
-export class ResultStream extends Readable {
-  constructor(private resultIterator: ResultIterator) {
+export class ResultStream<T> extends Readable {
+  constructor(private resultIterator: ResultIterator<T>) {
     super({ objectMode: true });
   }
 

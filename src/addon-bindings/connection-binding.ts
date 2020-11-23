@@ -5,7 +5,7 @@ import { IExecuteOptions } from "@addon-types";
  */
 
 import { DuckDBBinding } from "./duckdb-binding";
-import { ResultIteratorBinding } from "./result-iterator-binding";
+import { ResultIteratorClass } from "./result-iterator-binding";
 
 // lambda doesn't work with npm module bindings
 // eslint-disable-next-line node/no-unpublished-require, @typescript-eslint/no-var-requires
@@ -13,7 +13,7 @@ const { Connection } = require("../../build/Release/node-duckdb-addon.node");
 
 export declare class ConnectionClass {
   constructor(db: InstanceType<typeof DuckDBBinding>);
-  public execute(command: string, options?: IExecuteOptions): Promise<InstanceType<typeof ResultIteratorBinding>>;
+  public execute<T>(command: string, options?: IExecuteOptions): Promise<ResultIteratorClass<T>>;
   public close(): void;
   public isClosed: boolean;
 }
