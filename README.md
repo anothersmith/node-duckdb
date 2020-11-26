@@ -1,11 +1,17 @@
-# NodeJS DuckDB driver with native bindings
+# Node-DuckDB
+
 ## Overview
-- This is a library that adds support for [DuckDB](https://duckdb.org/) to NodeJS. 
-- It comes preinstalled with DuckDB ver 0.2.2 with the parquet extension included. 
+
+- This is a library that adds support for [DuckDB](https://duckdb.org/) to NodeJS.
+- It comes preinstalled with DuckDB ver 0.2.2 with the parquet extension included.
 - Has been tested to work with Linux and MacOS.
+- Currently supports NodeJS v12.17.0+.
+- Supports BIGINT and HUGEINT types as [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt).
 
 ## Using
+
 [See examples](examples)
+
 ## Developing
 
 First build:
