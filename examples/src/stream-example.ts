@@ -25,7 +25,7 @@ async function outputToFileAsCsv() {
     await connection.execute("CREATE TABLE people(id INTEGER, name VARCHAR);");
     await connection.execute("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
 
-    // result is a stream of objects
+    // result is a stream of arrays
     const resultStream = await connection.execute("SELECT * FROM people;", {rowResultFormat: RowResultFormat.Array});
 
     const transformToCsvStream = new ArrayToCsvTransform();

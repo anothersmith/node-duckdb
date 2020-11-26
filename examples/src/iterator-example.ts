@@ -1,4 +1,5 @@
 import { Connection, DuckDB } from "@deepcrawl/node-duckdb";
+import { RowResultFormat } from "@deepcrawl/node-duckdb/dist/addon-types";
 
 async function queryDatabaseWithIterator() {
   // create new database in memory
@@ -19,6 +20,10 @@ async function queryDatabaseWithIterator() {
 
   // fetch and print the rest of rows
   console.log(result.fetchAllRows());
+
+  // do the same query, but return as arrays, rather than objects
+  const result2 = await connection.executeIterator("SELECT * FROM people;", {rowResultFormat: RowResultFormat.Array});
+  console.log(result2.fetchAllRows());
 
   // release resources
   connection.close();
