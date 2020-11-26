@@ -205,7 +205,10 @@ namespace NodeDuckDB {
       }
   }
   Napi::Value ResultIterator::Close(const Napi::CallbackInfo &info) {
-    result = nullptr;
+    result.reset();
     return info.Env().Undefined();
+  }
+  void ResultIterator::close() {
+    result.reset();
   }
 }

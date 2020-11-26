@@ -14,6 +14,7 @@ namespace NodeDuckDB {
 			static Napi::Object Create();
 			unique_ptr<duckdb::QueryResult> result;
 			ResultFormat rowResultFormat;
+			void close();
 
 		private:
 			static Napi::FunctionReference constructor;

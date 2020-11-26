@@ -3,6 +3,8 @@
 
 #include <napi.h>
 #include "duckdb.hpp"
+#include <vector>
+#include "result_iterator.h"
 
 namespace NodeDuckDB {
   class Connection : public Napi::ObjectWrap<Connection> {
@@ -18,6 +20,7 @@ namespace NodeDuckDB {
 
       shared_ptr<duckdb::DuckDB> database;
       shared_ptr<duckdb::Connection> connection;
+      std::shared_ptr<std::vector<ResultIterator*>> results;
   };
 }
 #endif
