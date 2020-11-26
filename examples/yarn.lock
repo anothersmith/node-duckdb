@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@deepcrawl/node-duckdb@^0.0.26":
+"@deepcrawl/node-duckdb@0.0.26":
   version "0.0.26"
   resolved "https://npm.pkg.github.com/download/@deepcrawl/node-duckdb/0.0.26/739d4b5891c0e7c06033f551246f70fd2d792e57f85c421ebfb457792741835f#5d3c7d8b2e19d59f84ba5f7e4ea27670ad905821"
   integrity sha512-R6fBjAmgqu5PhLRIajvOl88wuu7dObBbWim42edrVs96CQaKgRrtp7ASF7huanx0goMn8wGE96Q0AWOjmPp7/A==

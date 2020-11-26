@@ -38,11 +38,13 @@
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
+    "@types/stream-to-array": "^2.3.0",
     "cmake-js": "^6.1.0",
     "json-bigint": "^1.0.0",
     "node-addon-api": "^3.0.2",
     "prebuild-install": "^6.0.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "stream-to-array": "^2.3.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",

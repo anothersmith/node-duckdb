@@ -1,10 +1,20 @@
 import { Connection, DuckDB } from "@deepcrawl/node-duckdb";
+import { RowResultFormat } from "@deepcrawl/node-duckdb/dist/addon-types";
 import { createWriteStream } from "fs";
+import {Transform} from "stream";
 
 
-class MyWriteStream extends 
+class ArrayToCsvTransform extends Transform {
+    constructor() {
+        super({objectMode: true})
+    }
+    _transform(chunk: any[], _encoding: string, callback: any) {
+        this.push(chunk.join(",") + '\n');
+        callback();
+    }
+}
 
-async function outputToFile() {
+async function outputToFileAsCsv() {
     // create new database in memory
     const db = new DuckDB();
     // create a new connection to the database
@@ -15,14 +25,13 @@ async function outputToFile() {
     await connection.execute("CREATE TABLE people(id INTEGER, name VARCHAR);");
     await connection.execute("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
 
-    // result is a stream
-    const result = await connection.execute("SELECT * FROM people;");
+    // result is a stream of objects
+    const resultStream = await connection.execute("SELECT * FROM people;", {rowResultFormat: RowResultFormat.Array});
 
+    const transformToCsvStream = new ArrayToCsvTransform();
     const writeStream = createWriteStream("my-people-output");
-
-    result.pipe(writeStream).on("close", () => {
-        db.close();
-    })
+    // objects -> csv strings -> file
+    resultStream.pipe(transformToCsvStream).pipe(writeStream);
 }
 
-outputToFile();
+outputToFileAsCsv();

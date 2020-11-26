@@ -4,7 +4,7 @@ import { Connection, DuckDB } from "@addon";
 import { serializedSetArray, entireSerializedResultSet } from "./test-fixtures/json-serialization";
 import { readStream } from "./utils";
 import { createWriteStream } from "fs";
-
+import * as toArray from 'stream-to-array';
 const query = "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')";
 
 describe("JSON serialization", () => {
@@ -39,9 +39,10 @@ describe("JSON serialization", () => {
 
   it.only("is supported by stream - writing", async () => {
     const rs = await connection.execute<string>(query, { serializedJson: true });
+    const rs2 = await toArray(rs);
     const writeStream = createWriteStream("my-people-output");
     await new Promise((res, rej) => {
-      rs
+      rs2
         .pipe(writeStream)
         .on("end", res)
         .on("error", rej)
