@@ -1,7 +1,9 @@
+/* eslint-disable */
 import { Connection, DuckDB } from "@addon";
 
 import { serializedSetArray, entireSerializedResultSet } from "./test-fixtures/json-serialization";
 import { readStream } from "./utils";
+import { createWriteStream } from "fs";
 
 const query = "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')";
 
@@ -29,9 +31,21 @@ describe("JSON serialization", () => {
     expect(resultSet).toEqual(entireSerializedResultSet);
   });
 
-  it("is supported by stream", async () => {
+  it("is supported by stream - reading", async () => {
     const rs = await connection.execute<string>(query, { serializedJson: true });
     const allRows = await readStream(rs);
     expect(allRows).toEqual(serializedSetArray);
+  });
+
+  it.only("is supported by stream - writing", async () => {
+    const rs = await connection.execute<string>(query, { serializedJson: true });
+    const writeStream = createWriteStream("my-people-output");
+    await new Promise((res, rej) => {
+      rs
+        .pipe(writeStream)
+        .on("end", res)
+        .on("error", rej)
+        .on("close", res)
+    })
   });
 });
