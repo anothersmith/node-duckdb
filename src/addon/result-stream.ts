@@ -3,9 +3,9 @@ import { Readable } from "stream";
 import { ResultIterator } from "./result-iterator";
 
 export class ResultStream<T> extends Readable {
-  constructor(private resultIterator: ResultIterator<T>, jsonMode?: boolean) {
-    super({ objectMode: !jsonMode });
-    if (jsonMode) {
+  constructor(private resultIterator: ResultIterator<T>, serializedJson?: boolean) {
+    super({ objectMode: !serializedJson });
+    if (serializedJson) {
       this.setEncoding("utf-8")
     }
   }

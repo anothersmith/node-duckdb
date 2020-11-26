@@ -5,8 +5,7 @@ import jsonBigInt from "json-bigint";
 export class ResultIterator<T> {
     constructor(private resultInterator: ResultIteratorClass<T>) {}
     public fetchRow(): T | null {
-        const r = this.resultInterator.fetchRow();
-        return r;
+        return this.resultInterator.fetchRow();
     }
     public fetchRowJson(): string | null {
         const row = this.fetchRow();

@@ -4,3 +4,4 @@ duckdb
 addon
 dist
 tsconfig.json
+examples
