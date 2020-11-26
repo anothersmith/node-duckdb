@@ -7,6 +7,7 @@
 - Has been tested to work with Linux and MacOS.
 - Currently supports NodeJS v12.17.0+.
 - Supports BIGINT and HUGEINT types as [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt).
+- Provides an async API and a streaming one.
 
 ## Using
 
