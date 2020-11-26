@@ -21,7 +21,7 @@ describe("executeIterator on csv", () => {
       "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')",
       executeOptions,
     );
-    expect(result.fetchRow()).toMatchObject([60n]);
+    expect(result.fetchRow()).toMatchObject([BigInt(60)]);
     expect(result.fetchRow()).toBe(null);
   });
 

@@ -1,7 +1,7 @@
 import { Connection, DuckDB } from "@addon";
 
-const jsonResult = {
-  bigint_col: 0n,
+const expectedResult = {
+  bigint_col: BigInt(0),
   bool_col: true,
   date_string_col: "03/01/09",
   double_col: 0,
@@ -32,7 +32,7 @@ describe("Result iterator", () => {
       "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
     );
     const allRows = result.fetchAllRows();
-    expect(allRows[0]).toEqual(jsonResult);
+    expect(allRows[0]).toEqual(expectedResult);
     expect(allRows.length).toBe(8);
   });
 });

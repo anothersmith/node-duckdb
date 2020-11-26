@@ -25,7 +25,7 @@ describe("Result iterator (streaming)", () => {
     expect(() => result1.fetchRow()).toThrow(
       "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
     );
-    expect(result2.fetchRow()).toEqual([60n]);
+    expect(result2.fetchRow()).toEqual([BigInt(60)]);
   });
 
   it("gracefully handles inactive stream - second query is materialized", async () => {
@@ -38,14 +38,14 @@ describe("Result iterator (streaming)", () => {
     expect(() => result1.fetchRow()).toThrow(
       "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
     );
-    expect(result2.fetchRow()).toEqual([60n]);
+    expect(result2.fetchRow()).toEqual([BigInt(60)]);
   });
 
   it("works fine if done one after another", async () => {
     const result1 = await connection.executeIterator(query, executeOptions);
-    expect(result1.fetchRow()).toEqual([60n]);
+    expect(result1.fetchRow()).toEqual([BigInt(60)]);
     const result2 = await connection.executeIterator(query, executeOptions);
-    expect(result2.fetchRow()).toEqual([60n]);
+    expect(result2.fetchRow()).toEqual([BigInt(60)]);
   });
 
   it("is able to close - throws error when reading from closed result", async () => {
@@ -63,8 +63,8 @@ describe("Result iterator (streaming)", () => {
     const connection2 = new Connection(db);
     const result1 = await connection1.executeIterator(query, executeOptions);
     const result2 = await connection2.executeIterator(query, executeOptions);
-    expect(result1.fetchRow()).toEqual([60n]);
-    expect(result2.fetchRow()).toEqual([60n]);
+    expect(result1.fetchRow()).toEqual([BigInt(60)]);
+    expect(result2.fetchRow()).toEqual([BigInt(60)]);
   });
 
   it("works fine if two streaming operations are done on separate databases", async () => {
