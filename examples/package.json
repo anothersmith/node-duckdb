@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "run-iterator-example": "node dist/iterator-example.js"
+    "run-iterator-example": "node dist/iterator-example.js",
+    "run-stream-example": "node dist/stream-example.js"
   },
   "dependencies": {
     "@deepcrawl/node-duckdb": "^0.0.26",

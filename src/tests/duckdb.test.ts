@@ -32,7 +32,8 @@ describe("DuckDB", () => {
     await expect(p).rejects.toSatisfy((e: Error) => {
       return (
         e.message === "Database that this connection belongs to has been closed!" ||
-        e.message === "INTERRUPT: Interrupted!"
+        e.message === "INTERRUPT: Interrupted!" ||
+        e.message === "INTERRUPT Error: Interrupted!"
       );
     });
     expect(db.isClosed).toBe(true);

@@ -1,10 +1,19 @@
 import { ResultType } from "@addon-types";
 import { ResultIteratorClass } from "../addon-bindings";
+import jsonBigInt from "json-bigint";
 
 export class ResultIterator<T> {
     constructor(private resultInterator: ResultIteratorClass<T>) {}
-    public fetchRow(): T {
-        return this.resultInterator.fetchRow();
+    public fetchRow(): T | null {
+        const r = this.resultInterator.fetchRow();
+        return r;
+    }
+    public fetchRowJson(): string | null {
+        const row = this.fetchRow();
+        if (row === null) {
+            return null;
+        }
+        return jsonBigInt.stringify(row);
     }
     public fetchAllRows(): T[] {
         const allRows: T[] = [];
@@ -12,6 +21,9 @@ export class ResultIterator<T> {
             allRows.push(element);
           }
         return allRows;
+    }
+    public fetchAllRowsJson(): string {
+        return jsonBigInt.stringify(this.fetchAllRows());
     }
     public describe(): string[][] {
         return this.resultInterator.describe();

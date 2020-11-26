@@ -2,8 +2,8 @@ import { Connection, DuckDB } from "@addon";
 import { RowResultFormat } from "@addon-types";
 
 const query = "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')";
-const jsonResult = {
-  bigint_col: 0n,
+const objectResult = {
+  bigint_col: BigInt(0),
   bool_col: true,
   date_string_col: "03/01/09",
   double_col: 0,
@@ -16,7 +16,7 @@ const jsonResult = {
   tinyint_col: 0,
 };
 
-const arrayResult = [4, true, 0, 0, 0, 0n, 0, 0, "03/01/09", "0", 1235865600000];
+const arrayResult = [4, true, 0, 0, 0, BigInt(0), 0, 0, "03/01/09", "0", 1235865600000];
 describe("Result format", () => {
   let db: DuckDB;
   let connection: Connection;
@@ -30,14 +30,14 @@ describe("Result format", () => {
     db.close();
   });
 
-  it("is selected as JSON by default", async () => {
+  it("is selected as Object by default", async () => {
     const result = await connection.executeIterator(query);
-    expect(result.fetchRow()).toEqual(jsonResult);
+    expect(result.fetchRow()).toEqual(objectResult);
   });
 
-  it("can be specified explicitly as JSON", async () => {
+  it("can be specified explicitly as Object", async () => {
     const result = await connection.executeIterator(query, { rowResultFormat: RowResultFormat.Object });
-    expect(result.fetchRow()).toEqual(jsonResult);
+    expect(result.fetchRow()).toEqual(objectResult);
   });
 
   it("can be specified explicitly as array", async () => {

@@ -3,13 +3,16 @@ import { Readable } from "stream";
 import { ResultIterator } from "./result-iterator";
 
 export class ResultStream<T> extends Readable {
-  constructor(private resultIterator: ResultIterator<T>) {
-    super({ objectMode: true });
+  constructor(private resultIterator: ResultIterator<T>, jsonMode?: boolean) {
+    super({ objectMode: !jsonMode });
+    if (jsonMode) {
+      this.setEncoding("utf-8")
+    }
   }
 
   public _read(): void {
     try {
-      const element = this.resultIterator.fetchRow();
+      const element = this.readableObjectMode ? this.resultIterator.fetchRow() : this.resultIterator.fetchRowJson();
       this.push(element);
       if (element === null) {
         this.close();
