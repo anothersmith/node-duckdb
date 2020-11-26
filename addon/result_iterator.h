@@ -20,10 +20,7 @@ namespace NodeDuckDB {
 			Napi::Value FetchRow(const Napi::CallbackInfo& info);
 			Napi::Value Describe(const Napi::CallbackInfo& info);
 			Napi::Value GetType(const Napi::CallbackInfo &info);
-			Napi::Value Close(const Napi::CallbackInfo &info) {
-				result = nullptr;
-				return info.Env().Undefined();
-			}
+			Napi::Value Close(const Napi::CallbackInfo &info);
 			Napi::Value IsClosed(const Napi::CallbackInfo &info);
 			unique_ptr<duckdb::DataChunk> current_chunk;
 			uint64_t chunk_offset = 0;
