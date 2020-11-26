@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@deepcrawl/node-duckdb@0.0.29":
-  version "0.0.29"
-  resolved "https://npm.pkg.github.com/download/@deepcrawl/node-duckdb/0.0.29/40d89927314aca45d97a6f8e9466ced9bb840889678890524c56fb8df7c3f7d8#b770c5dca74caec0a56013ff13fb2b6f1c3dbcda"
-  integrity sha512-t5+5nKe7OmMav4HGuakiNrfslY5wnRVxnTe+aOEbUL259LpUTg+L84/cIz33PCf3yKTg3OCe/1ncFFy5uVtdfA==
+"@deepcrawl/node-duckdb@0.0.32":
+  version "0.0.32"
+  resolved "https://npm.pkg.github.com/download/@deepcrawl/node-duckdb/0.0.32/11ce6ffef2ddb3082d78985daadcddd77fd00b92c5179f0f48ff5df2e338ee20#35e9f1464e6731f7a59719f61875ebfd824374f6"
+  integrity sha512-D9C7y6pbdL1RR+EifZpIA4XU4LFfEI8bs6QZWThdtmRytR0XaE9DJIFbYanIfCK5DRv5zAIWgdWoCa/w1n01Ew==
   dependencies:
     cmake-js "^6.1.0"
     node-addon-api "^3.0.2"
