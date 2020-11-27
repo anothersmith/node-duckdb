@@ -1,6 +1,6 @@
 {
   "name": "@deepcrawl/node-duckdb",
-  "version": "0.0.29",
+  "version": "0.0.32",
   "private": false,
   "repository": {
     "type": "git",

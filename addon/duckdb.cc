@@ -62,7 +62,7 @@ namespace NodeDuckDB {
   }
 
   Napi::Value DuckDB::Close(const Napi::CallbackInfo& info) {
-    database = nullptr;
+    database.reset();
     return info.Env().Undefined();
   }
   Napi::Value DuckDB::IsClosed(const Napi::CallbackInfo &info) {
