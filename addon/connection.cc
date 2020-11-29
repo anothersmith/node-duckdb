@@ -8,6 +8,9 @@
 #include "async_executor.h"
 #include <iostream>
 #include "type-converters.h"
+#include <vector>
+#include "result_iterator.h"
+#include <memory>
 using namespace std;
 
 
@@ -41,6 +44,7 @@ namespace NodeDuckDB {
 
     bool read_only = false;
     string database_name = "";
+    results = std::make_shared<std::vector<ResultIterator*>>();
 
     duckdb::DBConfig config;
     if (read_only)
@@ -83,7 +87,7 @@ namespace NodeDuckDB {
         } 
       }
 
-      AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterializedValue, rowResultFormatValue);
+      AsyncExecutor* wk = new AsyncExecutor(env, query, connection, deferred, forceMaterializedValue, rowResultFormatValue, results);
       wk->Queue();
     } catch (Napi::Error& e) {
       deferred.Reject(e.Value());
@@ -95,8 +99,13 @@ namespace NodeDuckDB {
   }
 
   Napi::Value Connection::Close(const Napi::CallbackInfo& info) {
-    connection = nullptr;
-    database = nullptr;
+    for(auto& result : *results) {
+      if (result != nullptr) {
+        result->close();
+      }
+    }
+    connection.reset();
+    database.reset();
     return info.Env().Undefined();
   }
   Napi::Value Connection::IsClosed(const Napi::CallbackInfo &info) {

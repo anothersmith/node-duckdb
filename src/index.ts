@@ -1,2 +1,2 @@
 export { DuckDB, Connection, ResultIterator, ResultStream } from "./addon";
-export { ResultType } from "./addon-types";
+export { ResultType, RowResultFormat } from "./addon-types";

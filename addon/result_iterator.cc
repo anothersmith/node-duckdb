@@ -204,4 +204,11 @@ namespace NodeDuckDB {
         return Napi::String::New(env, val.ToString());
       }
   }
+  Napi::Value ResultIterator::Close(const Napi::CallbackInfo &info) {
+    result.reset();
+    return info.Env().Undefined();
+  }
+  void ResultIterator::close() {
+    result.reset();
+  }
 }
