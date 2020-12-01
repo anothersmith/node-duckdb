@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "private": false,
   "repository": {
     "type": "git",
