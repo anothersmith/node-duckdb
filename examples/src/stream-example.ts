@@ -1,4 +1,4 @@
-import { Connection, DuckDB, RowResultFormat } from "@deepcrawl/node-duckdb";
+import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
 import { createWriteStream } from "fs";
 import {Transform} from "stream";
 
