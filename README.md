@@ -17,14 +17,19 @@
 
 First build:
 
-1. `yarn install` - installs dependencies including duckdb
+1. `yarn install` - installs dependencies including downloading duckdb
 2. `yarn build:ts` - builds typescript
 3. `yarn test` - runs all tests
 
 Other useful scripts:
 
-- `yarn build:[addon|duckdb|ts]` - build native addon bindings, duckdb or the typescript code
-- `yarn lint`
+- `yarn build` - build everything
+- `yarn build:addon` - build just the bindings code
+- `yarn build:duckdb` - build just the duckdb database
+- `yarn build:ts` - build just the typescript code
+- `yarn lint` - lint the project
+- `yarn test` - run all tests
+- `yarn test csv` - run just the csv test suite
 
 ## Publishing
 
