@@ -16,6 +16,15 @@
       6
     ]
   },
+  "description": "DuckDB for Node.JS",
+  "keywords": [
+    "duckdb",
+    "sql",
+    "database",
+    "db",
+    "async",
+    "stream"
+  ],
   "scripts": {
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
     "build:addon": "rimraf build && cmake-js compile --CDnapi_build_version=6",
