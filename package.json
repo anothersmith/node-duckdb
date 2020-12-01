@@ -1,5 +1,5 @@
 {
-  "name": "@deepcrawl/node-duckdb",
+  "name": "node-duckdb",
   "version": "0.0.32",
   "private": false,
   "repository": {
