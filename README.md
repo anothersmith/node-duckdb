@@ -11,7 +11,7 @@
 
 ## Using
 
-[See examples](examples)
+[See examples](https://github.com/deepcrawl/node-duckdb/tree/master/examples)
 
 ## Developing
 
