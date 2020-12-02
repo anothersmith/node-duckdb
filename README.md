@@ -11,7 +11,7 @@
 
 ## Using
 
-[See examples](examples)
+[See examples](https://github.com/deepcrawl/node-duckdb/tree/master/examples)
 
 ## Developing
 
@@ -34,4 +34,4 @@ Other useful scripts:
 ## Publishing
 
 - `export GITHUB_TOKEN=<your PAT>` - create a PAT in github that allows uploading artifacts to github releases
-- `yarn login --registry=https://npm.pkg.github.com && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
+- `yarn login && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
