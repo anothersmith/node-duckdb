@@ -5,3 +5,5 @@ coverage
 duckdb
 duckdb.tar.gz
 prebuilds
+.idea
+cmake-build-debug

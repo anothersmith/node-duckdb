@@ -3,13 +3,13 @@ import { Connection, DuckDB } from "@addon";
 const jsonResult = {
   bigint_col: 0n,
   bool_col: true,
-  date_string_col: "03/01/09",
+  date_string_col: Buffer.from([48, 51, 47, 48, 49, 47, 48, 57]),
   double_col: 0,
   float_col: 0,
   id: 4,
   int_col: 0,
   smallint_col: 0,
-  string_col: "0",
+  string_col: Buffer.from([48]),
   timestamp_col: 1235865600000,
   tinyint_col: 0,
 };

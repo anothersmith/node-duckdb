@@ -32,7 +32,7 @@
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
-    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.3.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.3 duckdb && rm duckdb.tar.gz",
     "install": "prebuild-install --verbose -d -r napi || (yarn download-duckdb && yarn build:duckdb && yarn prebuild:current-target)",
     "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
     "lint:fix": "yarn lint --fix",
