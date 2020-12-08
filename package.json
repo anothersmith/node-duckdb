@@ -11,13 +11,18 @@
     "async",
     "stream"
   ],
+  "homepage": "https://github.com/deepcrawl/node-duckdb#readme",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/deepcrawl/node-duckdb.git",
-    "directory": "node-duckdb"
+    "url": "https://github.com/deepcrawl/node-duckdb.git"
   },
   "license": "MIT",
   "author": "DeepCrawl",
+  "contributors": [
+    "Dan Forsberg <dan.forsberg@deepcrawl.com> (https://github.com/dforsber)",
+    "Pieter Raubenheimer <pieter.raubenheimer@deepcrawl.com> (https://github.com/jupiter)",
+    "Rostislav Provodenko <rostislav.provodenko@deepcrawl.com> (https://github.com/rostislavdeepcrawl)"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "binary": {
