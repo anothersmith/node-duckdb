@@ -33,6 +33,7 @@ Other useful scripts:
 - `yarn test csv` - run just the csv test suite
 
 Workflow notes:
+
 - if addon code is changed in your PR, the package.json version should also be changed manually, otherwise the old binary will be used in CI/CD and elsewhere
 
 ## Automated Publishing
