@@ -161,4 +161,8 @@ describe("DuckDB configuration", () => {
   it("does not allow to specify invalid enableCopy", () => {
     expect(() => new DuckDB(<any>{ options: { enableCopy: 10 } })).toThrow("Invalid enableCopy: must be a boolean");
   });
+
+  it("returns package version", async () => {
+    expect(await DuckDB.getBindingsVersion()).toBe("0.0.39");
+  });
 });
