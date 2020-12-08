@@ -34,6 +34,8 @@ jobs:
           yarn publish --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   build:
     needs: release
     runs-on: ubuntu-latest

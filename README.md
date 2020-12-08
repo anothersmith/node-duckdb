@@ -17,9 +17,10 @@
 
 First build:
 
-1. `yarn install` - installs dependencies including downloading duckdb
-2. `yarn build:ts` - builds typescript
-3. `yarn test` - runs all tests
+1. `export NPM_TOKEN=<your token for the NPM registry>`
+2. `yarn install` - installs dependencies including downloading duckdb
+3. `yarn build:ts` - builds typescript
+4. `yarn test` - runs all tests
 
 Other useful scripts:
 
@@ -31,7 +32,14 @@ Other useful scripts:
 - `yarn test` - run all tests
 - `yarn test csv` - run just the csv test suite
 
-## Publishing
+## Automated Publishing
+
+- Change your yarn config: `yarn config set version-git-message "Release: v%s"`
+- Create a separate branch and on that branch:
+  - `yarn version`
+  - rebase and merge or regular merge the PR into master
+
+## Manual Publishing
 
 - `export GITHUB_TOKEN=<your PAT>` - create a PAT in github that allows uploading artifacts to github releases
 - `yarn login && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
