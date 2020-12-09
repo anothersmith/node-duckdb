@@ -34,7 +34,7 @@ Note: this will download the duckdb binary for your platform (currently Linux an
 
 ### Usage
 
-Using node-duckdb is really simple:
+Using node-duckdb is easy:
 
 ```
 const db = new DuckDB();
@@ -44,7 +44,7 @@ await connection.execute("SELECT * FROM mytable;");
 
 #### Promise API example
 
-A simple example using promises:
+An example using promises:
 
 ```
 import { Connection, DuckDB } from "node-duckdb";
@@ -74,7 +74,7 @@ queryDatabaseWithIterator();
 
 #### Streaming API example
 
-A simple demo of reading from DuckDB, transforming to CSV and writing to file using the streaming API:
+A demo of reading from DuckDB, transforming to CSV and writing to file using the streaming API:
 
 ```
 import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
