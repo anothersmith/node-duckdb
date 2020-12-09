@@ -5,3 +5,5 @@ coverage
 duckdb
 duckdb.tar.gz
 prebuilds
+temp
+etc
