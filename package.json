@@ -53,15 +53,18 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn cleanup:binaries && yarn prebuild:all-targets && yarn prebuild:upload",
-    "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
+    "test": "yarn build:ts && jest --runInBand --testTimeout=60000",
+    "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown --input-folder temp"
   },
   "dependencies": {
+    "@microsoft/api-extractor": "^7.12.0",
     "cmake-js": "^6.1.0",
     "node-addon-api": "^3.0.2",
     "prebuild-install": "^6.0.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.11.3",
     "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@zerollup/ts-transform-paths": "^1.7.18",

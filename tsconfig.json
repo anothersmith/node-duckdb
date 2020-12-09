@@ -19,7 +19,7 @@
       "declaration": true,                      /* Generates corresponding '.d.ts' file. */
       "declarationMap": true   ,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
       "composite": false,                       /* Enable project compilation */
-      "removeComments": true,                   /* Do not emit comments to output. */
+      "removeComments": false,                   /* Do not emit comments to output. */
       "importHelpers": false,                   /* Import emit helpers from 'tslib'. */
 
       /* Strict Type-Checking Options */
@@ -33,7 +33,7 @@
       "alwaysStrict": true,                     /* Parse in strict mode and emit "use strict" for each source file. */
 
       /* Additional Checks */
-      "noUnusedLocals": true,                   /* Report errors on unused locals. */
+      "noUnusedLocals": false,                   /* Report errors on unused locals. */
       "noUnusedParameters": true,               /* Report errors on unused parameters. */
       "noImplicitReturns": true,                /* Report error when not all code paths in function return a value. */
       "noFallthroughCasesInSwitch": true,       /* Report errors for fallthrough cases in switch statement. */

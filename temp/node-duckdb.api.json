@@ -1,0 +1,1718 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.12.0",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "node-duckdb!",
+  "docComment": "/**\n * Node.js bindings for DuckDB from {@link https://www.deepcrawl.com/ | DeepCrawl}\n *\n * @example\n *\n * Do some simple querying and print the result\n * ```\n * import { Connection, DuckDB } from \"node-duckdb\";\n *\n * async function queryDatabaseWithIterator() {\n *   // create new database in memory\n *   const db = new DuckDB();\n *   // create a new connection to the database\n *  const connection = new Connection(db);\n *\n *  // perform some queries\n *  await connection.executeIterator(\"CREATE TABLE people(id INTEGER, name VARCHAR);\");\n *  await connection.executeIterator(\"INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');\");\n *  const result = await connection.executeIterator(\"SELECT * FROM people;\");\n *\n *  // fetch and print result\n *  console.log(result.fetchAllRows());\n *\n *  // release resources\n *  connection.close();\n *  db.close();\n * }\n *\n * queryDatabaseWithIterator();\n * ```\n *\n * @packageDocumentation\n */\n",
+  "name": "node-duckdb",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "node-duckdb!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Enum",
+          "canonicalReference": "node-duckdb!AccessMode:enum",
+          "docComment": "/**\n * Access mode specifier\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare enum AccessMode "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AccessMode",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!AccessMode.Automatic:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Automatic = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "1"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Automatic",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!AccessMode.ReadOnly:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ReadOnly = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "2"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "ReadOnly",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!AccessMode.ReadWrite:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ReadWrite = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "3"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "ReadWrite",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!AccessMode.Undefined:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Undefined = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "0"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Undefined",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "node-duckdb!Connection:class",
+          "docComment": "/**\n * The Connection class represents a DuckDB connection.\n *\n * @remarks\n *\n * The connection instance is what executes queries. A single db class can have multiple connections. Having more than one connection instance is required when executing concurrent queries.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class Connection "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "Connection",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "node-duckdb!Connection:constructor(1)",
+              "docComment": "/**\n * Connection constructor.\n *\n * @param duckdb - {@link DuckDB | DuckDB} instance to connect to.\n *\n * @example\n *\n * Initializing a connection:\n * ```\n * import { DuckDB } from \"node-duckdb\";\n * const db = new DuckDB();\n * const connection = new Connection(db);\n * ```\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(duckdb: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DuckDB",
+                  "canonicalReference": "node-duckdb!DuckDB:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "duckdb",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!Connection#close:member(1)",
+              "docComment": "/**\n * Close the connection (also closes all {@link ResultStream | ResultStream} or {@link ResultIterator | ResultIterator} objects associated with this connection).\n *\n * @remarks\n *\n * Even though GC will automatically destroy the Connection object at some point, DuckDB data is stored in the native address space, not the V8 heap, meaning you can easily have a Node.js process taking gigabytes of memory (more than the default heap size for Node.js) with V8 not triggering GC. So, definitely think about manually calling `close()`.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "close(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "close"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!Connection#execute:member(1)",
+              "docComment": "/**\n * Asynchronously executes the query and returns a node.js stream that wraps the result set.\n *\n * @param command - SQL command to execute\n *\n * @param options - optional options object of type {@link IExecuteOptions | IExecuteOptions}\n *\n * @example\n *\n * Streaming results of a DuckDB query into a CSV file:\n * ```\n * import { Connection, DuckDB, RowResultFormat } from \"node-duckdb\";\n * import { createWriteStream } from \"fs\";\n * import { Transform } from \"stream\";\n * class ArrayToCsvTransform extends Transform {\n *     constructor() {\n *        super({objectMode: true})\n *    }\n *    _transform(chunk: any[], _encoding: string, callback: any) {\n *        this.push(chunk.join(\",\") + '\\n');\n *        callback();\n *    }\n * }\n *\n * async function outputToFileAsCsv() {\n *     const db = new DuckDB();\n *     const connection = new Connection(db);\n *     await connection.execute(\"CREATE TABLE people(id INTEGER, name VARCHAR);\");\n *     await connection.execute(\"INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');\");\n *     const resultStream = await connection.execute(\"SELECT * FROM people;\", {rowResultFormat: RowResultFormat.Array});\n *     const transformToCsvStream = new ArrayToCsvTransform();\n *     const writeStream = createWriteStream(\"my-people-output\");\n *     resultStream.pipe(transformToCsvStream).pipe(writeStream);\n * }\n * outputToFileAsCsv();\n * ```\n *\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "execute<T>(command: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IExecuteOptions",
+                  "canonicalReference": "node-duckdb!IExecuteOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ResultStream",
+                  "canonicalReference": "node-duckdb!ResultStream:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<T>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 9
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "command",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "typeParameters": [
+                {
+                  "typeParameterName": "T",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                }
+              ],
+              "name": "execute"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!Connection#executeIterator:member(1)",
+              "docComment": "/**\n * Asynchronously executes the query and returns an iterator that points to the first result in the result set.\n *\n * @param command - SQL command to execute\n *\n * @param options - optional options object of type {@link IExecuteOptions | IExecuteOptions}\n *\n * @example\n *\n * Printing rows:\n * ```\n * import { Connection, DuckDB, RowResultFormat } from \"node-duckdb\";\n * async function queryDatabaseWithIterator() {\n *   const db = new DuckDB();\n *   const connection = new Connection(db);\n *   await connection.executeIterator(\"CREATE TABLE people(id INTEGER, name VARCHAR);\");\n *   await connection.executeIterator(\"INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');\");\n *   const result = await connection.executeIterator(\"SELECT * FROM people;\");\n *   // print the first row\n *   console.log(result.fetchRow());\n *   // print the rest of the rows\n *   console.log(result.fetchAllRows());\n *   const result2 = await connection.executeIterator(\"SELECT * FROM people;\", {rowResultFormat: RowResultFormat.Array});\n *   console.log(result2.fetchAllRows());\n *   connection.close();\n *   db.close();\n * }\n * queryDatabaseWithIterator();\n * ```\n *\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "executeIterator<T>(command: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IExecuteOptions",
+                  "canonicalReference": "node-duckdb!IExecuteOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ResultIterator",
+                  "canonicalReference": "node-duckdb!ResultIterator:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<T>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 9
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "command",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "typeParameters": [
+                {
+                  "typeParameterName": "T",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                }
+              ],
+              "name": "executeIterator"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!Connection#isClosed:member",
+              "docComment": "/**\n * If the connection is closed returns true, otherwise false.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get isClosed(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isClosed",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "node-duckdb!DuckDB:class",
+          "docComment": "/**\n * The DuckDB class represents a DuckDB database instance.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class DuckDB "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "DuckDB",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "node-duckdb!DuckDB:constructor(1)",
+              "docComment": "/**\n * DuckDB Database constructor. When called instantiates a native instance of DuckDB.\n *\n * @param config - optional configuration object of type {@link IDuckDBConfig | IDuckDBConfig}.\n *\n * @example\n *\n * Initializing a duckdb database in memory:\n * ```\n * import { DuckDB } from \"node-duckdb\";\n * const db = new DuckDB();\n * ```\n *\n * @example\n *\n * Initializing a duckdb database from file:\n * ```\n * import { DuckDB } from \"node-duckdb\";\n * const db = new DuckDB({ path: join(__dirname, \"./mydb\") });\n * ```\n *\n * @example\n *\n * Initializing a duckdb database from file and setting some additional options:\n * ```\n * import { DuckDB, OrderType } from \"node-duckdb\";\n * const db = new DuckDB({ path: join(__dirname, \"./mydb\"), options: { defaultOrderType: OrderType.Descending, temporaryDirectory: false } });\n * ```\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(config?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IDuckDBConfig",
+                  "canonicalReference": "node-duckdb!IDuckDBConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "config",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#accessMode:member",
+              "docComment": "/**\n * Returns the {@link AccessMode | access mode} used by the database.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get accessMode(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AccessMode",
+                  "canonicalReference": "node-duckdb!AccessMode:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "accessMode",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#checkPointWALSize:member",
+              "docComment": "/**\n * Returns the checkpoint write ahead log size used by the database.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get checkPointWALSize(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "checkPointWALSize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!DuckDB#close:member(1)",
+              "docComment": "/**\n * Closes the underlying duckdb database, frees associated memory and renders it unusuable.\n *\n * @remarks\n *\n * Even though GC will automatically destroy the Connection object at some point, DuckDB data is stored in the native address space, not the V8 heap, meaning you can easily have a Node.js process taking gigabytes of memory (more than the default heap size for Node.js) with V8 not triggering GC. So, definitely think about manually calling `close()`.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "close(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "close"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#collation:member",
+              "docComment": "/**\n * Returns the collation used by the database.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get collation(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "collation",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#defaultNullOrder:member",
+              "docComment": "/**\n * Returns the default {@link OrderByNullType | sort order for null values}.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get defaultNullOrder(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OrderByNullType",
+                  "canonicalReference": "node-duckdb!OrderByNullType:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "defaultNullOrder",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#defaultOrderType:member",
+              "docComment": "/**\n * Returns the default {@link OrderType | sort order}.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get defaultOrderType(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OrderType",
+                  "canonicalReference": "node-duckdb!OrderType:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "defaultOrderType",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#enableCopy:member",
+              "docComment": "/**\n * Returns true of copying is enabled, false otherwise.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get enableCopy(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "enableCopy",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#isClosed:member",
+              "docComment": "/**\n * Returns true if the underlying database has been closed, false otherwise.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get isClosed(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isClosed",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#maximumMemory:member",
+              "docComment": "/**\n * Returns the maximum memory limit for the database.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get maximumMemory(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "maximumMemory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#temporaryDirectory:member",
+              "docComment": "/**\n * Returns the temporary directory location for the database.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get temporaryDirectory(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "temporaryDirectory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!DuckDB#useTemporaryDirectory:member",
+              "docComment": "/**\n * Returns true if the database uses a temporary directory for storing data that does not fit into memory, false otherwise.\n *\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get useTemporaryDirectory(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "useTemporaryDirectory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "node-duckdb!IDuckDBConfig:interface",
+          "docComment": "/**\n * Configuration object for DuckDB\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface IDuckDBConfig "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "IDuckDBConfig",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBConfig#options:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IDuckDBOptionsConfig",
+                  "canonicalReference": "node-duckdb!IDuckDBOptionsConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "options",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBConfig#path:member",
+              "docComment": "/**\n * Path to the database file. If undefined, in-memory database is created\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "path?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "path",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "node-duckdb!IDuckDBOptionsConfig:interface",
+          "docComment": "/**\n * Options object type for the DuckDB class\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface IDuckDBOptionsConfig "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "IDuckDBOptionsConfig",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#accessMode:member",
+              "docComment": "/**\n * Access Mode\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "accessMode?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AccessMode",
+                  "canonicalReference": "node-duckdb!AccessMode:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "accessMode",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#checkPointWALSize:member",
+              "docComment": "/**\n * Checkpoint Write Ahead Log Size (in bytes)\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "checkPointWALSize?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "checkPointWALSize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#collation:member",
+              "docComment": "/**\n * Collation\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "collation?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "collation",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#defaultNullOrder:member",
+              "docComment": "/**\n * Default order for Null values\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "defaultNullOrder?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OrderByNullType",
+                  "canonicalReference": "node-duckdb!OrderByNullType:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "defaultNullOrder",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#defaultOrderType:member",
+              "docComment": "/**\n * Default Order\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "defaultOrderType?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OrderType",
+                  "canonicalReference": "node-duckdb!OrderType:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "defaultOrderType",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#enableCopy:member",
+              "docComment": "/**\n * Enable Copy\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "enableCopy?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "enableCopy",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#maximumMemory:member",
+              "docComment": "/**\n * Maximum memory limit for the databse (in bytes)\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "maximumMemory?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "maximumMemory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#temporaryDirectory:member",
+              "docComment": "/**\n * Location of the temporary directory\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "temporaryDirectory?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "temporaryDirectory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#useDirectIO:member",
+              "docComment": "/**\n * Whether to use Direct IO\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "useDirectIO?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "useDirectIO",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IDuckDBOptionsConfig#useTemporaryDirectory:member",
+              "docComment": "/**\n * Whether to use temporary directory to store data that doesn't fit in memory\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "useTemporaryDirectory?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "useTemporaryDirectory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "node-duckdb!IExecuteOptions:interface",
+          "docComment": "/**\n * Options for connection.execute\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface IExecuteOptions "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "IExecuteOptions",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IExecuteOptions#forceMaterialized:member",
+              "docComment": "/**\n * Materialized means that the whole result is loaded into memory, as opposed to streaming which means there is a pointer to the next row and rows are retrieved one by one. If falsy, DuckDB will *attempt* to not load the whole result set into memory at once.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "forceMaterialized?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "forceMaterialized",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "node-duckdb!IExecuteOptions#rowResultFormat:member",
+              "docComment": "/**\n * Row format\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rowResultFormat?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "RowResultFormat",
+                  "canonicalReference": "node-duckdb!RowResultFormat:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "rowResultFormat",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Enum",
+          "canonicalReference": "node-duckdb!OrderByNullType:enum",
+          "docComment": "/**\n * Null order specifier\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare enum OrderByNullType "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OrderByNullType",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderByNullType.Default:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Default = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "1"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Default",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderByNullType.Invalid:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Invalid = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "0"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Invalid",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderByNullType.NullsFirst:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NullsFirst = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "2"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "NullsFirst",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderByNullType.NullsLast:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NullsLast = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "3"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "NullsLast",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Enum",
+          "canonicalReference": "node-duckdb!OrderType:enum",
+          "docComment": "/**\n * Default sort order specifier\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare enum OrderType "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OrderType",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderType.Ascending:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Ascending = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "2"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Ascending",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderType.Default:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Default = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "1"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Default",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderType.Descending:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Descending = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "3"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Descending",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!OrderType.Invalid:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Invalid = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "0"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Invalid",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "node-duckdb!ResultIterator:class",
+          "docComment": "/**\n * ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the executeIterator method on the Connection class.\n *\n * @remarks\n *\n * The constructor for this class is marked as internal. Third-party code should not call the constructor directly or create subclasses that extend the `ResultIterator` class.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class ResultIterator<T> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "ResultIterator",
+          "members": [
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!ResultIterator#close:member(1)",
+              "docComment": "/**\n * Close the ResultIterator\n *\n * @remarks\n *\n * `close` on the connection automatically closes all associated ResultIterators.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "close(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "close"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!ResultIterator#describe:member(1)",
+              "docComment": "/**\n * Describe the result set schema.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "describe(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[][]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "describe"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!ResultIterator#fetchAllRows:member(1)",
+              "docComment": "/**\n * Fetch all rows\n *\n * @remarks\n *\n * Note, this may produce a `heap out of bounds` error in case when there is too much data. Either use the `fetchRow` or the `execute` method of the Connection class when there is a lot of data.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "fetchAllRows(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "T[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "fetchAllRows"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "node-duckdb!ResultIterator#fetchRow:member(1)",
+              "docComment": "/**\n * Fetch the next row\n *\n * @remarks\n *\n * First call returns the first row, when no more rows left `null` is returned.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "fetchRow(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "T"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "fetchRow"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!ResultIterator#isClosed:member",
+              "docComment": "/**\n * Returns true if ResultIterator is closed, false otherwise.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get isClosed(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isClosed",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "node-duckdb!ResultIterator#type:member",
+              "docComment": "/**\n * Get the {@link ResultType | ResultType} of the ResultIterator. This is specified by the options argument on `executeIterator`.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get type(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ResultType",
+                  "canonicalReference": "node-duckdb!ResultType:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "type",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "node-duckdb!ResultStream:class",
+          "docComment": "/**\n * This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by `execute`.\n *\n * @remarks\n *\n * The constructor for this class is marked as internal. Third-party code should not call the constructor directly or create subclasses that extend the `ResultStream` class.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class ResultStream<T> extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Readable",
+              "canonicalReference": "!internal.Readable:class"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "ResultStream",
+          "members": [],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Enum",
+          "canonicalReference": "node-duckdb!ResultType:enum",
+          "docComment": "/**\n * Specifier for how DuckDB attempts to load the result\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare enum ResultType "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ResultType",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!ResultType.Materialized:member",
+              "docComment": "/**\n * Load the whole result set into memory\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Materialized = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"Materialized\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Materialized",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!ResultType.Streaming:member",
+              "docComment": "/**\n * Keep pointer to the first row, don't load the whole result set all at once\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Streaming = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"Streaming\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Streaming",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Enum",
+          "canonicalReference": "node-duckdb!RowResultFormat:enum",
+          "docComment": "/**\n * Result format specifier for rows\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare enum RowResultFormat "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "RowResultFormat",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!RowResultFormat.Array:member",
+              "docComment": "/**\n * Array, e.g. [\"Bob\", 23]\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Array = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "1"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Array",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "node-duckdb!RowResultFormat.Object:member",
+              "docComment": "/**\n * Object, e.g. \\{name: \"Bob\", age: 23\\}\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Object = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "0"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Object",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
