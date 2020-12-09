@@ -8,5 +8,5 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [node-duckdb](./node-duckdb.md) | Node.js bindings for DuckDB from [DeepCrawl](https://www.deepcrawl.com/) |
+|  [node-duckdb](./node-duckdb.md) | Node.js bindings for DuckDB from [DeepCrawl](https://www.deepcrawl.com/)<!-- -->. |
 
