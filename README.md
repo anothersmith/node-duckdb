@@ -1,7 +1,5 @@
 # Node-DuckDB
 
----
-
 ###### [API](https://github.com/deepcrawl/node-duckdb/docs/api/node-duckdb.md) | [Code Of Conduct](https://github.com/deepcrawl/node-duckdb/docs/CODE_OF_CONDUCT.md) | [Contributing](https://github.com/deepcrawl/node-duckdb/docs/CONTRIBUTING.md) | [Developing](https://github.com/deepcrawl/node-duckdb/docs/DEVELOPING.md)
 
 > Production ready DuckDB Node.js library written in TypeScript.
