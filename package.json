@@ -54,7 +54,7 @@
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn cleanup:binaries && yarn prebuild:all-targets && yarn prebuild:upload",
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000",
-    "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown --input-folder temp && ./replace.sh"
+    "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./replace.sh"
   },
   "dependencies": {
     "@microsoft/api-extractor": "^7.12.0",
