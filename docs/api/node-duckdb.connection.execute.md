@@ -14,10 +14,10 @@ execute<T>(command: string, options?: IExecuteOptions): Promise<ResultStream<T>>
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  command | string | SQL command to execute |
-|  options | [IExecuteOptions](./node-duckdb.iexecuteoptions.md) | optional options object of type [IExecuteOptions](./node-duckdb.iexecuteoptions.md) |
+| Parameter | Type                                                | Description                                                                         |
+| --------- | --------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| command   | string                                              | SQL command to execute                                                              |
+| options   | [IExecuteOptions](./node-duckdb.iexecuteoptions.md) | optional options object of type [IExecuteOptions](./node-duckdb.iexecuteoptions.md) |
 
 <b>Returns:</b>
 
@@ -54,4 +54,3 @@ async function outputToFileAsCsv() {
 outputToFileAsCsv();
 
 ```
-

@@ -11,6 +11,7 @@ Close the ResultIterator
 ```typescript
 close(): void;
 ```
+
 <b>Returns:</b>
 
 void
@@ -18,4 +19,3 @@ void
 ## Remarks
 
 `close` on the connection automatically closes all associated ResultIterators.
-

@@ -9,7 +9,7 @@ ResultIterator represents the result set of a DuckDB query. Instances of this cl
 <b>Signature:</b>
 
 ```typescript
-export declare class ResultIterator<T> 
+export declare class ResultIterator<T>
 ```
 
 ## Remarks
@@ -18,17 +18,16 @@ The constructor for this class is marked as internal. Third-party code should no
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [isClosed](./node-duckdb.resultiterator.isclosed.md) |  | boolean | Returns true if ResultIterator is closed, false otherwise. |
-|  [type](./node-duckdb.resultiterator.type.md) |  | [ResultType](./node-duckdb.resulttype.md) | Get the [ResultType](./node-duckdb.resulttype.md) of the ResultIterator. This is specified by the options argument on <code>executeIterator</code>. |
+| Property                                             | Modifiers | Type                                      | Description                                                                                                                                         |
+| ---------------------------------------------------- | --------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [isClosed](./node-duckdb.resultiterator.isclosed.md) |           | boolean                                   | Returns true if ResultIterator is closed, false otherwise.                                                                                          |
+| [type](./node-duckdb.resultiterator.type.md)         |           | [ResultType](./node-duckdb.resulttype.md) | Get the [ResultType](./node-duckdb.resulttype.md) of the ResultIterator. This is specified by the options argument on <code>executeIterator</code>. |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [close()](./node-duckdb.resultiterator.close.md) |  | Close the ResultIterator |
-|  [describe()](./node-duckdb.resultiterator.describe.md) |  | Describe the result set schema. |
-|  [fetchAllRows()](./node-duckdb.resultiterator.fetchallrows.md) |  | Fetch all rows |
-|  [fetchRow()](./node-duckdb.resultiterator.fetchrow.md) |  | Fetch the next row |
-
+| Method                                                         | Modifiers | Description                     |
+| -------------------------------------------------------------- | --------- | ------------------------------- |
+| [close()](./node-duckdb.resultiterator.close.md)               |           | Close the ResultIterator        |
+| [describe()](./node-duckdb.resultiterator.describe.md)         |           | Describe the result set schema. |
+| [fetchAllRows()](./node-duckdb.resultiterator.fetchallrows.md) |           | Fetch all rows                  |
+| [fetchRow()](./node-duckdb.resultiterator.fetchrow.md)         |           | Fetch the next row              |

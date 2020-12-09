@@ -14,9 +14,9 @@ constructor(duckdb: DuckDB);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  duckdb | [DuckDB](./node-duckdb.duckdb.md) | [DuckDB](./node-duckdb.duckdb.md) instance to connect to. |
+| Parameter | Type                              | Description                                               |
+| --------- | --------------------------------- | --------------------------------------------------------- |
+| duckdb    | [DuckDB](./node-duckdb.duckdb.md) | [DuckDB](./node-duckdb.duckdb.md) instance to connect to. |
 
 ## Example
 
@@ -28,4 +28,3 @@ const db = new DuckDB();
 const connection = new Connection(db);
 
 ```
-

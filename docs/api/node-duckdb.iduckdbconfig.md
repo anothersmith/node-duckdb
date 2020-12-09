@@ -9,13 +9,12 @@ Configuration object for DuckDB
 <b>Signature:</b>
 
 ```typescript
-export interface IDuckDBConfig 
+export interface IDuckDBConfig
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [options?](./node-duckdb.iduckdbconfig.options.md) | [IDuckDBOptionsConfig](./node-duckdb.iduckdboptionsconfig.md) | <i>(Optional)</i> |
-|  [path?](./node-duckdb.iduckdbconfig.path.md) | string | <i>(Optional)</i> Path to the database file. If undefined, in-memory database is created |
-
+| Property                                           | Type                                                          | Description                                                                              |
+| -------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [options?](./node-duckdb.iduckdbconfig.options.md) | [IDuckDBOptionsConfig](./node-duckdb.iduckdboptionsconfig.md) | <i>(Optional)</i>                                                                        |
+| [path?](./node-duckdb.iduckdbconfig.path.md)       | string                                                        | <i>(Optional)</i> Path to the database file. If undefined, in-memory database is created |

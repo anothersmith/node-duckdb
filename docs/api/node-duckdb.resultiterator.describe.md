@@ -11,7 +11,7 @@ Describe the result set schema.
 ```typescript
 describe(): string[][];
 ```
+
 <b>Returns:</b>
 
 string\[\]\[\]
-

@@ -9,13 +9,12 @@ Specifier for how DuckDB attempts to load the result
 <b>Signature:</b>
 
 ```typescript
-export declare enum ResultType 
+export declare enum ResultType
 ```
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Materialized | <code>&quot;Materialized&quot;</code> | Load the whole result set into memory |
-|  Streaming | <code>&quot;Streaming&quot;</code> | Keep pointer to the first row, don't load the whole result set all at once |
-
+| Member       | Value                                 | Description                                                                |
+| ------------ | ------------------------------------- | -------------------------------------------------------------------------- |
+| Materialized | <code>&quot;Materialized&quot;</code> | Load the whole result set into memory                                      |
+| Streaming    | <code>&quot;Streaming&quot;</code>    | Keep pointer to the first row, don't load the whole result set all at once |

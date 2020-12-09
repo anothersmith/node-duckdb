@@ -42,6 +42,7 @@
     "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
     "eslint:check": "eslint --ext .js,.json,.ts ./",
     "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
+    "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./replace.sh",
     "install": "prebuild-install --verbose -d -r napi || (yarn download-duckdb && yarn build:duckdb && yarn prebuild:current-target)",
     "lint:check": "yarn prettier:check && yarn eslint:check && yarn clang:check",
     "lint:fix": "yarn prettier:fix && yarn eslint:fix && yarn clang:fix",
@@ -53,8 +54,7 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn cleanup:binaries && yarn prebuild:all-targets && yarn prebuild:upload",
-    "test": "yarn build:ts && jest --runInBand --testTimeout=60000",
-    "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./replace.sh"
+    "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
     "@microsoft/api-extractor": "^7.12.0",

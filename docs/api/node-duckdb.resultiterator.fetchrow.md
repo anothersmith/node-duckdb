@@ -11,6 +11,7 @@ Fetch the next row
 ```typescript
 fetchRow(): T;
 ```
+
 <b>Returns:</b>
 
 T
@@ -18,4 +19,3 @@ T
 ## Remarks
 
 First call returns the first row, when no more rows left `null` is returned.
-

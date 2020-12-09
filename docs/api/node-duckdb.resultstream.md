@@ -9,11 +9,11 @@ This is a Readable stream that wrapps the ResultIterator. Instances of this clas
 <b>Signature:</b>
 
 ```typescript
-export declare class ResultStream<T> extends Readable 
+export declare class ResultStream<T> extends Readable
 ```
+
 <b>Extends:</b> Readable
 
 ## Remarks
 
 The constructor for this class is marked as internal. Third-party code should not call the constructor directly or create subclasses that extend the `ResultStream` class.
-

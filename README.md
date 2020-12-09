@@ -1,11 +1,11 @@
 # Node-DuckDB
 
 ---
+
 ###### [API](https://github.com/deepcrawl/node-duckdb/docs/api/node-duckdb.md) | [Code Of Conduct](https://github.com/deepcrawl/node-duckdb/docs/CODE_OF_CONDUCT.md) | [Contributing](https://github.com/deepcrawl/node-duckdb/docs/CONTRIBUTING.md) | [Developing](https://github.com/deepcrawl/node-duckdb/docs/DEVELOPING.md)
 
 > Production ready DuckDB Node.js library written in TypeScript.
-[<img src="https://www.deepcrawl.com/wp-content/themes/deepcrawl/images/deepcrawl-logo.svg" height="200" width="300" align="right">](https://www.deepcrawl.com/)
-
+> [<img src="https://www.deepcrawl.com/wp-content/themes/deepcrawl/images/deepcrawl-logo.svg" height="200" width="300" align="right">](https://www.deepcrawl.com/)
 
 ## Overview
 
@@ -15,25 +15,37 @@
 - Currently supports NodeJS v12.17.0+.
 - Supports BIGINT and HUGEINT types as [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt).
 - Provides a **Promise**-based API and a **Stream**-based one.
+
 ## Getting Started
+
 ### Installation
+
 To use Node-DuckDB in your project:
+
 ```
 npm i node-duckdb
 ```
+
 or
+
 ```
 yarn add node-duckdb
 ```
+
 Note: this will download the duckdb binary for your platform (currently Linux and MacOS are supported), or if it's not available will attempt to build it.
+
 ### Usage
+
 Using node-duckdb is really simple:
+
 ```
 const db = new DuckDB();
 const connection = new Connection(db);
 await connection.execute("SELECT * FROM mytable;");
 ```
+
 #### Promise API example
+
 A simple example using promises:
 
 ```
@@ -61,7 +73,9 @@ async function queryDatabaseWithIterator() {
 queryDatabaseWithIterator();
 
 ```
+
 #### Streaming API example
+
 A simple demo of reading from DuckDB, transforming to CSV and writing to file using the streaming API:
 
 ```
@@ -84,7 +98,7 @@ async function outputToFileAsCsv() {
     // create new database in memory
     const db = new DuckDB();
     // create a new connection to the database
-    // note you can execute only one streaming query at a time per one connection   
+    // note you can execute only one streaming query at a time per one connection
     const connection = new Connection(db);
 
     // by default a query is a streaming one, as opposed to being materialized
@@ -105,10 +119,13 @@ outputToFileAsCsv();
 ```
 
 #### Complete sample project
+
 You can see a complete sample project using node-duckdb [here](https://github.com/deepcrawl/node-duckdb/tree/master/examples).
 
 ## API
+
 API documentation is found [here](https://github.com/deepcrawl/node-duckdb/docs/api/node-duckdb.md).
 
 ## Developing
+
 Documentation for developers is found [here](https://github.com/deepcrawl/node-duckdb/docs/DEVELOPING.md).

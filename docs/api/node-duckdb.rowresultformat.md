@@ -9,13 +9,12 @@ Result format specifier for rows
 <b>Signature:</b>
 
 ```typescript
-export declare enum RowResultFormat 
+export declare enum RowResultFormat
 ```
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Array | <code>1</code> | Array, e.g. \["Bob", 23\] |
-|  Object | <code>0</code> | Object, e.g. {<!-- -->name: "Bob", age: 23<!-- -->} |
-
+| Member | Value          | Description                                         |
+| ------ | -------------- | --------------------------------------------------- |
+| Array  | <code>1</code> | Array, e.g. \["Bob", 23\]                           |
+| Object | <code>0</code> | Object, e.g. {<!-- -->name: "Bob", age: 23<!-- -->} |

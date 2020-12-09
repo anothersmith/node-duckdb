@@ -9,15 +9,14 @@ Null order specifier
 <b>Signature:</b>
 
 ```typescript
-export declare enum OrderByNullType 
+export declare enum OrderByNullType
 ```
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Default | <code>1</code> |  |
-|  Invalid | <code>0</code> |  |
-|  NullsFirst | <code>2</code> |  |
-|  NullsLast | <code>3</code> |  |
-
+| Member     | Value          | Description |
+| ---------- | -------------- | ----------- |
+| Default    | <code>1</code> |             |
+| Invalid    | <code>0</code> |             |
+| NullsFirst | <code>2</code> |             |
+| NullsLast  | <code>3</code> |             |

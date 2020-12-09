@@ -14,9 +14,9 @@ constructor(config?: IDuckDBConfig);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  config | [IDuckDBConfig](./node-duckdb.iduckdbconfig.md) | optional configuration object of type [IDuckDBConfig](./node-duckdb.iduckdbconfig.md)<!-- -->. |
+| Parameter | Type                                            | Description                                                                                    |
+| --------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| config    | [IDuckDBConfig](./node-duckdb.iduckdbconfig.md) | optional configuration object of type [IDuckDBConfig](./node-duckdb.iduckdbconfig.md)<!-- -->. |
 
 ## Example 1
 
@@ -47,4 +47,3 @@ import { DuckDB, OrderType } from "node-duckdb";
 const db = new DuckDB({ path: join(__dirname, "./mydb"), options: { defaultOrderType: OrderType.Descending, temporaryDirectory: false } });
 
 ```
-

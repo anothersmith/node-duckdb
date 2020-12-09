@@ -19,7 +19,7 @@ export enum OrderType {
   Descending = 3,
 }
 /**
- * Null order specifier 
+ * Null order specifier
  * @public
  */
 export enum OrderByNullType {

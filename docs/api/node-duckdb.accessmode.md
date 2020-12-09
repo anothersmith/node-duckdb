@@ -9,15 +9,14 @@ Access mode specifier
 <b>Signature:</b>
 
 ```typescript
-export declare enum AccessMode 
+export declare enum AccessMode
 ```
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Automatic | <code>1</code> |  |
-|  ReadOnly | <code>2</code> |  |
-|  ReadWrite | <code>3</code> |  |
-|  Undefined | <code>0</code> |  |
-
+| Member    | Value          | Description |
+| --------- | -------------- | ----------- |
+| Automatic | <code>1</code> |             |
+| ReadOnly  | <code>2</code> |             |
+| ReadWrite | <code>3</code> |             |
+| Undefined | <code>0</code> |             |

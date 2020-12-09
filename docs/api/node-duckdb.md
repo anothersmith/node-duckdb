@@ -38,28 +38,27 @@ queryDatabaseWithIterator();
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Connection](./node-duckdb.connection.md) | The Connection class represents a DuckDB connection. |
-|  [DuckDB](./node-duckdb.duckdb.md) | The DuckDB class represents a DuckDB database instance. |
-|  [ResultIterator](./node-duckdb.resultiterator.md) | ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the executeIterator method on the Connection class. |
-|  [ResultStream](./node-duckdb.resultstream.md) | This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by <code>execute</code>. |
+| Class                                             | Description                                                                                                                                             |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Connection](./node-duckdb.connection.md)         | The Connection class represents a DuckDB connection.                                                                                                    |
+| [DuckDB](./node-duckdb.duckdb.md)                 | The DuckDB class represents a DuckDB database instance.                                                                                                 |
+| [ResultIterator](./node-duckdb.resultiterator.md) | ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the executeIterator method on the Connection class. |
+| [ResultStream](./node-duckdb.resultstream.md)     | This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by <code>execute</code>.                                 |
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [AccessMode](./node-duckdb.accessmode.md) | Access mode specifier |
-|  [OrderByNullType](./node-duckdb.orderbynulltype.md) | Null order specifier |
-|  [OrderType](./node-duckdb.ordertype.md) | Default sort order specifier |
-|  [ResultType](./node-duckdb.resulttype.md) | Specifier for how DuckDB attempts to load the result |
-|  [RowResultFormat](./node-duckdb.rowresultformat.md) | Result format specifier for rows |
+| Enumeration                                         | Description                                          |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| [AccessMode](./node-duckdb.accessmode.md)           | Access mode specifier                                |
+| [OrderByNullType](./node-duckdb.orderbynulltype.md) | Null order specifier                                 |
+| [OrderType](./node-duckdb.ordertype.md)             | Default sort order specifier                         |
+| [ResultType](./node-duckdb.resulttype.md)           | Specifier for how DuckDB attempts to load the result |
+| [RowResultFormat](./node-duckdb.rowresultformat.md) | Result format specifier for rows                     |
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [IDuckDBConfig](./node-duckdb.iduckdbconfig.md) | Configuration object for DuckDB |
-|  [IDuckDBOptionsConfig](./node-duckdb.iduckdboptionsconfig.md) | Options object type for the DuckDB class |
-|  [IExecuteOptions](./node-duckdb.iexecuteoptions.md) | Options for connection.execute |
-
+| Interface                                                     | Description                              |
+| ------------------------------------------------------------- | ---------------------------------------- |
+| [IDuckDBConfig](./node-duckdb.iduckdbconfig.md)               | Configuration object for DuckDB          |
+| [IDuckDBOptionsConfig](./node-duckdb.iduckdboptionsconfig.md) | Options object type for the DuckDB class |
+| [IExecuteOptions](./node-duckdb.iexecuteoptions.md)           | Options for connection.execute           |

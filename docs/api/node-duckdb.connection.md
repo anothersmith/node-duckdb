@@ -9,7 +9,7 @@ The Connection class represents a DuckDB connection.
 <b>Signature:</b>
 
 ```typescript
-export declare class Connection 
+export declare class Connection
 ```
 
 ## Remarks
@@ -18,21 +18,20 @@ The connection instance is what executes queries. A single db class can have mul
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(duckdb)](./node-duckdb.connection._constructor_.md) |  | Connection constructor. |
+| Constructor                                                        | Modifiers | Description             |
+| ------------------------------------------------------------------ | --------- | ----------------------- |
+| [(constructor)(duckdb)](./node-duckdb.connection._constructor_.md) |           | Connection constructor. |
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [isClosed](./node-duckdb.connection.isclosed.md) |  | boolean | If the connection is closed returns true, otherwise false. |
+| Property                                         | Modifiers | Type    | Description                                                |
+| ------------------------------------------------ | --------- | ------- | ---------------------------------------------------------- |
+| [isClosed](./node-duckdb.connection.isclosed.md) |           | boolean | If the connection is closed returns true, otherwise false. |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [close()](./node-duckdb.connection.close.md) |  | Close the connection (also closes all [ResultStream](./node-duckdb.resultstream.md) or [ResultIterator](./node-duckdb.resultiterator.md) objects associated with this connection). |
-|  [execute(command, options)](./node-duckdb.connection.execute.md) |  | Asynchronously executes the query and returns a node.js stream that wraps the result set. |
-|  [executeIterator(command, options)](./node-duckdb.connection.executeiterator.md) |  | Asynchronously executes the query and returns an iterator that points to the first result in the result set. |
-
+| Method                                                                           | Modifiers | Description                                                                                                                                                                        |
+| -------------------------------------------------------------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [close()](./node-duckdb.connection.close.md)                                     |           | Close the connection (also closes all [ResultStream](./node-duckdb.resultstream.md) or [ResultIterator](./node-duckdb.resultiterator.md) objects associated with this connection). |
+| [execute(command, options)](./node-duckdb.connection.execute.md)                 |           | Asynchronously executes the query and returns a node.js stream that wraps the result set.                                                                                          |
+| [executeIterator(command, options)](./node-duckdb.connection.executeiterator.md) |           | Asynchronously executes the query and returns an iterator that points to the first result in the result set.                                                                       |

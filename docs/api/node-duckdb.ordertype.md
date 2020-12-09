@@ -9,15 +9,14 @@ Default sort order specifier
 <b>Signature:</b>
 
 ```typescript
-export declare enum OrderType 
+export declare enum OrderType
 ```
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Ascending | <code>2</code> |  |
-|  Default | <code>1</code> |  |
-|  Descending | <code>3</code> |  |
-|  Invalid | <code>0</code> |  |
-
+| Member     | Value          | Description |
+| ---------- | -------------- | ----------- |
+| Ascending  | <code>2</code> |             |
+| Default    | <code>1</code> |             |
+| Descending | <code>3</code> |             |
+| Invalid    | <code>0</code> |             |

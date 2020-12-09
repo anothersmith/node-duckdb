@@ -1,4 +1,5 @@
 ## Developing
+
 First build:
 
 1. `yarn install` - installs dependencies including downloading duckdb
@@ -6,6 +7,7 @@ First build:
 3. `yarn test` - runs all tests
 
 Other useful scripts:
+
 - `yarn build` - build everything
 - `yarn build:addon` - build just the bindings code
 - `yarn build:duckdb` - build just the duckdb database

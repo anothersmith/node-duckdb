@@ -11,6 +11,7 @@ Fetch all rows
 ```typescript
 fetchAllRows(): T[];
 ```
+
 <b>Returns:</b>
 
 T\[\]
@@ -18,4 +19,3 @@ T\[\]
 ## Remarks
 
 Note, this may produce a `heap out of bounds` error in case when there is too much data. Either use the `fetchRow` or the `execute` method of the Connection class when there is a lot of data.
-
