@@ -4,7 +4,7 @@
 
 ## Connection class
 
-The Connection class represents a DuckDB connection.
+Represents a DuckDB connection.
 
 <b>Signature:</b>
 
@@ -14,7 +14,7 @@ export declare class Connection
 
 ## Remarks
 
-The connection instance is what executes queries. A single db class can have multiple connections. Having more than one connection instance is required when executing concurrent queries.
+A single db instance can have multiple connections. Having more than one connection instance is required when executing concurrent queries.
 
 ## Constructors
 

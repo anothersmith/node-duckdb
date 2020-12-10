@@ -18,4 +18,4 @@ T\[\]
 
 ## Remarks
 
-Note, this may produce a `heap out of bounds` error in case when there is too much data. Either use the `fetchRow` or the `execute` method of the Connection class when there is a lot of data.
+Note, this may produce a `heap out of bounds` error in case when there is too much data. Either use the [fetchRow](./node-duckdb.resultiterator.fetchrow.md) or the [Connection.execute](./node-duckdb.connection.execute.md) method when there is a lot of data.

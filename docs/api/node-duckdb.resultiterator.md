@@ -4,7 +4,7 @@
 
 ## ResultIterator class
 
-ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the executeIterator method on the Connection class.
+ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the [Connection.executeIterator](./node-duckdb.connection.executeiterator.md)<!-- -->.
 
 <b>Signature:</b>
 
@@ -18,10 +18,10 @@ The constructor for this class is marked as internal. Third-party code should no
 
 ## Properties
 
-| Property                                             | Modifiers | Type                                      | Description                                                                                                                                         |
-| ---------------------------------------------------- | --------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [isClosed](./node-duckdb.resultiterator.isclosed.md) |           | boolean                                   | Returns true if ResultIterator is closed, false otherwise.                                                                                          |
-| [type](./node-duckdb.resultiterator.type.md)         |           | [ResultType](./node-duckdb.resulttype.md) | Get the [ResultType](./node-duckdb.resulttype.md) of the ResultIterator. This is specified by the options argument on <code>executeIterator</code>. |
+| Property                                             | Modifiers | Type                                      | Description                                                                                                                                                                                                                                         |
+| ---------------------------------------------------- | --------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [isClosed](./node-duckdb.resultiterator.isclosed.md) |           | boolean                                   | Returns true if ResultIterator is closed, false otherwise.                                                                                                                                                                                          |
+| [type](./node-duckdb.resultiterator.type.md)         |           | [ResultType](./node-duckdb.resulttype.md) | Get the [ResultType](./node-duckdb.resulttype.md) of the ResultIterator. This is specified by the [options](./node-duckdb.iexecuteoptions.forcematerialized.md) argument on [executeIterator](./node-duckdb.connection.executeiterator.md)<!-- -->. |
 
 ## Methods
 

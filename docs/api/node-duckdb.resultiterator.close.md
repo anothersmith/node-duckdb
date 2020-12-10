@@ -18,4 +18,4 @@ void
 
 ## Remarks
 
-`close` on the connection automatically closes all associated ResultIterators.
+[Connection.close](./node-duckdb.connection.close.md) automatically closes all associated ResultIterators.

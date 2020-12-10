@@ -1,6 +1,12 @@
 /**
  * Node.js bindings for DuckDB from {@link https://www.deepcrawl.com/ | DeepCrawl}.
  * 
+ * Node-DuckDB is a thin wrapper on top of {@link https://duckdb.org/ | DuckDB}. 
+ * Using it involves:
+ * 1. Creating a Database object
+ * 2. Creating a Connection object to the Database object
+ * 3. Calling execute or executeIteraor on the Connection object
+ * 
  * @packageDocumentation 
  * 
  * @example
@@ -29,6 +35,7 @@
  *
  * queryDatabaseWithIterator();
  * ```
+ * For more examples see {@link https://github.com/deepcrawl/node-duckdb/tree/feature/ODIN-423-welcome-page/examples | here}.
  */
 
 export { DuckDB, Connection, ResultIterator, ResultStream } from "./addon";

@@ -5,10 +5,10 @@ import { ResultIterator } from "./result-iterator";
 import { IExecuteOptions } from "@addon-types";
 
 /**
- * The Connection class represents a DuckDB connection.
+ * Represents a DuckDB connection.
  * 
  * @remarks
- * The connection instance is what executes queries. A single db class can have multiple connections. Having more than one connection instance is required when executing concurrent queries.
+ * A single db instance can have multiple connections. Having more than one connection instance is required when executing concurrent queries.
  * 
  * @public
  */
@@ -93,6 +93,15 @@ export class Connection {
    *   db.close();
    * }
    * queryDatabaseWithIterator();
+   * ```
+   * 
+   * @example
+   * Providing generics type:
+   * ```
+   * const result = await connection.executeIterator<number[]>(`SELECT CAST(1 AS TINYINT)`, {
+   *  rowResultFormat: RowResultFormat.Array,
+   * });
+   * expect(result.fetchRow()).toMatchObject([1]);
    * ```
    */
   public async executeIterator<T>(command: string, options?: IExecuteOptions): Promise<ResultIterator<T>> {

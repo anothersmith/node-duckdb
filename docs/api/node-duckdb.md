@@ -6,6 +6,8 @@
 
 Node.js bindings for DuckDB from [DeepCrawl](https://www.deepcrawl.com/)<!-- -->.
 
+Node-DuckDB is a thin wrapper on top of [DuckDB](https://duckdb.org/)<!-- -->. Using it involves: 1. Creating a Database object 2. Creating a Connection object to the Database object 3. Calling execute or executeIteraor on the Connection object
+
 ## Example
 
 Do some simple querying and print the result
@@ -36,14 +38,16 @@ queryDatabaseWithIterator();
 
 ```
 
+For more examples see [here](https://github.com/deepcrawl/node-duckdb/tree/feature/ODIN-423-welcome-page/examples)<!-- -->.
+
 ## Classes
 
-| Class                                             | Description                                                                                                                                             |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Connection](./node-duckdb.connection.md)         | The Connection class represents a DuckDB connection.                                                                                                    |
-| [DuckDB](./node-duckdb.duckdb.md)                 | The DuckDB class represents a DuckDB database instance.                                                                                                 |
-| [ResultIterator](./node-duckdb.resultiterator.md) | ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the executeIterator method on the Connection class. |
-| [ResultStream](./node-duckdb.resultstream.md)     | This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by <code>execute</code>.                                 |
+| Class                                             | Description                                                                                                                                                                                |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Connection](./node-duckdb.connection.md)         | Represents a DuckDB connection.                                                                                                                                                            |
+| [DuckDB](./node-duckdb.duckdb.md)                 | The DuckDB class represents a DuckDB database instance.                                                                                                                                    |
+| [ResultIterator](./node-duckdb.resultiterator.md) | ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the [Connection.executeIterator](./node-duckdb.connection.executeiterator.md)<!-- -->. |
+| [ResultStream](./node-duckdb.resultstream.md)     | This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by [Connection.execute](./node-duckdb.connection.execute.md)<!-- -->.                       |
 
 ## Enumerations
 

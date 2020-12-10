@@ -18,4 +18,4 @@ void
 
 ## Remarks
 
-Even though GC will automatically destroy the Connection object at some point, DuckDB data is stored in the native address space, not the V8 heap, meaning you can easily have a Node.js process taking gigabytes of memory (more than the default heap size for Node.js) with V8 not triggering GC. So, definitely think about manually calling `close()`<!-- -->.
+Even though GC will automatically destroy the Database object at some point, DuckDB data is stored in the native address space, not the V8 heap, meaning you can easily have a Node.js process taking gigabytes of memory (more than the default heap size for Node.js) with V8 not triggering GC. So, definitely think about manually calling `close()`<!-- -->.

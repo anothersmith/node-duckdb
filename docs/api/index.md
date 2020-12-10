@@ -6,6 +6,6 @@
 
 ## Packages
 
-| Package                         | Description                                                                       |
-| ------------------------------- | --------------------------------------------------------------------------------- |
-| [node-duckdb](./node-duckdb.md) | Node.js bindings for DuckDB from [DeepCrawl](https://www.deepcrawl.com/)<!-- -->. |
+| Package                         | Description                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [node-duckdb](./node-duckdb.md) | Node.js bindings for DuckDB from [DeepCrawl](https://www.deepcrawl.com/)<!-- -->.<!-- -->Node-DuckDB is a thin wrapper on top of [DuckDB](https://duckdb.org/)<!-- -->. Using it involves: 1. Creating a Database object 2. Creating a Connection object to the Database object 3. Calling execute or executeIteraor on the Connection object |

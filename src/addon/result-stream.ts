@@ -2,7 +2,7 @@ import { Readable } from "stream";
 
 import { ResultIterator } from "./result-iterator";
 /**
- * This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by `execute`.
+ * This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by {@link Connection.execute | Connection.execute}.
  * @public
  */
 export class ResultStream<T> extends Readable {

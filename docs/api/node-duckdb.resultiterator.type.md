@@ -4,7 +4,7 @@
 
 ## ResultIterator.type property
 
-Get the [ResultType](./node-duckdb.resulttype.md) of the ResultIterator. This is specified by the options argument on `executeIterator`<!-- -->.
+Get the [ResultType](./node-duckdb.resulttype.md) of the ResultIterator. This is specified by the [options](./node-duckdb.iexecuteoptions.forcematerialized.md) argument on [executeIterator](./node-duckdb.connection.executeiterator.md)<!-- -->.
 
 <b>Signature:</b>
 

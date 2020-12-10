@@ -23,7 +23,7 @@ executeIterator<T>(command: string, options?: IExecuteOptions): Promise<ResultIt
 
 Promise&lt;[ResultIterator](./node-duckdb.resultiterator.md)<!-- -->&lt;T&gt;&gt;
 
-## Example
+## Example 1
 
 Printing rows:
 
@@ -45,5 +45,17 @@ async function queryDatabaseWithIterator() {
   db.close();
 }
 queryDatabaseWithIterator();
+
+```
+
+## Example 2
+
+Providing generics type:
+
+```
+const result = await connection.executeIterator<number[]>(`SELECT CAST(1 AS TINYINT)`, {
+ rowResultFormat: RowResultFormat.Array,
+});
+expect(result.fetchRow()).toMatchObject([1]);
 
 ```

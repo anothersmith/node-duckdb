@@ -2,7 +2,7 @@ import { ResultType } from "@addon-types";
 import { ResultIteratorClass } from "../addon-bindings";
 
 /**
- * ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the executeIterator method on the Connection class.
+ * ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the {@link Connection.executeIterator | Connection.executeIterator}.
  * 
  * @public
  */
@@ -25,7 +25,7 @@ export class ResultIterator<T> {
      * Fetch all rows
      * 
      * @remarks
-     * Note, this may produce a `heap out of bounds` error in case when there is too much data. Either use the `fetchRow` or the `execute` method of the Connection class when there is a lot of data.
+     * Note, this may produce a `heap out of bounds` error in case when there is too much data. Either use the {@link ResultIterator.fetchRow | fetchRow} or the  {@link Connection.execute | Connection.execute} method when there is a lot of data.
      */
     public fetchAllRows(): T[] {
         const allRows: T[] = [];
@@ -43,13 +43,13 @@ export class ResultIterator<T> {
     /**
      * Close the ResultIterator
      * @remarks
-     * `close` on the connection automatically closes all associated ResultIterators.
+     * {@link Connection.close | Connection.close} automatically closes all associated ResultIterators.
      */
     public close(): void {
         return this.resultInterator.close();
     }
     /**
-     * Get the {@link ResultType | ResultType} of the ResultIterator. This is specified by the options argument on `executeIterator`.
+     * Get the {@link ResultType | ResultType} of the ResultIterator. This is specified by the {@link IExecuteOptions.forceMaterialized | options} argument on {@link Connection.executeIterator | executeIterator}.
      */
     public get type(): ResultType {
         return this.resultInterator.type;

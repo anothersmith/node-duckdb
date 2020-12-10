@@ -4,7 +4,7 @@
 
 ## ResultStream class
 
-This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by `execute`<!-- -->.
+This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by [Connection.execute](./node-duckdb.connection.execute.md)<!-- -->.
 
 <b>Signature:</b>
 
