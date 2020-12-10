@@ -33,6 +33,5 @@ jobs:
           yarn install --frozen-lockfile
           yarn lint:check
           yarn test
-          yarn generate-doc
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
