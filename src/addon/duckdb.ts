@@ -1,6 +1,6 @@
 import { IDuckDBConfig } from "@addon-types";
 import { DuckDBBinding, DuckDBClass } from "../addon-bindings";
-import {AccessMode, OrderType, OrderByNullType} from "@addon-types";
+import { AccessMode, OrderType, OrderByNullType } from "@addon-types";
 
 /**
  * The DuckDB class represents a DuckDB database instance.
@@ -9,7 +9,7 @@ import {AccessMode, OrderType, OrderByNullType} from "@addon-types";
 export class DuckDB {
     private duckdb: DuckDBClass;
     /**
-     * DuckDB Database constructor. When called instantiates a native instance of DuckDB.
+     * Represents a native instance of DuckDB.
      * @param config - optional configuration object of type {@link IDuckDBConfig | IDuckDBConfig}.
      * 
      * 

@@ -1,11 +1,13 @@
 /**
- * Node.js bindings for DuckDB from {@link https://www.deepcrawl.com/ | DeepCrawl}.
- * 
  * Node-DuckDB is a thin wrapper on top of {@link https://duckdb.org/ | DuckDB}. 
+ * 
  * Using it involves:
- * 1. Creating a Database object
- * 2. Creating a Connection object to the Database object
- * 3. Calling execute or executeIteraor on the Connection object
+ * 
+ * 1. Creating a {@link Database | Database} object
+ * 
+ * 2. Creating a {@link Connection | Connection} object to the Database object
+ * 
+ * 3. Calling {@link Connection.execute | Connection.execute} or {@link Connection.executeIterator | Connection.executeIterator} on the Connection object
  * 
  * @packageDocumentation 
  * 
