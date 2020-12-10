@@ -1,6 +1,6 @@
 import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
 import { createWriteStream } from "fs";
-import {Transform} from "stream";
+import { Transform } from "stream";
 
 
 class ArrayToCsvTransform extends Transform {
