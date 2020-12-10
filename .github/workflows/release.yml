@@ -32,7 +32,7 @@ jobs:
       - name: Install modules with frozen lockfile and build
         run: |
           yarn install --frozen-lockfile
-          yarn publish --non-interactive
+          yarn publish --non-interactive --tag bleeding-edge
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
