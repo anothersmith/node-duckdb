@@ -164,7 +164,6 @@ describe("DuckDB configuration", () => {
 
   it("returns package version", async () => {
     const version = await DuckDB.getBindingsVersion();
-    expect(typeof version).toBe("string");
-    expect(version).toBeTruthy();
+    expect(version).toMatch(/\d+\.\d+\.\d+/);
   });
 });
