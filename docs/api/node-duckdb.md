@@ -2,11 +2,17 @@
 
 [Node-DuckDB API](./node-duckdb.md)
 
-## node-duckdb package
+## Node-DuckDB API
 
-Node.js bindings for DuckDB from [DeepCrawl](https://www.deepcrawl.com/)<!-- -->.
+Node-DuckDB is a thin wrapper on top of [DuckDB](https://duckdb.org/)<!-- -->.
 
-Node-DuckDB is a thin wrapper on top of [DuckDB](https://duckdb.org/)<!-- -->. Using it involves: 1. Creating a Database object 2. Creating a Connection object to the Database object 3. Calling execute or executeIteraor on the Connection object
+Using it involves:
+
+1. Creating a object
+
+2. Creating a [Connection](./node-duckdb.connection.md) object to the Database object
+
+3. Calling [Connection.execute](./node-duckdb.connection.execute.md) or [Connection.executeIterator](./node-duckdb.connection.executeiterator.md) on the Connection object
 
 ## Example
 

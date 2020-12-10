@@ -4,7 +4,7 @@
 
 ## DuckDB.(constructor)
 
-DuckDB Database constructor. When called instantiates a native instance of DuckDB.
+Represents a native instance of DuckDB.
 
 <b>Signature:</b>
 

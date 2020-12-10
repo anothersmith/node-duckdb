@@ -14,9 +14,9 @@ export declare class DuckDB
 
 ## Constructors
 
-| Constructor                                                    | Modifiers | Description                                                                        |
-| -------------------------------------------------------------- | --------- | ---------------------------------------------------------------------------------- |
-| [(constructor)(config)](./node-duckdb.duckdb._constructor_.md) |           | DuckDB Database constructor. When called instantiates a native instance of DuckDB. |
+| Constructor                                                    | Modifiers | Description                             |
+| -------------------------------------------------------------- | --------- | --------------------------------------- |
+| [(constructor)(config)](./node-duckdb.duckdb._constructor_.md) |           | Represents a native instance of DuckDB. |
 
 ## Properties
 
