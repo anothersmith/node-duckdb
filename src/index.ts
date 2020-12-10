@@ -1,16 +1,13 @@
-export { DuckDB, Connection, ResultIterator, ResultStream } from "./addon";
-export * from "./addon-types";
-
 /**
  * Node-DuckDB is a thin wrapper on top of {@link https://duckdb.org/ | DuckDB}. 
  * 
  * Using it involves:
  * 
- * 1. Creating a {@link DuckDB | DuckDB} object
+ * 1. Creating a {@link node-duckdb#DuckDB | DuckDB} object
  * 
- * 2. Creating a {@link Connection | Connection} object to the DuckDB object
+ * 2. Creating a {@link node-duckdb#Connection | Connection} object to the DuckDB object
  * 
- * 3. Calling {@link Connection.execute | Connection.execute} or {@link Connection.executeIterator | Connection.executeIterator} on the Connection object
+ * 3. Calling {@link node-duckdb#Connection.execute | Connection.execute} or {@link node-duckdb#Connection.executeIterator | Connection.executeIterator} on the Connection object
  * 
  * @packageDocumentation 
  * 
@@ -42,3 +39,5 @@ export * from "./addon-types";
  * ```
  * For more examples see {@link https://github.com/deepcrawl/node-duckdb/tree/feature/ODIN-423-welcome-page/examples | here}.
  */
+export { DuckDB, Connection, ResultIterator, ResultStream } from "./addon";
+export * from "./addon-types";
