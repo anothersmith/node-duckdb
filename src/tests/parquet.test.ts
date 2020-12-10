@@ -39,11 +39,11 @@ describe("executeIterator on parquet", () => {
       4.599999904632568,
       4.7,
       480,
-      '49',
+      "49",
       Buffer.from([53, 48]),
       true,
       1574799102501,
-      18271
+      18271,
     ]);
   });
 
@@ -59,11 +59,11 @@ describe("executeIterator on parquet", () => {
       floatval: 4.599999904632568,
       doubleval: 4.7,
       decimalval: 480,
-      stringval: '49',
+      stringval: "49",
       binaryval: Buffer.from([53, 48]),
       booleanval: true,
       timestampval: 1574799102501,
-      dateval: 18271
+      dateval: 18271,
     });
   });
 });

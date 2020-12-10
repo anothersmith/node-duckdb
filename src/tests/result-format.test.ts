@@ -16,7 +16,19 @@ const jsonResult = {
   tinyint_col: 0,
 };
 
-const arrayResult = [4, true, 0, 0, 0, 0n, 0, 0, Buffer.from([48, 51, 47, 48, 49, 47, 48, 57]), Buffer.from([48]), 1235865600000];
+const arrayResult = [
+  4,
+  true,
+  0,
+  0,
+  0,
+  0n,
+  0,
+  0,
+  Buffer.from([48, 51, 47, 48, 49, 47, 48, 57]),
+  Buffer.from([48]),
+  1235865600000,
+];
 describe("Result format", () => {
   let db: DuckDB;
   let connection: Connection;
