@@ -1,5 +1,7 @@
 import { IDuckDBConfig } from "@addon-types";
 import { DuckDBBinding, DuckDBClass } from "../addon-bindings";
+import { promises as fs } from "fs";
+import { join } from "path";
 import { AccessMode, OrderType, OrderByNullType } from "@addon-types";
 
 /**
@@ -7,6 +9,9 @@ import { AccessMode, OrderType, OrderByNullType } from "@addon-types";
  * @public
  */
 export class DuckDB {
+    public static async getBindingsVersion() {
+        return JSON.parse(await fs.readFile(join(__dirname, "../../package.json"), {encoding: "utf-8"})).version;
+    }
     private duckdb: DuckDBClass;
     /**
      * Represents a native instance of DuckDB.
