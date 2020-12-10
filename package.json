@@ -11,13 +11,18 @@
     "async",
     "stream"
   ],
+  "homepage": "https://github.com/deepcrawl/node-duckdb#readme",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/deepcrawl/node-duckdb.git",
-    "directory": "node-duckdb"
+    "url": "https://github.com/deepcrawl/node-duckdb.git"
   },
   "license": "MIT",
   "author": "DeepCrawl",
+  "contributors": [
+    "Dan Forsberg <dforsber@gmail.com> (https://github.com/dforsber)",
+    "Pieter Raubenheimer <pieter.raubenheimer@deepcrawl.com> (https://github.com/jupiter)",
+    "Rostislav Provodenko <rostislav.provodenko@gmail.com> (https://github.com/rostislavdeepcrawl)"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "binary": {
@@ -31,11 +36,16 @@
     "build:duckdb": "cd duckdb && make && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
+    "clang:check": "yarn clang-format --dry-run --Werror addon/**",
+    "clang:fix": "yarn clang-format -i addon/**",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
     "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/tarball/cf0d8de1fbdeae428ac284e2c0129012490d54cb > duckdb.tar.gz && tar xf duckdb.tar.gz && mv cwida-duckdb-cf0d8de duckdb && rm duckdb.tar.gz",
+    "eslint:check": "eslint --ext .js,.json,.ts ./",
+    "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
+    "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./docs/replace.sh",
     "install": "prebuild-install --verbose -d -r napi || (yarn download-duckdb && yarn build:duckdb && yarn prebuild:current-target)",
-    "lint": "yarn prettier:check && eslint --ext .js,.json,.ts ./",
-    "lint:fix": "yarn lint --fix",
+    "lint:check": "yarn prettier:check && yarn eslint:check && yarn clang:check",
+    "lint:fix": "yarn prettier:fix && yarn eslint:fix && yarn clang:fix",
     "prebuild:all-targets": "yarn install && yarn prebuild:linux",
     "prebuild:current-target": "yarn prebuild --all --backend cmake-js -r napi --include-regex \"((libduckdb)|(libparquet_extension)|(node-duckdb-addon.node))\" --verbose",
     "prebuild:linux": "docker-compose run --rm linux-build 'yarn install'",
@@ -47,15 +57,18 @@
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
+    "@microsoft/api-extractor": "^7.12.0",
     "cmake-js": "^6.1.0",
     "node-addon-api": "^3.0.2",
     "prebuild-install": "^6.0.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.11.3",
     "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
+    "clang-format": "^1.4.0",
     "eslint": "^7.10.0",
     "eslint-config-deepcrawl": "^5.6.0",
     "eslint-config-prettier": "^6.11.0",

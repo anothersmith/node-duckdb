@@ -7,3 +7,5 @@ duckdb.tar.gz
 prebuilds
 .idea
 cmake-build-debug
+temp
+etc
