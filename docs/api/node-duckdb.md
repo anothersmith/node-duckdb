@@ -4,48 +4,6 @@
 
 ## Node-DuckDB API
 
-Node-DuckDB is a thin wrapper on top of [DuckDB](https://duckdb.org/)<!-- -->.
-
-Using it involves:
-
-1. Creating a object
-
-2. Creating a [Connection](./node-duckdb.connection.md) object to the Database object
-
-3. Calling [Connection.execute](./node-duckdb.connection.execute.md) or [Connection.executeIterator](./node-duckdb.connection.executeiterator.md) on the Connection object
-
-## Example
-
-Do some simple querying and print the result
-
-```
-import { Connection, DuckDB } from "node-duckdb";
-
-async function queryDatabaseWithIterator() {
-  // create new database in memory
-  const db = new DuckDB();
-  // create a new connection to the database
- const connection = new Connection(db);
-
- // perform some queries
- await connection.executeIterator("CREATE TABLE people(id INTEGER, name VARCHAR);");
- await connection.executeIterator("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
- const result = await connection.executeIterator("SELECT * FROM people;");
-
- // fetch and print result
- console.log(result.fetchAllRows());
-
- // release resources
- connection.close();
- db.close();
-}
-
-queryDatabaseWithIterator();
-
-```
-
-For more examples see [here](https://github.com/deepcrawl/node-duckdb/tree/feature/ODIN-423-welcome-page/examples)<!-- -->.
-
 ## Classes
 
 | Class                                             | Description                                                                                                                                                                                |
