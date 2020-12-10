@@ -36,7 +36,7 @@ Note: this will download the duckdb binary for your platform (currently Linux an
 
 Using node-duckdb is easy:
 
-```
+```ts
 const db = new DuckDB();
 const connection = new Connection(db);
 await connection.execute("SELECT * FROM mytable;");
@@ -46,74 +46,42 @@ await connection.execute("SELECT * FROM mytable;");
 
 An example using promises:
 
-```
+```ts
 import { Connection, DuckDB } from "node-duckdb";
 
 async function queryDatabaseWithIterator() {
   // create new database in memory
   const db = new DuckDB();
   // create a new connection to the database
- const connection = new Connection(db);
+  const connection = new Connection(db);
 
- // perform some queries
- await connection.executeIterator("CREATE TABLE people(id INTEGER, name VARCHAR);");
- await connection.executeIterator("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
- const result = await connection.executeIterator("SELECT * FROM people;");
+  // perform some queries
+  await connection.executeIterator("CREATE TABLE people(id INTEGER, name VARCHAR);");
+  await connection.executeIterator("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
+  const result = await connection.executeIterator("SELECT * FROM people;");
 
- // fetch and print result
- console.log(result.fetchAllRows());
+  // fetch and print result
+  console.log(result.fetchAllRows());
 
- // release resources
- connection.close();
- db.close();
+  // release resources
+  connection.close();
+  db.close();
 }
 
 queryDatabaseWithIterator();
-
 ```
 
 #### Streaming API example
 
-A demo of reading from DuckDB, transforming to CSV and writing to file using the streaming API:
+Getting a stream of data from DuckDB and piping into a destination stream:
 
-```
-import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
-import { createWriteStream } from "fs";
-import { Transform } from "stream";
-
-
-class ArrayToCsvTransform extends Transform {
-    constructor() {
-        super({objectMode: true})
-    }
-    _transform(chunk: any[], _encoding: string, callback: any) {
-        this.push(chunk.join(",") + '\n');
-        callback();
-    }
-}
-
-async function outputToFileAsCsv() {
-    // create new database in memory
-    const db = new DuckDB();
-    // create a new connection to the database
-    // note you can execute only one streaming query at a time per one connection
-    const connection = new Connection(db);
-
-    // by default a query is a streaming one, as opposed to being materialized
-    await connection.execute("CREATE TABLE people(id INTEGER, name VARCHAR);");
-    await connection.execute("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
-
-    // result is a stream of arrays
-    const resultStream = await connection.execute("SELECT * FROM people;", {rowResultFormat: RowResultFormat.Array});
-
-    const transformToCsvStream = new ArrayToCsvTransform();
-    const writeStream = createWriteStream("my-people-output");
-    // objects -> csv strings -> file
-    resultStream.pipe(transformToCsvStream).pipe(writeStream);
-}
-
-outputToFileAsCsv();
-
+```ts
+import { Connection, DuckDB } from "node-duckdb";
+const db = new DuckDB();
+const connection = new Connection(db);
+const resultStream = await connection.execute("SELECT * FROM people;");
+// get destinationStream somehow
+resultStream.pipe(destinationStream);
 ```
 
 #### Complete sample project
