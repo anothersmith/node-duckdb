@@ -1,6 +1,6 @@
 # Node-DuckDB
 
-###### [API](https://github.com/deepcrawl/node-duckdb/docs/api/node-duckdb.md) | [Code Of Conduct](https://github.com/deepcrawl/node-duckdb/docs/CODE_OF_CONDUCT.md) | [Contributing](https://github.com/deepcrawl/node-duckdb/docs/CONTRIBUTING.md) | [Developing](https://github.com/deepcrawl/node-duckdb/docs/DEVELOPING.md)
+###### [API](https://github.com/deepcrawl/node-duckdb/blob/master/docs/api/node-duckdb.md) | [Code Of Conduct](https://github.com/deepcrawl/node-duckdb/blob/master/docs/CODE_OF_CONDUCT.md) | [Contributing](https://github.com/deepcrawl/node-duckdb/blob/master/docs/CONTRIBUTING.md) | [Developing](https://github.com/deepcrawl/node-duckdb/blob/master/docs/DEVELOPING.md)
 
 > Production ready DuckDB Node.js library written in TypeScript.
 > [<img src="https://www.deepcrawl.com/wp-content/themes/deepcrawl/images/deepcrawl-logo.svg" height="200" width="300" align="right">](https://www.deepcrawl.com/)
@@ -90,8 +90,8 @@ You can see a complete sample project using node-duckdb [here](https://github.co
 
 ## API
 
-API documentation is found [here](https://github.com/deepcrawl/node-duckdb/docs/api/node-duckdb.md).
+API documentation is found [here](https://github.com/deepcrawl/node-duckdb/blob/master/docs/api/node-duckdb.md).
 
 ## Developing
 
-Documentation for developers is found [here](https://github.com/deepcrawl/node-duckdb/docs/DEVELOPING.md).
+Documentation for developers is found [here](https://github.com/deepcrawl/node-duckdb/blob/master/docs/DEVELOPING.md).
