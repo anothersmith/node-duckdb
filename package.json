@@ -19,9 +19,9 @@
   "license": "MIT",
   "author": "DeepCrawl",
   "contributors": [
-    "Dan Forsberg <dan.forsberg@deepcrawl.com> (https://github.com/dforsber)",
+    "Dan Forsberg <dforsber@gmail.com> (https://github.com/dforsber)",
     "Pieter Raubenheimer <pieter.raubenheimer@deepcrawl.com> (https://github.com/jupiter)",
-    "Rostislav Provodenko <rostislav.provodenko@deepcrawl.com> (https://github.com/rostislavdeepcrawl)"
+    "Rostislav Provodenko <rostislav.provodenko@gmail.com> (https://github.com/rostislavdeepcrawl)"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
