@@ -30,7 +30,8 @@ jobs:
         run: |
           echo ${{ github.event.release.tag_name }} 
           yarn install --frozen-lockfile
-          yarn publish --new-version "${GITHUB_REF:11}" --tag test --no-git-tag-version
+          yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
+          yarn publish --tag test --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
