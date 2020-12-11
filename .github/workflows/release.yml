@@ -48,6 +48,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn version --new-version "${GITHUB_REF:11}"
           # yarn publish --tag test --access public
+          echo ${{github.event.release.tag_name}}
           git tag -d ${{github.event.release.tag_name}}
           git push -f
         env:
