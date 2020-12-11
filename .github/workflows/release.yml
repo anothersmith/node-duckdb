@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install modules with frozen lockfile and build
         run: |
-          yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}" 
+          echo "//registry.yarnpkg.com/:_authToken=$NPM_TOKEN" >>~/.npmrc
           yarn install --frozen-lockfile
           yarn publish --new-version ${{ github.event.release.tag_name }} --tag test
         env:
