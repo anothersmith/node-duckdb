@@ -1,0 +1,96 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New Node-DuckDB version'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: publish-workflow
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+          scope: "@deepcrawl"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Restore keys from cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # - name: Temporarily disable "include administrators" branch protection
+      #   uses: benjefferies/branch-protection-bot@master
+      #   if: always()
+      #   with:
+      #     access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
+      #     enforce_admins: false
+      #     branch: master
+      - name: Install modules with frozen lockfile and build
+        run: |
+          echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
+          cat ~/.npmrc
+          yarn config set username $USERNAME
+          yarn config set email $EMAIL
+          yarn config set version-git-message "Release: v%s"
+          yarn config set version-tag-prefix "vv"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          yarn install --frozen-lockfile
+          yarn version --new-version "${{ github.event.inputs.version }}}"
+          # yarn publish --tag test --access public
+          git push -f
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
+          USERNAME: ${{secrets.USERNAME}}
+          EMAIL: ${{secrets.EMAIL}}
+      # - name: Enable "include administrators" branch protection
+      #   uses: benjefferies/branch-protection-bot@master
+      #   if: always()  # Force to always run this step to ensure "include administrators" is always turned back on
+      #   with:
+      #     access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
+      #     enforce_admins: true
+      #     branch: master
+  build:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@master
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+          scope: "@deepcrawl"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Restore keys from cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install modules with frozen lockfile and build
+        run: |
+          yarn install --frozen-lockfile
+          yarn lint:check
+          yarn test
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
