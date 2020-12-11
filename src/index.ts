@@ -13,7 +13,7 @@
  * 
  * @example
  * Do some simple querying and print the result
- * ```
+ * ```ts
  * import { Connection, DuckDB } from "node-duckdb";
  * 
  * async function queryDatabaseWithIterator() {

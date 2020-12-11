@@ -27,7 +27,7 @@ Promise&lt;[ResultIterator](./node-duckdb.resultiterator.md)<!-- -->&lt;T&gt;&gt
 
 Printing rows:
 
-```
+```ts
 import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
 async function queryDatabaseWithIterator() {
   const db = new DuckDB();
@@ -39,23 +39,21 @@ async function queryDatabaseWithIterator() {
   console.log(result.fetchRow());
   // print the rest of the rows
   console.log(result.fetchAllRows());
-  const result2 = await connection.executeIterator("SELECT * FROM people;", {rowResultFormat: RowResultFormat.Array});
+  const result2 = await connection.executeIterator("SELECT * FROM people;", { rowResultFormat: RowResultFormat.Array });
   console.log(result2.fetchAllRows());
   connection.close();
   db.close();
 }
 queryDatabaseWithIterator();
-
 ```
 
 ## Example 2
 
 Providing generics type:
 
-```
+```ts
 const result = await connection.executeIterator<number[]>(`SELECT CAST(1 AS TINYINT)`, {
- rowResultFormat: RowResultFormat.Array,
+  rowResultFormat: RowResultFormat.Array,
 });
 expect(result.fetchRow()).toMatchObject([1]);
-
 ```

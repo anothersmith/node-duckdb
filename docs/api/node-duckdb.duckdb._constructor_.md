@@ -22,28 +22,28 @@ constructor(config?: IDuckDBConfig);
 
 Initializing a duckdb database in memory:
 
-```
+```ts
 import { DuckDB } from "node-duckdb";
 const db = new DuckDB();
-
 ```
 
 ## Example 2
 
 Initializing a duckdb database from file:
 
-```
+```ts
 import { DuckDB } from "node-duckdb";
 const db = new DuckDB({ path: join(__dirname, "./mydb") });
-
 ```
 
 ## Example 3
 
 Initializing a duckdb database from file and setting some additional options:
 
-```
+```ts
 import { DuckDB, OrderType } from "node-duckdb";
-const db = new DuckDB({ path: join(__dirname, "./mydb"), options: { defaultOrderType: OrderType.Descending, temporaryDirectory: false } });
-
+const db = new DuckDB({
+  path: join(__dirname, "./mydb"),
+  options: { defaultOrderType: OrderType.Descending, temporaryDirectory: false },
+});
 ```

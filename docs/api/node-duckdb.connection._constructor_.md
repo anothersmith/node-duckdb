@@ -22,9 +22,8 @@ constructor(duckdb: DuckDB);
 
 Initializing a connection:
 
-```
+```ts
 import { DuckDB } from "node-duckdb";
 const db = new DuckDB();
 const connection = new Connection(db);
-
 ```

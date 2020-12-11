@@ -27,30 +27,29 @@ Promise&lt;[ResultStream](./node-duckdb.resultstream.md)<!-- -->&lt;T&gt;&gt;
 
 Streaming results of a DuckDB query into a CSV file:
 
-```
+```ts
 import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
 import { createWriteStream } from "fs";
 import { Transform } from "stream";
 class ArrayToCsvTransform extends Transform {
-    constructor() {
-       super({objectMode: true})
-   }
-   _transform(chunk: any[], _encoding: string, callback: any) {
-       this.push(chunk.join(",") + '\n');
-       callback();
-   }
+  constructor() {
+    super({ objectMode: true });
+  }
+  _transform(chunk: any[], _encoding: string, callback: any) {
+    this.push(chunk.join(",") + "\n");
+    callback();
+  }
 }
 
 async function outputToFileAsCsv() {
-    const db = new DuckDB();
-    const connection = new Connection(db);
-    await connection.execute("CREATE TABLE people(id INTEGER, name VARCHAR);");
-    await connection.execute("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
-    const resultStream = await connection.execute("SELECT * FROM people;", {rowResultFormat: RowResultFormat.Array});
-    const transformToCsvStream = new ArrayToCsvTransform();
-    const writeStream = createWriteStream("my-people-output");
-    resultStream.pipe(transformToCsvStream).pipe(writeStream);
+  const db = new DuckDB();
+  const connection = new Connection(db);
+  await connection.execute("CREATE TABLE people(id INTEGER, name VARCHAR);");
+  await connection.execute("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
+  const resultStream = await connection.execute("SELECT * FROM people;", { rowResultFormat: RowResultFormat.Array });
+  const transformToCsvStream = new ArrayToCsvTransform();
+  const writeStream = createWriteStream("my-people-output");
+  resultStream.pipe(transformToCsvStream).pipe(writeStream);
 }
 outputToFileAsCsv();
-
 ```

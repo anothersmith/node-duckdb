@@ -9,7 +9,15 @@ import { AccessMode, OrderType, OrderByNullType } from "@addon-types";
  * @public
  */
 export class DuckDB {
-    public static async getBindingsVersion() {
+    /**
+     * Returns the current version of the node-duckdb package (from package.json)
+     * 
+     * @remarks
+     * Useful for logging/debugging
+     * 
+     * @public
+     */
+    public static async getBindingsVersion(): Promise<string> {
         return JSON.parse(await fs.readFile(join(__dirname, "../../package.json"), {encoding: "utf-8"})).version;
     }
     private duckdb: DuckDBClass;
@@ -20,21 +28,21 @@ export class DuckDB {
      * 
      * @example
      * Initializing a duckdb database in memory:
-     * ```
+     * ```ts
      * import { DuckDB } from "node-duckdb";
      * const db = new DuckDB();
      * ```
      * 
      * @example
      * Initializing a duckdb database from file:
-     * ```
+     * ```ts
      * import { DuckDB } from "node-duckdb";
      * const db = new DuckDB({ path: join(__dirname, "./mydb") });
      * ```
      * 
      * @example
      * Initializing a duckdb database from file and setting some additional options:
-     * ```
+     * ```ts
      * import { DuckDB, OrderType } from "node-duckdb";
      * const db = new DuckDB({ path: join(__dirname, "./mydb"), options: { defaultOrderType: OrderType.Descending, temporaryDirectory: false } });
      * ```

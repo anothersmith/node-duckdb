@@ -20,7 +20,7 @@ export class Connection {
      * 
      * @example
      * Initializing a connection:
-     * ```
+     * ```ts
      * import { DuckDB } from "node-duckdb";
      * const db = new DuckDB();
      * const connection = new Connection(db);
@@ -37,7 +37,7 @@ export class Connection {
    * 
    * @example
    * Streaming results of a DuckDB query into a CSV file:
-   * ```
+   * ```ts
    * import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
    * import { createWriteStream } from "fs";
    * import { Transform } from "stream";
@@ -75,7 +75,7 @@ export class Connection {
    * 
    * @example
    * Printing rows:
-   * ```
+   * ```ts
    * import { Connection, DuckDB, RowResultFormat } from "node-duckdb";
    * async function queryDatabaseWithIterator() {
    *   const db = new DuckDB();
@@ -97,7 +97,7 @@ export class Connection {
    * 
    * @example
    * Providing generics type:
-   * ```
+   * ```ts
    * const result = await connection.executeIterator<number[]>(`SELECT CAST(1 AS TINYINT)`, {
    *  rowResultFormat: RowResultFormat.Array,
    * });

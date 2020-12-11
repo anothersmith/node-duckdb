@@ -18,30 +18,29 @@ Using it involves:
 
 Do some simple querying and print the result
 
-```
+```ts
 import { Connection, DuckDB } from "node-duckdb";
 
 async function queryDatabaseWithIterator() {
   // create new database in memory
   const db = new DuckDB();
   // create a new connection to the database
- const connection = new Connection(db);
+  const connection = new Connection(db);
 
- // perform some queries
- await connection.executeIterator("CREATE TABLE people(id INTEGER, name VARCHAR);");
- await connection.executeIterator("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
- const result = await connection.executeIterator("SELECT * FROM people;");
+  // perform some queries
+  await connection.executeIterator("CREATE TABLE people(id INTEGER, name VARCHAR);");
+  await connection.executeIterator("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
+  const result = await connection.executeIterator("SELECT * FROM people;");
 
- // fetch and print result
- console.log(result.fetchAllRows());
+  // fetch and print result
+  console.log(result.fetchAllRows());
 
- // release resources
- connection.close();
- db.close();
+  // release resources
+  connection.close();
+  db.close();
 }
 
 queryDatabaseWithIterator();
-
 ```
 
 For more examples see [here](https://github.com/deepcrawl/node-duckdb/tree/feature/ODIN-423-welcome-page/examples)<!-- -->.

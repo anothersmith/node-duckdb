@@ -35,6 +35,7 @@ export declare class DuckDB
 
 ## Methods
 
-| Method                                   | Modifiers | Description                                                                              |
-| ---------------------------------------- | --------- | ---------------------------------------------------------------------------------------- |
-| [close()](./node-duckdb.duckdb.close.md) |           | Closes the underlying duckdb database, frees associated memory and renders it unusuable. |
+| Method                                                             | Modifiers           | Description                                                                              |
+| ------------------------------------------------------------------ | ------------------- | ---------------------------------------------------------------------------------------- |
+| [close()](./node-duckdb.duckdb.close.md)                           |                     | Closes the underlying duckdb database, frees associated memory and renders it unusuable. |
+| [getBindingsVersion()](./node-duckdb.duckdb.getbindingsversion.md) | <code>static</code> | Returns the current version of the node-duckdb package (from package.json)               |
