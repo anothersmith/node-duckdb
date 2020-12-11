@@ -1,13 +1,11 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [published]
 
 jobs:
   release:
-    if: "contains(github.event.head_commit.message, 'Release: v')"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
@@ -30,8 +28,9 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install modules with frozen lockfile and build
         run: |
+          yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}" 
           yarn install --frozen-lockfile
-          yarn publish --non-interactive
+          yarn publish --new-version ${{ github.event.release.tag_name }} --tag test
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
