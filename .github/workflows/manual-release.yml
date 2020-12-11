@@ -43,7 +43,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           yarn install --frozen-lockfile
-          yarn version --new-version "${{ github.event.inputs.version }}}"
+          yarn version --new-version "${{ github.event.inputs.version }}"
           # yarn publish --tag test --access public
           git push -f
         env:
