@@ -42,10 +42,11 @@ jobs:
           cat ~/.npmrc
           yarn config set username $USERNAME
           yarn config set email $EMAIL
+          yarn config set version-git-message "Release: v%s"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           yarn install --frozen-lockfile
-          yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
+          yarn version --new-version "${GITHUB_REF:11}"
           # yarn publish --tag test --access public
           git push -f
         env:
