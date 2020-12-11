@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install modules with frozen lockfile and build
         run: |
-          echo -e "always-auth=true\n//registry.yarnpkg.com/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
+          echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
           cat ~/.npmrc
           yarn config set username $USERNAME
           yarn config set email $EMAIL
