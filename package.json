@@ -53,7 +53,7 @@
     "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "postpublish": "yarn cleanup:binaries && yarn prebuild:all-targets && yarn prebuild:upload",
+    "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",
     "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
   },
   "dependencies": {
