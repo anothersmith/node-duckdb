@@ -9,12 +9,12 @@ Returns the current version of the node-duckdb package (from package.json)
 <b>Signature:</b>
 
 ```typescript
-static getBindingsVersion(): Promise<any>;
+static getBindingsVersion(): Promise<string>;
 ```
 
 <b>Returns:</b>
 
-Promise&lt;any&gt;
+Promise&lt;string&gt;
 
 ## Remarks
 

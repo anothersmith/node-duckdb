@@ -17,7 +17,7 @@ export class DuckDB {
      * 
      * @public
      */
-    public static async getBindingsVersion() {
+    public static async getBindingsVersion(): Promise<string> {
         return JSON.parse(await fs.readFile(join(__dirname, "../../package.json"), {encoding: "utf-8"})).version;
     }
     private duckdb: DuckDBClass;
