@@ -16,6 +16,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
+          token: ${{secrets.BRANCH_PROTECTION_TOKEN}}
       - name: Setup node
         uses: actions/setup-node@v1
         with:
