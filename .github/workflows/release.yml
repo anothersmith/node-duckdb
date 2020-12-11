@@ -43,13 +43,14 @@ jobs:
           yarn config set username $USERNAME
           yarn config set email $EMAIL
           yarn config set version-git-message "Release: v%s"
+          yarn config set version-tag-prefix "vv"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           yarn install --frozen-lockfile
           yarn version --new-version "${GITHUB_REF:11}"
           # yarn publish --tag test --access public
           echo ${{github.event.release.tag_name}}
-          git tag -d ${{github.event.release.tag_name}}
+          # git tag -d ${{github.event.release.tag_name}}
           git push -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
