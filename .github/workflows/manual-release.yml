@@ -1,4 +1,4 @@
-name: Release
+name: Manual Release
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: publish-workflow
+          ref: master
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -32,13 +32,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      # - name: Temporarily disable "include administrators" branch protection
-      #   uses: benjefferies/branch-protection-bot@master
-      #   if: always()
-      #   with:
-      #     access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
-      #     enforce_admins: false
-      #     branch: master
       - name: Install modules with frozen lockfile and build
         run: |
           echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
@@ -58,19 +51,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
           USERNAME: ${{secrets.USERNAME}}
           EMAIL: ${{secrets.EMAIL}}
-      # - name: Enable "include administrators" branch protection
-      #   uses: benjefferies/branch-protection-bot@master
-      #   if: always()  # Force to always run this step to ensure "include administrators" is always turned back on
-      #   with:
-      #     access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
-      #     enforce_admins: true
-      #     branch: master
   build:
     needs: release
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout master
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
+        with:
+          ref: master
       - name: Setup node
         uses: actions/setup-node@v1
         with:
