@@ -45,6 +45,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn version --new-version "${{ github.event.inputs.version }}"
           # yarn publish --tag test --access public
+          echo "pushing----"
           git push -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
