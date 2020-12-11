@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
           USERNAME: ${{secrets.USERNAME}}
           EMAIL: ${{secrets.EMAIL}}
-          GH_TOKEN: {{secrets.BRANCH_PROTECTION_TOKEN}}
+          GH_TOKEN: ${{secrets.BRANCH_PROTECTION_TOKEN}}
   build:
     needs: release
     runs-on: ubuntu-latest
