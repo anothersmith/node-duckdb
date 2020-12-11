@@ -37,8 +37,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
-          USERNAME: {{secrets.USERNAME}}
-          EMAIL: {{secrets.EMAIL}}
+          USERNAME: ${{secrets.USERNAME}}
+          EMAIL: ${{secrets.EMAIL}}
   build:
     needs: release
     runs-on: ubuntu-latest
