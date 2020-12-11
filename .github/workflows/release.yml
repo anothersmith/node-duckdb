@@ -37,6 +37,7 @@ jobs:
       #     branch: master
       - name: Install modules with frozen lockfile and build
         run: |
+          echo ${{ toJson(github) }}
           echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
           cat ~/.npmrc
           yarn config set username $USERNAME
