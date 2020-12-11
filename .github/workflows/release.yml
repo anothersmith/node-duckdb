@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@master
+        with:
+          fetch-depth: 0
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -43,7 +45,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           yarn install --frozen-lockfile
           yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
-          yarn publish --tag test --access public
+          # yarn publish --tag test --access public
           git push -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
