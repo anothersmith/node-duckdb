@@ -1,11 +1,7 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "New Node-DuckDB version"
-        required: true
+  push
 
 jobs:
   release:
@@ -33,22 +29,26 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+      - name: Temporarily disable "include administrators" branch protection
+        uses: benjefferies/branch-protection-bot@master
+        if: always()
+        with:
+          access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
+          enforce_admins: false
+          branch: feature/ODIN-358-branch-protection
       - name: Install modules with frozen lockfile and build
         run: |
-          echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
-          cat ~/.npmrc
-          yarn config set username $USERNAME
-          yarn config set email $EMAIL
-          yarn config set version-git-message "Release: v%s"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          yarn install --frozen-lockfile
-          yarn version --new-version "${{ github.event.inputs.version }}"
-          yarn publish --tag provisional-release --access public
-          git push -f
+          git commit -m 'empty' --allow-empty -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
           USERNAME: ${{secrets.USERNAME}}
           EMAIL: ${{secrets.EMAIL}}
           GH_TOKEN: ${{secrets.BRANCH_PROTECTION_TOKEN}}
+      - name: Enable "include administrators" branch protection
+        uses: benjefferies/branch-protection-bot@master
+        if: always()  # Force to always run this step to ensure "include administrators" is always turned back on
+        with:
+          access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
+          enforce_admins: true
+          branch: feature/ODIN-358-branch-protection
