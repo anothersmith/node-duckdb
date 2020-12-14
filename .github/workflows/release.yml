@@ -38,7 +38,8 @@ jobs:
           branch: feature/ODIN-358-branch-protection
       - name: Install modules with frozen lockfile and build
         run: |
-          git commit -m 'empty' --allow-empty -f
+          git commit -m 'empty' --allow-empty
+          git push -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
