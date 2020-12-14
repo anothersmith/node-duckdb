@@ -20,14 +20,42 @@ Workflow notes:
 
 - if addon code is changed in your PR, the package.json version should also be changed manually, otherwise the old binary will be used in CI/CD and elsewhere
 
-## Automated Publishing
+## Automated Release
 
-- Change your yarn config: `yarn config set version-git-message "Release: v%s"`
-- Create a separate branch and on that branch:
-  - `yarn version`
-  - rebase and merge or regular merge the PR into master
+Once `master` is ready to be released:
 
-## Manual Publishing
+- Stop merging into `master`
+- In github:
+  - Go to `Actions` -> `Release` -> `Run Workflow`
+  - Enter the new version for the release, e.g.: `0.60.1`
+  - Click `Run Workflow`
+
+This will do the following:
+
+- The new version of `node-duckdb` with Linux binaries will be published to npm. The package will be tagged as `provisional-release` instead of `latest`, meaning that users won't get the version of the package if they just do `yarn install node-duckdb`.
+- A new tagged commit will be pushed onto master
+- A github release will be created
+- The commit will then be tested with the `build` job
+- Appveyor will build and publish the MacOs binaries, and then run the tests
+
+At the end you should see that:
+
+- the `Release` job has been run successfully (visible on the screen where you triggered the `Release` job)
+- the `Build` job has been run successfully for the `Release: va.b.c` commit (visible in the github commit history)
+- The Appveyor job (`continuous-integration/appveyor/branch`) has been run successfully (visible in the github commit history)
+
+If the above checks are all green and you want to make the release a non-provisional one do:
+
+```
+yarn tag remove node-duckdb@xxx provisional-release
+yarn tag add node-duckdb@xxx latest
+```
+
+You can now continue merging into master.
+
+## Manual Release
+
+On a mac:
 
 - `export GITHUB_TOKEN=<your PAT>` - create a PAT in github that allows uploading artifacts to github releases
-- `yarn login && yarn publish` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
+- `yarn login && yarn publish && yarn prebuild:linux && yarn prebuild:upload` - publish will do a bunch of various stuff, including prebuilding binaries for linux/mac and publishing those
