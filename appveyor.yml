@@ -15,5 +15,5 @@ install:
   - yarn install --frozen-lockfile
   - yarn prebuild:upload
 
-test:
+test_script:
   - ls -alh
