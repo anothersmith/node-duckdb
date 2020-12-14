@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'New Node-DuckDB version'
+        description: "New Node-DuckDB version"
         required: true
 
 jobs:
@@ -57,7 +57,6 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout master
         uses: actions/checkout@v2
         with:
