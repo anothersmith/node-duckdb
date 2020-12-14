@@ -1,0 +1,16 @@
+branches:
+  only:
+    - feature/ODIN-424-appveyor
+
+only_commits:
+  message: /Release:/
+
+image: macos
+
+environment:
+  nodejs_version: "12"
+
+install:
+  - echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$env:NPM_AUTH_TOKEN" >> ~/.npmrc
+  - yarn install --frozen-lockfile
+  - yarn prebuild:upload
