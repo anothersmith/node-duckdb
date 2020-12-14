@@ -1,6 +1,6 @@
 branches:
   only:
-    - feature/ODIN-424-appveyor
+    - master
 
 only_commits:
   message: /Release:/

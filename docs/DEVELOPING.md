@@ -42,7 +42,7 @@ At the end you should see that:
 
 - the `Release` job has been run successfully (visible on the screen where you triggered the `Release` job)
 - the `Build` job has been run successfully for the `Release: va.b.c` commit (visible in the github commit history)
-- The Appveyor job has been run successfully (visible in the github commit history)
+- The Appveyor job (`continuous-integration/appveyor/branch`) has been run successfully (visible in the github commit history)
 
 If the above checks are all green and you want to make the release a non-provisional one do:
 
@@ -51,7 +51,9 @@ yarn tag remove node-duckdb@xxx provisional-release
 yarn tag add node-duckdb@xxx latest
 ```
 
-## Manual Publishing
+You can now continue merging into master.
+
+## Manual Release
 
 On a mac:
 
