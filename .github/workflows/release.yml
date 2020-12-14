@@ -1,7 +1,11 @@
 name: Release
 
 on:
-  push
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New Node-DuckDB version"
+        required: true
 
 jobs:
   release:
@@ -11,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: feature/ODIN-358-branch-protection
+          ref: master
           token: ${{secrets.BRANCH_PROTECTION_TOKEN}}
       - name: Setup node
         uses: actions/setup-node@v1
@@ -35,12 +39,19 @@ jobs:
         with:
           access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
           enforce_admins: false
-          branch: feature/ODIN-358-branch-protection
+          branch: master
       - name: Install modules with frozen lockfile and build
         run: |
+          echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
+          cat ~/.npmrc
+          yarn config set username $USERNAME
+          yarn config set email $EMAIL
+          yarn config set version-git-message "Release: v%s"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m 'empty' --allow-empty
+          yarn install --frozen-lockfile
+          yarn version --new-version "${{ github.event.inputs.version }}"
+          yarn publish --tag provisional-release --access public
           git push -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -54,4 +65,4 @@ jobs:
         with:
           access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
           enforce_admins: true
-          branch: feature/ODIN-358-branch-protection
+          branch: master
