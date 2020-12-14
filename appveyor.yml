@@ -12,5 +12,6 @@ environment:
 
 install:
   - echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$env:NPM_AUTH_TOKEN" >> ~/.npmrc
+  - npm install -g yarn
   - yarn install --frozen-lockfile
   - yarn prebuild:upload
