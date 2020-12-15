@@ -52,7 +52,6 @@ For more examples see [here](https://github.com/deepcrawl/node-duckdb/tree/featu
 | [Connection](./node-duckdb.connection.md)         | Represents a DuckDB connection.                                                                                                                                                            |
 | [DuckDB](./node-duckdb.duckdb.md)                 | The DuckDB class represents a DuckDB database instance.                                                                                                                                    |
 | [ResultIterator](./node-duckdb.resultiterator.md) | ResultIterator represents the result set of a DuckDB query. Instances of this class are returned by the [Connection.executeIterator](./node-duckdb.connection.executeiterator.md)<!-- -->. |
-| [ResultStream](./node-duckdb.resultstream.md)     | This is a Readable stream that wrapps the ResultIterator. Instances of this class are returned by [Connection.execute](./node-duckdb.connection.execute.md)<!-- -->.                       |
 
 ## Enumerations
 

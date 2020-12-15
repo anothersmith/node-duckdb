@@ -1,7 +1,7 @@
-coverage/
-node_modules/
-duckdb
-addon
-dist
-tsconfig.json
-examples
+/coverage/
+/node_modules/
+/duckdb
+/addon
+/dist
+/tsconfig.json
+/examples

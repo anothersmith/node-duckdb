@@ -1,40 +1,43 @@
-import { ConnectionBinding } from "../addon-bindings";
-import { ResultStream } from "./result-stream";
-import {DuckDB} from "./duckdb";
-import { ResultIterator } from "./result-iterator";
+import { Readable } from "stream";
+
+import { ConnectionBinding } from "@addon-bindings";
 import { IExecuteOptions } from "@addon-types";
+
+import { DuckDB } from "./duckdb";
+import { ResultIterator } from "./result-iterator";
+import { getResultStream } from "./result-stream";
 
 /**
  * Represents a DuckDB connection.
- * 
+ *
  * @remarks
  * A single db instance can have multiple connections. Having more than one connection instance is required when executing concurrent queries.
- * 
+ *
  * @public
  */
 export class Connection {
   /**
-     * Connection constructor.
-     * @param duckdb - {@link DuckDB | DuckDB} instance to connect to.
-     * 
-     * 
-     * @example
-     * Initializing a connection:
-     * ```ts
-     * import { DuckDB } from "node-duckdb";
-     * const db = new DuckDB();
-     * const connection = new Connection(db);
-     * ```
-     * 
-     * @public
-     */
+   * Connection constructor.
+   * @param duckdb - {@link DuckDB | DuckDB} instance to connect to.
+   *
+   *
+   * @example
+   * Initializing a connection:
+   * ```ts
+   * import { DuckDB } from "node-duckdb";
+   * const db = new DuckDB();
+   * const connection = new Connection(db);
+   * ```
+   *
+   * @public
+   */
   constructor(private duckdb: DuckDB) {}
   private connectionBinding = new ConnectionBinding(this.duckdb.db);
   /**
-   * Asynchronously executes the query and returns a node.js stream that wraps the result set.
+   * Asynchronously executes the query and returns a {@link https://nodejs.org/api/stream.html#stream_class_stream_readable | Readable stream} that wraps the result set.
    * @param command - SQL command to execute
    * @param options - optional options object of type {@link IExecuteOptions | IExecuteOptions}
-   * 
+   *
    * @example
    * Streaming results of a DuckDB query into a CSV file:
    * ```ts
@@ -64,15 +67,15 @@ export class Connection {
    * outputToFileAsCsv();
    * ```
    */
-  public async execute<T>(command: string, options?: IExecuteOptions): Promise<ResultStream<T>> {
+  public async execute<T>(command: string, options?: IExecuteOptions): Promise<Readable> {
     const resultIteratorBinding = await this.connectionBinding.execute<T>(command, options);
-    return new ResultStream(new ResultIterator(resultIteratorBinding));
+    return getResultStream(new ResultIterator(resultIteratorBinding));
   }
   /**
    * Asynchronously executes the query and returns an iterator that points to the first result in the result set.
    * @param command - SQL command to execute
    * @param options - optional options object of type {@link IExecuteOptions | IExecuteOptions}
-   * 
+   *
    * @example
    * Printing rows:
    * ```ts
@@ -83,7 +86,7 @@ export class Connection {
    *   await connection.executeIterator("CREATE TABLE people(id INTEGER, name VARCHAR);");
    *   await connection.executeIterator("INSERT INTO people VALUES (1, 'Mark'), (2, 'Hannes'), (3, 'Bob');");
    *   const result = await connection.executeIterator("SELECT * FROM people;");
-   *   // print the first row    
+   *   // print the first row
    *   console.log(result.fetchRow());
    *   // print the rest of the rows
    *   console.log(result.fetchAllRows());
@@ -94,7 +97,7 @@ export class Connection {
    * }
    * queryDatabaseWithIterator();
    * ```
-   * 
+   *
    * @example
    * Providing generics type:
    * ```ts
@@ -108,7 +111,7 @@ export class Connection {
     return new ResultIterator(await this.connectionBinding.execute<T>(command, options));
   }
   /**
-   * Close the connection (also closes all {@link ResultStream | ResultStream} or {@link ResultIterator | ResultIterator} objects associated with this connection).
+   * Close the connection (also closes all {@link https://nodejs.org/api/stream.html#stream_class_stream_readable | Readable} or {@link ResultIterator | ResultIterator} objects associated with this connection).
    * @remarks
    * Even though GC will automatically destroy the Connection object at some point, DuckDB data is stored in the native address space, not the V8 heap, meaning you can easily have a Node.js process taking gigabytes of memory (more than the default heap size for Node.js) with V8 not triggering GC. So, definitely think about manually calling `close()`.
    */

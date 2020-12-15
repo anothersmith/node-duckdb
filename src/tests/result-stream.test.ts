@@ -1,11 +1,13 @@
-import { Connection, DuckDB, ResultStream } from "@addon";
+import { Readable } from "stream";
+
+import { Connection, DuckDB } from "@addon";
 import { IExecuteOptions, RowResultFormat } from "@addon-types";
 
 const query = "SELECT * FROM read_csv_auto('src/tests/test-fixtures/web_page.csv')";
 
 const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array };
 
-function readStream<T>(rs: ResultStream<T>): Promise<T[]> {
+function readStream<T>(rs: Readable): Promise<T[]> {
   return new Promise((resolve, reject) => {
     const elements: T[] = [];
     rs.on("data", (el: any) => elements.push(el));
@@ -68,25 +70,6 @@ describe("Result stream", () => {
       message:
         "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
     });
-    expect(hasClosedFired).toBe(true);
-  });
-
-  it("closes resource when all data has been read", async () => {
-    const rs = await connection.execute(query, executeOptions);
-    let hasClosedFired = false;
-    rs.on("close", () => (hasClosedFired = true));
-    const elements = await readStream(rs);
-    expect(elements.length).toBe(60);
-    expect(hasClosedFired).toBe(true);
-  });
-
-  it("closes resource on manual destroy", async () => {
-    const rs1 = await connection.execute(query, executeOptions);
-    let hasClosedFired = false;
-    rs1.on("close", () => (hasClosedFired = true));
-    void readStream(rs1);
-    expect(hasClosedFired).toBe(false);
-    rs1.destroy();
     expect(hasClosedFired).toBe(true);
   });
 
