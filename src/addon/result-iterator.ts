@@ -6,7 +6,7 @@ import { ResultType } from "@addon-types";
  *
  * @public
  */
-export class ResultIterator<T> {
+export class ResultIterator<T> implements IterableIterator<T> {
   /**
    *
    * @internal
@@ -57,11 +57,11 @@ export class ResultIterator<T> {
     return this.resultInterator.isClosed;
   }
 
-  // TS interface for the return value is incorrect (`value` should not be present when `done` is true)
-  public next(): { done: true } | { done: false; value: T } {
+  public next(): IteratorResult<T> {
     const row = this.fetchRow();
     if (row === null) {
-      return { done: true };
+      // TS interface is incorrect: when `done` is true, there should be no `value`
+      return <IteratorReturnResult<T>>{ done: true };
     }
     return {
       value: row,

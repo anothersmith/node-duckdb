@@ -9,8 +9,10 @@ ResultIterator represents the result set of a DuckDB query. Instances of this cl
 <b>Signature:</b>
 
 ```typescript
-export declare class ResultIterator<T>
+export declare class ResultIterator<T> implements IterableIterator<T>
 ```
+
+<b>Implements:</b> IterableIterator&lt;T&gt;
 
 ## Remarks
 

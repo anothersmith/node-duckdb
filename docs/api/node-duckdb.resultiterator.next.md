@@ -7,14 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-next(): {
-        done: true;
-    } | {
-        done: false;
-        value: T;
-    };
+next(): IteratorResult<T>;
 ```
 
 <b>Returns:</b>
 
-{ done: true; } \| { done: false; value: T; }
+IteratorResult&lt;T&gt;
