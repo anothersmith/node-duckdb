@@ -4,12 +4,12 @@
 
 ## Connection.execute() method
 
-Asynchronously executes the query and returns a node.js stream that wraps the result set.
+Asynchronously executes the query and returns a [Readable stream](https://nodejs.org/api/stream.html#stream_class_stream_readable) that wraps the result set.
 
 <b>Signature:</b>
 
 ```typescript
-execute<T>(command: string, options?: IExecuteOptions): Promise<ResultStream<T>>;
+execute<T>(command: string, options?: IExecuteOptions): Promise<Readable>;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ execute<T>(command: string, options?: IExecuteOptions): Promise<ResultStream<T>>
 
 <b>Returns:</b>
 
-Promise&lt;[ResultStream](./node-duckdb.resultstream.md)<!-- -->&lt;T&gt;&gt;
+Promise&lt;Readable&gt;
 
 ## Example
 

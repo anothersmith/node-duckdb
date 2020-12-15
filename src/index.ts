@@ -39,5 +39,5 @@
  * ```
  * For more examples see {@link https://github.com/deepcrawl/node-duckdb/tree/feature/ODIN-423-welcome-page/examples | here}.
  */
-export { DuckDB, Connection, ResultIterator, ResultStream } from "./addon";
+export { DuckDB, Connection, ResultIterator } from "./addon";
 export * from "./addon-types";

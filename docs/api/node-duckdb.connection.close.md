@@ -4,7 +4,7 @@
 
 ## Connection.close() method
 
-Close the connection (also closes all [ResultStream](./node-duckdb.resultstream.md) or [ResultIterator](./node-duckdb.resultiterator.md) objects associated with this connection).
+Close the connection (also closes all [Readable](https://nodejs.org/api/stream.html#stream_class_stream_readable) or [ResultIterator](./node-duckdb.resultiterator.md) objects associated with this connection).
 
 <b>Signature:</b>
 

@@ -1,6 +1,6 @@
-node_modules
-coverage
-build
-duckdb
-prebuilds
-examples
+/node_modules
+/coverage
+/build
+/duckdb
+/prebuilds
+/examples

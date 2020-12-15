@@ -25,9 +25,11 @@ The constructor for this class is marked as internal. Third-party code should no
 
 ## Methods
 
-| Method                                                         | Modifiers | Description                     |
-| -------------------------------------------------------------- | --------- | ------------------------------- |
-| [close()](./node-duckdb.resultiterator.close.md)               |           | Close the ResultIterator        |
-| [describe()](./node-duckdb.resultiterator.describe.md)         |           | Describe the result set schema. |
-| [fetchAllRows()](./node-duckdb.resultiterator.fetchallrows.md) |           | Fetch all rows                  |
-| [fetchRow()](./node-duckdb.resultiterator.fetchrow.md)         |           | Fetch the next row              |
+| Method                                                                     | Modifiers | Description                     |
+| -------------------------------------------------------------------------- | --------- | ------------------------------- |
+| [\[Symbol.iterator\]()](./node-duckdb.resultiterator._symbol.iterator_.md) |           |                                 |
+| [close()](./node-duckdb.resultiterator.close.md)                           |           | Close the ResultIterator        |
+| [describe()](./node-duckdb.resultiterator.describe.md)                     |           | Describe the result set schema. |
+| [fetchAllRows()](./node-duckdb.resultiterator.fetchallrows.md)             |           | Fetch all rows                  |
+| [fetchRow()](./node-duckdb.resultiterator.fetchrow.md)                     |           | Fetch the next row              |
+| [next()](./node-duckdb.resultiterator.next.md)                             |           |                                 |
