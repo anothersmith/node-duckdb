@@ -26,28 +26,27 @@ Once `master` is ready to be released:
 
 - Stop merging into `master`
 - In github:
-  - Go to `Actions` -> `Release` -> `Run Workflow`
-  - Enter the new version for the release, e.g.: `0.60.1`
+  - Go to `Actions` -> `Automatic Release` -> `Run Workflow`
   - Click `Run Workflow`
 
 This will do the following:
 
+- Changelog will be amended and package version will be bumped using semantic commits
 - The new version of `node-duckdb` with Linux binaries will be published to npm. The package will be tagged as `provisional-release` instead of `latest`, meaning that users won't get the version of the package if they just do `yarn install node-duckdb`.
-- A new tagged commit will be pushed onto master
+- The commit and the tag will be pushed
 - A github release will be created
 - The commit will then be tested with the `build` job
 - Appveyor will build and publish the MacOs binaries, and then run the tests
 
 At the end you should see that:
 
-- the `Release` job has been run successfully (visible on the screen where you triggered the `Release` job)
-- the `Build` job has been run successfully for the `Release: va.b.c` commit (visible in the github commit history)
+- the `Auto Release` job has been run successfully (visible on the screen where you triggered the `Release` job)
+- the `Build` job has been run successfully for the `chore(release): a.b.c` commit (visible in the github commit history)
 - The Appveyor job (`continuous-integration/appveyor/branch`) has been run successfully (visible in the github commit history)
 
 If the above checks are all green and you want to make the release a non-provisional one do:
 
 ```
-yarn tag remove node-duckdb@xxx provisional-release
 yarn tag add node-duckdb@xxx latest
 ```
 

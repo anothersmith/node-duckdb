@@ -3,7 +3,7 @@ branches:
     - master
 
 only_commits:
-  message: /Release:/
+  message: /chore(release):/
 
 image: macos
 
