@@ -9,7 +9,7 @@ const accessAsync = promisify(access);
 const unlinkAsync = promisify(unlink);
 
 const possibleTypes = ["INT32", "INT64", "DOUBLE", "UTF8", "BOOLEAN"];
-const numberOfColumns = 250;
+const numberOfColumnsWithRandomTypes = 250;
 
 // first column types are predetermined, the rest random
 const columnTypes = [
@@ -25,10 +25,12 @@ const columnTypes = [
   "BOOLEAN",
   "BOOLEAN",
   "BOOLEAN",
-  ...Array.from(new Array(numberOfColumns), () => possibleTypes[random(0, possibleTypes.length - 1, false)]),
+  ...Array.from(
+    new Array(numberOfColumnsWithRandomTypes),
+    () => possibleTypes[random(0, possibleTypes.length - 1, false)],
+  ),
 ];
 
-// eslint-disable-next-line no-restricted-properties
 const schema = Object.assign(
   {},
   ...columnTypes.map((columnType, index) => ({ [`col${index}`]: { type: columnType } })),

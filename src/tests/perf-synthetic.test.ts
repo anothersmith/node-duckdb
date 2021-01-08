@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, jest/expect-expect */
 import { join } from "path";
 
 import { Connection, DuckDB } from "@addon";
@@ -7,6 +7,9 @@ import { writeSyntheticParquetFile } from "./synthetic-test-data-generator";
 
 const filePath = join(__dirname, "../large-synth");
 
+/**
+ * Test suite used to measure performance, change the number of rows argument of writeSyntheticParquetFile to increase test data set size
+ */
 describe("Perfomance test suite against synthetic data set", () => {
   let db: DuckDB;
   let connection: Connection;
@@ -26,7 +29,6 @@ describe("Perfomance test suite against synthetic data set", () => {
     db.close();
   });
 
-  // eslint-disable-next-line jest/expect-expect
   it("multiple queries", async () => {
     await Promise.all([
       (async () => {
