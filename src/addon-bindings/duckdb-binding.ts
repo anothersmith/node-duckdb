@@ -9,7 +9,7 @@ const { DuckDB } = require("../../build/Release/node-duckdb-addon.node");
  */
 
 export declare class DuckDBClass {
-  constructor(config: IDuckDBConfig);
+  constructor(config: IDuckDBConfig, fileSystemCallback?: () => any);
   public close(): void;
   public isClosed: boolean;
   public accessMode: AccessMode;

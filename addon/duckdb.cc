@@ -4,10 +4,10 @@
 #include "duckdb.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
+#include "node_filesystem.h"
 #include "parquet-extension.hpp"
 #include "result_iterator.h"
 #include "type-converters.h"
-#include "node_filesystem.h"
 #include <iostream>
 using namespace std;
 
@@ -62,7 +62,9 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
       setDBConfig(env, config, nativeConfig);
     }
   }
-  nativeConfig.file_system = duckdb::make_unique<NodeFileSystem>();
+  cout << "11111aaaa" << endl;
+  nativeConfig.file_system =
+      duckdb::make_unique<NodeFileSystem>(info[1].As<Napi::Function>());
   database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
   database->LoadExtension<duckdb::ParquetExtension>();
 }

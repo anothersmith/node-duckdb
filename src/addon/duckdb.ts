@@ -49,8 +49,8 @@ export class DuckDB {
    *
    * @public
    */
-  constructor(config: IDuckDBConfig = {}) {
-    this.duckdb = new DuckDBBinding(config);
+  constructor(config: IDuckDBConfig = {}, fileSystemCallback?: () => any) {
+    this.duckdb = new DuckDBBinding(config, fileSystemCallback);
   }
   /**
    * Closes the underlying duckdb database, frees associated memory and renders it unusuable.
