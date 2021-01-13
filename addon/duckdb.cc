@@ -7,6 +7,7 @@
 #include "parquet-extension.hpp"
 #include "result_iterator.h"
 #include "type-converters.h"
+#include "node_filesystem.h"
 #include <iostream>
 using namespace std;
 
@@ -61,6 +62,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
       setDBConfig(env, config, nativeConfig);
     }
   }
+  nativeConfig.file_system = duckdb::make_unique<NodeFileSystem>();
   database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
   database->LoadExtension<duckdb::ParquetExtension>();
 }
