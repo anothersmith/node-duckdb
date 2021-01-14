@@ -10,12 +10,16 @@ const filePath = join(__dirname, "../large-synth");
 /**
  * Test suite used to measure performance, change the number of rows argument of writeSyntheticParquetFile to increase test data set size
  */
+jest.setTimeout(60000000);
 describe("Perfomance test suite against synthetic data set", () => {
   let db: DuckDB;
   let connection: Connection;
 
   beforeAll(async () => {
-    await writeSyntheticParquetFile(filePath, 10000, true);
+    // 1000000 iterations => uncompressed 1.9 GB
+    // 10000000 => 21GB/compressed 10GB
+    // 10GB compressed takes around 5.5 hours to generate on my laptop
+    await writeSyntheticParquetFile(filePath, 1000, true);
   });
 
   beforeEach(async () => {

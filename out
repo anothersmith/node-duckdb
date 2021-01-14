@@ -1,0 +1,13 @@
+yarn run v1.22.5
+$ yarn build:ts && jest --runInBand --testTimeout=60000 node-filesystem.test
+$ rimraf dist && ttsc
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In /Users/rostislavprovodenko/repos/node-duckdb2
+  124 files checked.
+  testMatch: /Users/rostislavprovodenko/repos/node-duckdb2/dist/**/?(*.)+(test).js - 19 matches
+  testPathIgnorePatterns: /node_modules/ - 124 matches
+  testRegex:  - 0 matches
+Pattern: node-filesystem.test - 0 matches
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

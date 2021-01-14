@@ -33,7 +33,7 @@ const columnTypes = [
 
 const schema = Object.assign(
   {},
-  ...columnTypes.map((columnType, index) => ({ [`col${index}`]: { type: columnType } })),
+  ...columnTypes.map((columnType, index) => ({ [`col${index}`]: { type: columnType, compression: "GZIP" } })),
 );
 
 function getRandomValue(columnType: string): number | string | boolean {
@@ -77,10 +77,11 @@ export async function writeSyntheticParquetFile(
   const writer = await parquet.ParquetWriter.openFile(new parquet.ParquetSchema(schema), path);
   for (let i = 0; i < numberOfRows; i++) {
     const row = Object.assign(
-      {},
-      ...columnTypes.map((columnType, index) => ({ [`col${index}`]: getRandomValue(columnType) })),
-    );
+        {},
+        ...columnTypes.map((columnType, index) => ({ [`col${index}`]: getRandomValue(columnType) })),
+        );
     await writer.appendRow(row);
+
   }
   await writer.close();
   console.log("finished writing synthetic file");
