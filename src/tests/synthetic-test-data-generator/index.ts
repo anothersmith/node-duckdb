@@ -1,12 +1,10 @@
 /* eslint-disable no-console, no-loops/no-loops, no-restricted-properties, max-lines-per-function */
-import { access, constants, unlink } from "fs";
-import { promisify } from "util";
+import { constants, promises as fsPromises } from "fs";
 
 import { random, times } from "lodash";
 import parquet from "parquetjs";
 
-const accessAsync = promisify(access);
-const unlinkAsync = promisify(unlink);
+const { unlink, access } = fsPromises;
 
 const possibleTypes = ["INT32", "INT64", "DOUBLE", "UTF8", "BOOLEAN"];
 const numberOfColumnsWithRandomTypes = 250;
@@ -50,7 +48,7 @@ export async function writeSyntheticParquetFile(
 ): Promise<void> {
   let doesFileExist = true;
   try {
-    await accessAsync(path, constants.F_OK);
+    await access(path, constants.F_OK);
   } catch (e) {
     doesFileExist = false;
   }
@@ -61,7 +59,7 @@ export async function writeSyntheticParquetFile(
   }
 
   if (forceRewrite && doesFileExist) {
-    await unlinkAsync(path);
+    await unlink(path);
   }
   console.log("writing synthetic file");
   const writer = await parquet.ParquetWriter.openFile(new parquet.ParquetSchema(schema), path);
