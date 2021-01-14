@@ -6,4 +6,5 @@ module.exports = {
   roots: ["<rootDir>"],
   testMatch: ["<rootDir>/dist/**/?(*.)+(test).js"],
   setupFilesAfterEnv: ["jest-extended"],
+  testEnvironment: "node",
 };
