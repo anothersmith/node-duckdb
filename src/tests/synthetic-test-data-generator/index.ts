@@ -2,7 +2,7 @@
 import { access, constants, unlink } from "fs";
 import { promisify } from "util";
 
-import { random } from "lodash";
+import { random, times } from "lodash";
 import parquet from "parquetjs";
 
 const accessAsync = promisify(access);
@@ -14,17 +14,7 @@ const numberOfColumnsWithRandomTypes = 250;
 // first column types are predetermined, the rest random
 const columnTypes = [
   ...possibleTypes,
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
-  "BOOLEAN",
+  ...times(10, () => "BOOLEAN"),
   ...Array.from(
     new Array(numberOfColumnsWithRandomTypes),
     () => possibleTypes[random(0, possibleTypes.length - 1, false)],
