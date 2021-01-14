@@ -92,6 +92,10 @@ You can see a complete sample project using node-duckdb [here](https://github.co
 
 API documentation is found [here](https://github.com/deepcrawl/node-duckdb/blob/master/docs/api/node-duckdb.md).
 
+## Known Issues
+
+Known issues and their workarounds are found [here](https://github.com/deepcrawl/node-duckdb/blob/master/docs/KNOWN_ISSUES.md).
+
 ## Developing
 
 Documentation for developers is found [here](https://github.com/deepcrawl/node-duckdb/blob/master/docs/DEVELOPING.md).
