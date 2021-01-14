@@ -4,3 +4,4 @@
 /duckdb
 /prebuilds
 /examples
+**/*.parquet

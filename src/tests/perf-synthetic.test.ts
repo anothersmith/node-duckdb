@@ -5,7 +5,7 @@ import { Connection, DuckDB } from "@addon";
 
 import { writeSyntheticParquetFile } from "./synthetic-test-data-generator";
 
-const filePath = join(__dirname, "../large-synth");
+const filePath = join(__dirname, "../large-synth.parquet");
 
 /**
  * Test suite used to measure performance, change the number of rows argument of writeSyntheticParquetFile to increase test data set size
