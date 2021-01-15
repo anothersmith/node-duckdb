@@ -6,13 +6,13 @@ namespace NodeDuckDB {
 
 class NodeFileSystem : public duckdb::FileSystem {
 public:
-  NodeFileSystem(const Napi::Function &filesystem_callback);
+  NodeFileSystem(Napi::ThreadSafeFunction &filesystem_callback);
   unique_ptr<FileHandle> OpenFile(const char *path, uint8_t flags,
                                   FileLockType lock_type) override;
   void Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
             idx_t location) override;
 
 private:
-  const Napi::Function &filesystem_callback;
+  Napi::ThreadSafeFunction &filesystem_callback;
 };
 } // namespace NodeDuckDB

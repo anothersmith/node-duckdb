@@ -14,6 +14,8 @@ public:
   bool IsClosed(void);
 
 private:
+  Napi::FunctionReference b;
+  Napi::ThreadSafeFunction tsfn;
   Napi::Value Close(const Napi::CallbackInfo &info);
   Napi::Value IsClosed(const Napi::CallbackInfo &info);
   Napi::Value GetAccessMode(const Napi::CallbackInfo &info);

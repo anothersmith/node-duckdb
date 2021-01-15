@@ -62,9 +62,18 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
       setDBConfig(env, config, nativeConfig);
     }
   }
-  cout << "11111aaaa" << endl;
-  nativeConfig.file_system =
-      duckdb::make_unique<NodeFileSystem>(info[1].As<Napi::Function>());
+  b = Napi::Persistent(info[1].As<Napi::Function>());
+  tsfn = Napi::ThreadSafeFunction::New(
+      b.Env(),
+      b.Value(),       // JavaScript function called asynchronously
+      "Resource Name", // Name
+      10,              // Unlimited queue
+      1,               // Only one thread will use this initially
+      [](Napi::Env) {  // Finalizer used to clean threads up
+        // nativeThread.join();
+      });
+
+  nativeConfig.file_system = duckdb::make_unique<NodeFileSystem>(tsfn);
   database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
   database->LoadExtension<duckdb::ParquetExtension>();
 }
