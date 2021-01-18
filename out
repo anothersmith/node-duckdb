@@ -3,25 +3,65 @@ $ yarn build:ts && jest --runInBand --testTimeout=60000 node-f
 $ rimraf dist && ttsc
 here
 filehandle here xxx
+locking
+waiting
+fdsafdsfdsfdsafds
+in callback
+unlocked
 herexxx
+locking
+waiting
+fdsafdsfdsfdsafds
+in callback
+unlocked
 herexxx
+locking
+waiting
+fdsafdsfdsfdsafds
+in callback
+unlocked
 herexxx
 PASS dist/tests/node-filesystem.test.js
   Node filesystem
-    ✓ allows reading from file (12 ms)
+    ✓ allows reading from file (14 ms)
 
   console.log
     In nodejs fs
 
       at src/tests/node-filesystem.test.ts:8:15
 
+  console.log
+    [Function: theFunction]
+
+      at src/tests/node-filesystem.test.ts:9:15
+
+  console.log
+    In nodejs fs
+
+      at src/tests/node-filesystem.test.ts:8:15
+
+  console.log
+    [Function: theFunction]
+
+      at src/tests/node-filesystem.test.ts:9:15
+
+  console.log
+    In nodejs fs
+
+      at src/tests/node-filesystem.test.ts:8:15
+
+  console.log
+    [Function: theFunction]
+
+      at src/tests/node-filesystem.test.ts:9:15
+
 -----------------------------|---------|----------|---------|---------|-------------------
 File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------------|---------|----------|---------|---------|-------------------
-All files                    |   67.86 |    76.92 |   36.84 |   66.67 |                   
- addon                       |   48.08 |        0 |   27.27 |    44.9 |                   
+All files                    |   66.67 |    76.92 |   34.21 |   65.43 |                   
+ addon                       |   46.15 |        0 |   24.24 |   42.86 |                   
   connection.ts              |   63.64 |      100 |      40 |   63.64 | 71-72,119-125     
-  duckdb.ts                  |   38.89 |        0 |   21.43 |   38.89 | 21,62,76,90-139   
+  duckdb.ts                  |   33.33 |        0 |   14.29 |   33.33 | 21,62,76-139      
   index.ts                   |     100 |      100 |   66.67 |     100 |                   
   result-iterator.ts         |   23.08 |        0 |   22.22 |   23.08 | 31-72             
   result-stream.ts           |      50 |      100 |       0 |      50 | 6-8               
@@ -38,38 +78,8 @@ All files                    |   67.86 |    76.92 |   36.84 |   66.67 |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        1.152 s
+Time:        1.173 s
 Ran all test suites matching /node-f/i.
-
-  ●  Cannot log after tests are done. Did you forget to wait for something async in your test?
-    Attempted to log "In nodejs fs".
-
-       6 |     const db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, () => {
-       7 |       // eslint-disable-next-line no-console
-    >  8 |       console.log("In nodejs fs");
-         |               ^
-       9 |     });
-      10 |     db.accessMode;
-      11 |     const connection1 = new Connection(db);
-
-      at CustomConsole.log (node_modules/@jest/console/build/CustomConsole.js:186:10)
-      at src/tests/node-filesystem.test.ts:8:15
-
-
-  ●  Cannot log after tests are done. Did you forget to wait for something async in your test?
-    Attempted to log "In nodejs fs".
-
-       6 |     const db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, () => {
-       7 |       // eslint-disable-next-line no-console
-    >  8 |       console.log("In nodejs fs");
-         |               ^
-       9 |     });
-      10 |     db.accessMode;
-      11 |     const connection1 = new Connection(db);
-
-      at CustomConsole.log (node_modules/@jest/console/build/CustomConsole.js:186:10)
-      at src/tests/node-filesystem.test.ts:8:15
-
 Jest did not exit one second after the test run has completed.
 
 This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.
