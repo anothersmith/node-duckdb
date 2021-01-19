@@ -6,54 +6,48 @@ filehandle here xxx
 locking
 waiting
 fdsafdsfdsfdsafds
-in callback
 unlocked
-herexxx
 locking
 waiting
 fdsafdsfdsfdsafds
-in callback
 unlocked
-herexxx
 locking
 waiting
 fdsafdsfdsfdsafds
-in callback
 unlocked
-herexxx
 PASS dist/tests/node-filesystem.test.js
   Node filesystem
-    ✓ allows reading from file (14 ms)
+    ✓ allows reading from file (16 ms)
 
   console.log
     In nodejs fs
 
-      at src/tests/node-filesystem.test.ts:8:15
+      at src/tests/node-filesystem.test.ts:10:15
 
   console.log
-    [Function: theFunction]
+    <Buffer 50 41 52 31>
 
-      at src/tests/node-filesystem.test.ts:9:15
-
-  console.log
-    In nodejs fs
-
-      at src/tests/node-filesystem.test.ts:8:15
-
-  console.log
-    [Function: theFunction]
-
-      at src/tests/node-filesystem.test.ts:9:15
+      at src/tests/node-filesystem.test.ts:14:17
 
   console.log
     In nodejs fs
 
-      at src/tests/node-filesystem.test.ts:8:15
+      at src/tests/node-filesystem.test.ts:10:15
 
   console.log
-    [Function: theFunction]
+    <Buffer da 02 00 00>
 
-      at src/tests/node-filesystem.test.ts:9:15
+      at src/tests/node-filesystem.test.ts:14:17
+
+  console.log
+    In nodejs fs
+
+      at src/tests/node-filesystem.test.ts:10:15
+
+  console.log
+    <Buffer 15 02 19 cc 48 06 73 63 68 65 6d 61 15 16 00 15 02 25 02 18 02 69 64 00 15 00 25 02 18 08 62 6f 6f 6c 5f 63 6f 6c 00 15 02 25 02 18 0b 74 69 6e 79 69 ... 680 more bytes>
+
+      at src/tests/node-filesystem.test.ts:14:17
 
 -----------------------------|---------|----------|---------|---------|-------------------
 File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
@@ -78,7 +72,7 @@ All files                    |   66.67 |    76.92 |   34.21 |   65.43 |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        1.173 s
+Time:        1.111 s
 Ran all test suites matching /node-f/i.
 Jest did not exit one second after the test run has completed.
 

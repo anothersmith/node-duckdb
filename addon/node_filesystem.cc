@@ -22,31 +22,38 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
   std::mutex mtx;
   std::unique_lock<std::mutex> lk(mtx);
   bool ready = false;
-  auto callback = [&](Napi::Env env, Function jsCallback, int *value) {
+  auto callback = [&](Napi::Env env, Function jsCallback, const string *path) {
     cout << "fdsafdsfdsfdsafds" << endl;
     auto fn = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) { 
-          cout << "in callback" << endl; 
-          // std::unique_lock<std::mutex> lk(mtx);
+          auto bla = info[0];
+          auto bufferNodejs = bla.As<Napi::Buffer<char>>();
+
+          
+          std::memcpy(buffer, bufferNodejs.Data(), nr_bytes);
           ready = true;
           cv.notify_one();
           },
         "theFunction");
+    auto buffer1 = Napi::Buffer<char>::New(env, nr_bytes);
+    auto path1 = Napi::String::New(env, *path);
+    auto length = Napi::Number::New(env, nr_bytes);
+    auto position = Napi::Number::New(env, location);
     // Transform native data into JS data, passing it to the provided
     // `jsCallback` -- the TSFN's JavaScript function.
-    jsCallback.Call({fn});
+    jsCallback.Call({path1, buffer1, length, position, fn});
   };
 
   int *value = new int(clock());
-  filesystem_callback.BlockingCall(value, callback);
+  const string *path = &handle.path;
+  filesystem_callback.BlockingCall(path, callback);
   cout << "locking" << endl;
   cout << "waiting" << endl;
   while (!ready)
     cv.wait(lk);
   cout << "unlocked" << endl;
 
-  return duckdb::FileSystem::Read(handle, buffer, nr_bytes, location);
 }
 
 } // namespace NodeDuckDB
