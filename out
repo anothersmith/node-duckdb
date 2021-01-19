@@ -3,59 +3,33 @@ $ yarn build:ts && jest --runInBand --testTimeout=60000 node-f
 $ rimraf dist && ttsc
 here
 filehandle here xxx
-locking
-waiting
-fdsafdsfdsfdsafds
-unlocked
-locking
-waiting
-fdsafdsfdsfdsafds
-unlocked
-locking
-waiting
-fdsafdsfdsfdsafds
-unlocked
+!!!!!!
 PASS dist/tests/node-filesystem.test.js
   Node filesystem
-    ✓ allows reading from file (16 ms)
+    ✓ allows reading from file (12 ms)
 
   console.log
     In nodejs fs
 
-      at src/tests/node-filesystem.test.ts:10:15
-
-  console.log
-    <Buffer 50 41 52 31>
-
-      at src/tests/node-filesystem.test.ts:14:17
+      at src/tests/node-filesystem.test.ts:17:15
 
   console.log
     In nodejs fs
 
-      at src/tests/node-filesystem.test.ts:10:15
-
-  console.log
-    <Buffer da 02 00 00>
-
-      at src/tests/node-filesystem.test.ts:14:17
+      at src/tests/node-filesystem.test.ts:17:15
 
   console.log
     In nodejs fs
 
-      at src/tests/node-filesystem.test.ts:10:15
-
-  console.log
-    <Buffer 15 02 19 cc 48 06 73 63 68 65 6d 61 15 16 00 15 02 25 02 18 02 69 64 00 15 00 25 02 18 08 62 6f 6f 6c 5f 63 6f 6c 00 15 02 25 02 18 0b 74 69 6e 79 69 ... 680 more bytes>
-
-      at src/tests/node-filesystem.test.ts:14:17
+      at src/tests/node-filesystem.test.ts:17:15
 
 -----------------------------|---------|----------|---------|---------|-------------------
 File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------------|---------|----------|---------|---------|-------------------
-All files                    |   66.67 |    76.92 |   34.21 |   65.43 |                   
- addon                       |   46.15 |        0 |   24.24 |   42.86 |                   
-  connection.ts              |   63.64 |      100 |      40 |   63.64 | 71-72,119-125     
-  duckdb.ts                  |   33.33 |        0 |   14.29 |   33.33 | 21,62,76-139      
+All files                    |   69.05 |    76.92 |   39.47 |    67.9 |                   
+ addon                       |      50 |        0 |    30.3 |   46.94 |                   
+  connection.ts              |   72.73 |      100 |      60 |   72.73 | 71-72,125         
+  duckdb.ts                  |   38.89 |        0 |   21.43 |   38.89 | 21,76-139         
   index.ts                   |     100 |      100 |   66.67 |     100 |                   
   result-iterator.ts         |   23.08 |        0 |   22.22 |   23.08 | 31-72             
   result-stream.ts           |      50 |      100 |       0 |      50 | 6-8               
@@ -72,7 +46,7 @@ All files                    |   66.67 |    76.92 |   34.21 |   65.43 |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        1.111 s
+Time:        1.196 s
 Ran all test suites matching /node-f/i.
 Jest did not exit one second after the test run has completed.
 

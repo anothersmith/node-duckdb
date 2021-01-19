@@ -62,12 +62,12 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
       setDBConfig(env, config, nativeConfig);
     }
   }
-  b = Napi::Persistent(info[1].As<Napi::Function>());
+  js_callback_ref = Napi::Persistent(info[1].As<Napi::Function>());
   tsfn = Napi::ThreadSafeFunction::New(
-      b.Env(),
-      b.Value(),       // JavaScript function called asynchronously
-      "Resource Name", // Name
-      10,              // Unlimited queue
+      js_callback_ref.Env(),
+      js_callback_ref.Value(),
+      "Node Filesystem Callback", 
+      0,              // Unlimited queue
       1,               // Only one thread will use this initially
       [](Napi::Env) {  // Finalizer used to clean threads up
         // nativeThread.join();

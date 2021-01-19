@@ -16,44 +16,40 @@ NodeFileSystem::OpenFile(const char *path, uint8_t flags,
   return duckdb::FileSystem::OpenFile(path, flags, lock_type);
 }
 
+int64_t NodeFileSystem::Read(FileHandle &handle, void *buffer,
+                             int64_t nr_bytes) {
+  cout << "!!!!!!" << endl;
+  return duckdb::FileSystem::Read(handle, buffer, nr_bytes);
+}
+
 void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
                           idx_t location) {
-  std::condition_variable cv;
-  std::mutex mtx;
-  std::unique_lock<std::mutex> lk(mtx);
-  bool ready = false;
-  auto callback = [&](Napi::Env env, Function jsCallback, const string *path) {
-    cout << "fdsafdsfdsfdsafds" << endl;
-    auto fn = Napi::Function::New(
-        env,
-        [&](const Napi::CallbackInfo &info) { 
-          auto bla = info[0];
-          auto bufferNodejs = bla.As<Napi::Buffer<char>>();
+  std::condition_variable condition_variable;
+  std::mutex mutex;
+  std::unique_lock<std::mutex> lock(mutex);
+  bool js_callback_fired = false;
 
-          
-          std::memcpy(buffer, bufferNodejs.Data(), nr_bytes);
-          ready = true;
-          cv.notify_one();
-          },
-        "theFunction");
-    auto buffer1 = Napi::Buffer<char>::New(env, nr_bytes);
-    auto path1 = Napi::String::New(env, *path);
-    auto length = Napi::Number::New(env, nr_bytes);
-    auto position = Napi::Number::New(env, location);
-    // Transform native data into JS data, passing it to the provided
-    // `jsCallback` -- the TSFN's JavaScript function.
-    jsCallback.Call({path1, buffer1, length, position, fn});
+  auto threadsafe_fn_callback = [&](Napi::Env env, Function js_callback) {
+    auto read_finished_callback = Napi::Function::New(
+        env,
+        [&](const Napi::CallbackInfo &info) {
+          std::memcpy(buffer, info[0].As<Napi::Buffer<char>>().Data(),
+                      nr_bytes);
+          js_callback_fired = true;
+          condition_variable.notify_one();
+        },
+        "nodeFileSystemCallback");
+
+    auto napi_buffer = Napi::Buffer<char>::New(env, nr_bytes);
+    auto napi_path = Napi::String::New(env, handle.path);
+    auto napi_length = Napi::Number::New(env, nr_bytes);
+    auto napi_position = Napi::Number::New(env, location);
+    js_callback.Call({napi_path, napi_buffer, napi_length, napi_position, read_finished_callback});
   };
 
-  int *value = new int(clock());
-  const string *path = &handle.path;
-  filesystem_callback.BlockingCall(path, callback);
-  cout << "locking" << endl;
-  cout << "waiting" << endl;
-  while (!ready)
-    cv.wait(lk);
-  cout << "unlocked" << endl;
-
+  filesystem_callback.BlockingCall(threadsafe_fn_callback);
+  while (!js_callback_fired)
+    condition_variable.wait(lock);
 }
 
 } // namespace NodeDuckDB
