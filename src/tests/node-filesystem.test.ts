@@ -12,13 +12,13 @@ describe("Node filesystem", () => {
       buffer: any,
       length: any,
       position: any,
-      b: any,
+      callback: any,
     ) => {
       console.log("In nodejs fs");
       const fd = openSync(path, "r");
 
       read(fd, buffer, 0, length, position, (_err, _bytesRead, filledBuffer) => {
-        b(filledBuffer);
+        callback(filledBuffer);
       });
     }));
     const connection1 = new Connection(db);
