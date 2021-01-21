@@ -14,7 +14,8 @@ public:
   bool IsClosed(void);
 
 private:
-  Napi::FunctionReference js_callback_ref;
+  Napi::Reference<Napi::Object> file_system_object;
+  Napi::FunctionReference read_with_location_callback_ref;
   Napi::ThreadSafeFunction tsfn;
   Napi::Value Close(const Napi::CallbackInfo &info);
   Napi::Value IsClosed(const Napi::CallbackInfo &info);

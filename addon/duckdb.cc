@@ -62,10 +62,11 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
       setDBConfig(env, config, nativeConfig);
     }
   }
-  js_callback_ref = Napi::Persistent(info[1].As<Napi::Function>());
+  file_system_object = Napi::Persistent(info[1].As<Napi::Object>());
+  read_with_location_callback_ref = Napi::Persistent(file_system_object.Value().Get("readWithLocation").As<Napi::Function>());
   tsfn = Napi::ThreadSafeFunction::New(
-      js_callback_ref.Env(),
-      js_callback_ref.Value(),
+      read_with_location_callback_ref.Env(),
+      read_with_location_callback_ref.Value(),
       "Node Filesystem Callback", 
       0,              // Unlimited queue
       1,               // Only one thread will use this initially

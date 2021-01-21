@@ -114,3 +114,11 @@ export interface IExecuteOptions {
    */
   rowResultFormat?: RowResultFormat;
 }
+
+export interface IFileSystem {
+  readWithLocation: (path: string,
+    buffer: Buffer,
+    length: number,
+    position: number,
+    callback: (buffer: Buffer) => void) => void;
+}
