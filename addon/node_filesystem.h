@@ -6,7 +6,7 @@ namespace NodeDuckDB {
 
 class NodeFileSystem : public duckdb::FileSystem {
 public:
-  NodeFileSystem(Napi::ThreadSafeFunction &read_with_location_callback_tsfn, Napi::ThreadSafeFunction &read_tsfn, Napi::ThreadSafeFunction &glob_tsfn);
+  NodeFileSystem(Napi::ThreadSafeFunction &read_with_location_callback_tsfn, Napi::ThreadSafeFunction &read_tsfn, Napi::ThreadSafeFunction &glob_tsfn, Napi::ThreadSafeFunction &get_file_size_tsfn);
   unique_ptr<FileHandle> OpenFile(const char *path, uint8_t flags,
                                   FileLockType lock_type) override;
   int64_t GetFileSize(FileHandle &handle) override;
@@ -27,5 +27,6 @@ private:
   Napi::ThreadSafeFunction &read_with_location_callback_tsfn;
   Napi::ThreadSafeFunction &read_tsfn;
   Napi::ThreadSafeFunction &glob_tsfn;
+  Napi::ThreadSafeFunction &get_file_size_tsfn;
 };
 } // namespace NodeDuckDB

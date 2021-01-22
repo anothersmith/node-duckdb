@@ -18,9 +18,11 @@ private:
   Napi::FunctionReference read_with_location_callback_ref;
   Napi::FunctionReference read_callback_ref;
   Napi::FunctionReference glob_callback_ref;
+  Napi::FunctionReference get_file_size_callback_ref;
   Napi::ThreadSafeFunction read_with_location_callback_tsfn;
   Napi::ThreadSafeFunction read_tsfn;
   Napi::ThreadSafeFunction glob_tsfn;
+  Napi::ThreadSafeFunction get_file_size_tsfn;
   Napi::Value Close(const Napi::CallbackInfo &info);
   Napi::Value IsClosed(const Napi::CallbackInfo &info);
   Napi::Value GetAccessMode(const Napi::CallbackInfo &info);

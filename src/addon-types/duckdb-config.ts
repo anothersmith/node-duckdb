@@ -126,5 +126,5 @@ export interface IFileSystem {
     length: number,
     callback: (buffer: Buffer) => void) => void;
   glob: (path: string, callback: (paths: string[]) => void) => void;
-    
+  getFileSize: (path: string, callback: (size: number) => void) => void; 
 }

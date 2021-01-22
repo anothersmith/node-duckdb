@@ -6,8 +6,8 @@ using namespace std;
 using namespace Napi;
 namespace NodeDuckDB {
 
-NodeFileSystem::NodeFileSystem(Napi::ThreadSafeFunction &read_with_location_callback_tsfn, Napi::ThreadSafeFunction &read_tsfn, Napi::ThreadSafeFunction &glob_tsfn)
-    : read_with_location_callback_tsfn{read_with_location_callback_tsfn}, read_tsfn{read_tsfn}, glob_tsfn{glob_tsfn} {}
+NodeFileSystem::NodeFileSystem(Napi::ThreadSafeFunction &read_with_location_callback_tsfn, Napi::ThreadSafeFunction &read_tsfn, Napi::ThreadSafeFunction &glob_tsfn, Napi::ThreadSafeFunction &get_file_size_tsfn)
+    : read_with_location_callback_tsfn{read_with_location_callback_tsfn}, read_tsfn{read_tsfn}, glob_tsfn{glob_tsfn}, get_file_size_tsfn{get_file_size_tsfn} {}
 
 unique_ptr<duckdb::FileHandle>
 NodeFileSystem::OpenFile(const char *path, uint8_t flags,
@@ -79,8 +79,32 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
 }
 
 int64_t NodeFileSystem::GetFileSize(FileHandle &handle) {
-  cout << "GetFileSize" << endl;
-  return duckdb::FileSystem::GetFileSize(handle);
+std::condition_variable condition_variable;
+  std::mutex mutex;
+  std::unique_lock<std::mutex> lock(mutex);
+  bool js_callback_fired = false;
+  int64_t file_size;
+
+  auto threadsafe_fn_callback = [&](Napi::Env env, Function js_callback) {
+    auto read_finished_callback = Napi::Function::New(
+        env,
+        [&](const Napi::CallbackInfo &info) {
+          auto result = info[0].As<Napi::Number>();
+          file_size = result.Int64Value();
+          js_callback_fired = true;
+          condition_variable.notify_one();
+        },
+        "nodeFileSystemCallback");
+
+    auto napi_path = Napi::String::New(env, handle.path);
+    js_callback.Call({napi_path, read_finished_callback});
+  };
+
+  get_file_size_tsfn.BlockingCall(threadsafe_fn_callback);
+  while (!js_callback_fired)
+    condition_variable.wait(lock);
+
+  return file_size;
 }
 
 bool NodeFileSystem::DirectoryExists(const string &directory) {

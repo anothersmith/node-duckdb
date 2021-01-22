@@ -3,10 +3,9 @@ $ yarn build:ts && jest --runInBand --testTimeout=60000 node-f
 $ rimraf dist && ttsc
 here
 filehandle here xxx
-GetFileSize
 PASS dist/tests/node-filesystem.test.js
   Node filesystem
-    ✓ allows reading from file (19 ms)
+    ✓ allows reading from file (21 ms)
 
   console.log
     [ 'src/tests/test-fixtures/alltypes_plain.parquet' ]
@@ -17,6 +16,11 @@ PASS dist/tests/node-filesystem.test.js
     In nodejs fs 111
 
       at read (src/tests/node-filesystem.test.ts:30:17)
+
+  console.log
+    1851
+
+      at src/tests/node-filesystem.test.ts:45:17
 
   console.log
     In nodejs fs
@@ -71,7 +75,7 @@ All files                    |   69.05 |    76.92 |   39.47 |    67.9 |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        1.611 s
+Time:        1.449 s
 Ran all test suites matching /node-f/i.
 Jest did not exit one second after the test run has completed.
 

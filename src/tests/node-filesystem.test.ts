@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { read, openSync } from "fs";
+import { read, openSync, stat } from "fs";
 
 import { Connection, DuckDB } from "@addon";
 import { AccessMode, IFileSystem } from "@addon-types";
@@ -39,6 +39,12 @@ const fileSystem: IFileSystem = {
         console.log(matches);
         callback(matches)
       });
+    },
+    getFileSize: (path: string, callback: (size: number) => void) => {
+      stat(path, (_err, stats) => {
+        console.log(stats.size);
+        callback(stats.size);
+      })
     }
 }
 
