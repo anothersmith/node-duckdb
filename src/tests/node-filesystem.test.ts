@@ -1,49 +1,45 @@
 /* eslint-disable */
-import { read, openSync, stat } from "fs";
+import { read, stat, open } from "fs";
 
 import { Connection, DuckDB } from "@addon";
 import { AccessMode, IFileSystem } from "@addon-types";
 
 import glob from "glob";
 
-let pos = 0;
+// let pos = 0;
 
 const fileSystem: IFileSystem = {
-  readWithLocation: (path: string,
+  readWithLocation: (fd: number,
     buffer: Buffer,
     length: number,
     position: number,
     callback: (buffer: Buffer) => void) => {
-      console.log("In nodejs fs");
-      console.log(position);
-      pos = position;
-      const fd = openSync(path, "r");
-
       read(fd, buffer, 0, length, position, (_err, _bytesRead, filledBuffer) => {
         callback(filledBuffer);
       });
     },
-    read: (path: string,
+    read: (fd: number,
       buffer: Buffer,
       length: number,
       callback: (buffer: Buffer, bytesRead: number) => void) => {
-        console.log("In nodejs fs 111");
-        const fd = openSync(path, "r");
-  
-        read(fd, buffer, 0, length, pos, (_err, bytesRead, filledBuffer) => {
+        read(fd, buffer, 0, length, null, (_err, bytesRead, filledBuffer) => {
           callback(filledBuffer, bytesRead);
         });
       },
     glob: (path: string, callback) => {
       glob(path, (_err, matches) => {
-        console.log(matches);
         callback(matches)
       });
     },
     getFileSize: (path: string, callback: (size: number) => void) => {
       stat(path, (_err, stats) => {
-        console.log(stats.size);
         callback(stats.size);
+      })
+    },
+    // TODO: _fileLockType
+    openFile: (path: string, flags: number, _fileLockType: number, callback: (fd: number)=>void) => {
+      open(path, flags, (_err, fd) => {
+        callback(fd);
       })
     }
 }

@@ -116,15 +116,16 @@ export interface IExecuteOptions {
 }
 
 export interface IFileSystem {
-  readWithLocation: (path: string,
+  readWithLocation: (fd: number,
     buffer: Buffer,
     length: number,
     position: number,
     callback: (buffer: Buffer) => void) => void;
-  read: (path: string,
+  read: (fd: number,
     buffer: Buffer,
     length: number,
     callback: (buffer: Buffer) => void) => void;
   glob: (path: string, callback: (paths: string[]) => void) => void;
   getFileSize: (path: string, callback: (size: number) => void) => void; 
+  openFile: (path: string, flags: number, fileLockType: number, callback: (fd: number)=>void) => void
 }
