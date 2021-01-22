@@ -1,0 +1,78 @@
+yarn run v1.22.5
+$ yarn build:ts && jest --runInBand --testTimeout=60000 node-f
+$ rimraf dist && ttsc
+here
+filehandle here xxx
+GetFileSize
+PASS dist/tests/node-filesystem.test.js
+  Node filesystem
+    ✓ allows reading from file (19 ms)
+
+  console.log
+    [ 'src/tests/test-fixtures/alltypes_plain.parquet' ]
+
+      at src/tests/node-filesystem.test.ts:39:17
+
+  console.log
+    In nodejs fs 111
+
+      at read (src/tests/node-filesystem.test.ts:30:17)
+
+  console.log
+    In nodejs fs
+
+      at readWithLocation (src/tests/node-filesystem.test.ts:17:15)
+
+  console.log
+    1847
+
+      at readWithLocation (src/tests/node-filesystem.test.ts:18:15)
+
+  console.log
+    In nodejs fs
+
+      at readWithLocation (src/tests/node-filesystem.test.ts:17:15)
+
+  console.log
+    1843
+
+      at readWithLocation (src/tests/node-filesystem.test.ts:18:15)
+
+  console.log
+    In nodejs fs
+
+      at readWithLocation (src/tests/node-filesystem.test.ts:17:15)
+
+  console.log
+    1113
+
+      at readWithLocation (src/tests/node-filesystem.test.ts:18:15)
+
+-----------------------------|---------|----------|---------|---------|-------------------
+File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------------------|---------|----------|---------|---------|-------------------
+All files                    |   69.05 |    76.92 |   39.47 |    67.9 |                   
+ addon                       |      50 |        0 |    30.3 |   46.94 |                   
+  connection.ts              |   72.73 |      100 |      60 |   72.73 | 71-72,125         
+  duckdb.ts                  |   38.89 |        0 |   21.43 |   38.89 | 21,76-139         
+  index.ts                   |     100 |      100 |   66.67 |     100 |                   
+  result-iterator.ts         |   23.08 |        0 |   22.22 |   23.08 | 31-72             
+  result-stream.ts           |      50 |      100 |       0 |      50 | 6-8               
+ addon-bindings              |     100 |      100 |     100 |     100 |                   
+  connection-binding.ts      |     100 |      100 |     100 |     100 |                   
+  duckdb-binding.ts          |     100 |      100 |     100 |     100 |                   
+  index.ts                   |     100 |      100 |     100 |     100 |                   
+  result-iterator-binding.ts |     100 |      100 |     100 |     100 |                   
+ addon-types                 |     100 |      100 |     100 |     100 |                   
+  duckdb-config.ts           |     100 |      100 |     100 |     100 |                   
+  index.ts                   |     100 |      100 |     100 |     100 |                   
+  result-type.ts             |     100 |      100 |     100 |     100 |                   
+-----------------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.611 s
+Ran all test suites matching /node-f/i.
+Jest did not exit one second after the test run has completed.
+
+This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

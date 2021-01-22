@@ -4,6 +4,9 @@ import { read, openSync } from "fs";
 import { Connection, DuckDB } from "@addon";
 import { AccessMode, IFileSystem } from "@addon-types";
 
+import glob from "glob";
+
+let pos = 0;
 
 const fileSystem: IFileSystem = {
   readWithLocation: (path: string,
@@ -13,10 +16,28 @@ const fileSystem: IFileSystem = {
     callback: (buffer: Buffer) => void) => {
       console.log("In nodejs fs");
       console.log(position);
+      pos = position;
       const fd = openSync(path, "r");
 
       read(fd, buffer, 0, length, position, (_err, _bytesRead, filledBuffer) => {
         callback(filledBuffer);
+      });
+    },
+    read: (path: string,
+      buffer: Buffer,
+      length: number,
+      callback: (buffer: Buffer, bytesRead: number) => void) => {
+        console.log("In nodejs fs 111");
+        const fd = openSync(path, "r");
+  
+        read(fd, buffer, 0, length, pos, (_err, bytesRead, filledBuffer) => {
+          callback(filledBuffer, bytesRead);
+        });
+      },
+    glob: (path: string, callback) => {
+      glob(path, (_err, matches) => {
+        console.log(matches);
+        callback(matches)
       });
     }
 }
