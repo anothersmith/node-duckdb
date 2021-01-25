@@ -1,21 +1,20 @@
 yarn run v1.22.5
 $ yarn build:ts && jest --runInBand --testTimeout=60000 node-f
 $ rimraf dist && ttsc
-Glob
 filehandle here xxx
 PASS dist/tests/node-filesystem.test.js
   Node filesystem
-    ✓ allows reading from file (9 ms)
+    ✓ allows reading from file (10 ms)
 
 -----------------------------|---------|----------|---------|---------|-------------------
 File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------------|---------|----------|---------|---------|-------------------
-All files                    |   69.05 |    76.92 |   39.47 |    67.9 |                   
- addon                       |      50 |        0 |    30.3 |   46.94 |                   
+All files                    |   66.67 |    76.92 |   34.21 |   65.43 |                   
+ addon                       |   46.15 |        0 |   24.24 |   42.86 |                   
   connection.ts              |   72.73 |      100 |      60 |   72.73 | 71-72,125         
   duckdb.ts                  |   38.89 |        0 |   21.43 |   38.89 | 21,76-139         
   index.ts                   |     100 |      100 |   66.67 |     100 |                   
-  result-iterator.ts         |   23.08 |        0 |   22.22 |   23.08 | 31-72             
+  result-iterator.ts         |    7.69 |        0 |       0 |    7.69 | 14-72             
   result-stream.ts           |      50 |      100 |       0 |      50 | 6-8               
  addon-bindings              |     100 |      100 |     100 |     100 |                   
   connection-binding.ts      |     100 |      100 |     100 |     100 |                   
@@ -30,7 +29,7 @@ All files                    |   69.05 |    76.92 |   39.47 |    67.9 |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        1.012 s
+Time:        1.205 s
 Ran all test suites matching /node-f/i.
 Jest did not exit one second after the test run has completed.
 

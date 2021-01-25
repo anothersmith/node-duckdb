@@ -121,7 +121,7 @@ export interface IFileSystem {
     buffer: Buffer,
     length: number,
     position: number,
-    callback: (buffer: Buffer) => void,
+    callback: (err: Error | null, buffer: Buffer) => void,
   ) => void;
   read: (fd: number, buffer: Buffer, length: number, callback: (buffer: Buffer) => void) => void;
   glob: (path: string, callback: (paths: string[]) => void) => void;

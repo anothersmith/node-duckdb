@@ -113,13 +113,18 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
   std::mutex mutex;
   std::unique_lock<std::mutex> lock(mutex);
   bool js_callback_fired = false;
+  string error;
 
   auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
-          std::memcpy(buffer, info[0].As<Napi::Buffer<char>>().Data(),
-                      nr_bytes);
+          if (!info[0].IsNull()) {
+            error = info[0].As<Napi::Error>().Message();
+          } else {
+            std::memcpy(buffer, info[1].As<Napi::Buffer<char>>().Data(),
+                        nr_bytes);
+          }
           js_callback_fired = true;
           condition_variable.notify_one();
         },
@@ -137,6 +142,9 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
   read_with_location_callback_tsfn.BlockingCall(threadsafe_fn_callback);
   while (!js_callback_fired)
     condition_variable.wait(lock);
+  if (!error.empty()) {
+    throw std::runtime_error(error);
+  }
 }
 
 int64_t NodeFileSystem::GetFileSize(FileHandle &handle) {
