@@ -1,15 +1,11 @@
 yarn run v1.22.5
 $ yarn build:ts && jest --runInBand --testTimeout=60000 node-f
 $ rimraf dist && ttsc
+Glob
 filehandle here xxx
 PASS dist/tests/node-filesystem.test.js
   Node filesystem
-    ✓ allows reading from file (15 ms)
-
-  console.log
-    4
-
-      at src/tests/node-filesystem.test.ts:26:19
+    ✓ allows reading from file (9 ms)
 
 -----------------------------|---------|----------|---------|---------|-------------------
 File                         | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
@@ -34,7 +30,7 @@ All files                    |   69.05 |    76.92 |   39.47 |    67.9 |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        1.47 s
+Time:        1.012 s
 Ran all test suites matching /node-f/i.
 Jest did not exit one second after the test run has completed.
 

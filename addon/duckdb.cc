@@ -63,59 +63,61 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
     }
   }
   file_system_object = Napi::Persistent(info[1].As<Napi::Object>());
-  read_with_location_callback_ref = Napi::Persistent(file_system_object.Value().Get("readWithLocation").As<Napi::Function>());
-  read_callback_ref = Napi::Persistent(file_system_object.Value().Get("read").As<Napi::Function>());
-  glob_callback_ref = Napi::Persistent(file_system_object.Value().Get("glob").As<Napi::Function>());
-  get_file_size_callback_ref = Napi::Persistent(file_system_object.Value().Get("getFileSize").As<Napi::Function>());
-  open_file_callback_ref = Napi::Persistent(file_system_object.Value().Get("openFile").As<Napi::Function>());
+  read_with_location_callback_ref = Napi::Persistent(
+      file_system_object.Value().Get("readWithLocation").As<Napi::Function>());
+  read_callback_ref = Napi::Persistent(
+      file_system_object.Value().Get("read").As<Napi::Function>());
+  glob_callback_ref = Napi::Persistent(
+      file_system_object.Value().Get("glob").As<Napi::Function>());
+  get_file_size_callback_ref = Napi::Persistent(
+      file_system_object.Value().Get("getFileSize").As<Napi::Function>());
+  open_file_callback_ref = Napi::Persistent(
+      file_system_object.Value().Get("openFile").As<Napi::Function>());
 
   read_with_location_callback_tsfn = Napi::ThreadSafeFunction::New(
       read_with_location_callback_ref.Env(),
-      read_with_location_callback_ref.Value(),
-      "Node Filesystem Callback", 
+      read_with_location_callback_ref.Value(), "Node Filesystem Callback",
       0,              // Unlimited queue
-      1,               // Only one thread will use this initially
-      [](Napi::Env) {  // Finalizer used to clean threads up
+      1,              // Only one thread will use this initially
+      [](Napi::Env) { // Finalizer used to clean threads up
         // nativeThread.join();
       });
   read_tsfn = Napi::ThreadSafeFunction::New(
-      read_callback_ref.Env(),
-      read_callback_ref.Value(),
-      "Node Filesystem Callback", 
+      read_callback_ref.Env(), read_callback_ref.Value(),
+      "Node Filesystem Callback",
       0,              // Unlimited queue
-      1,               // Only one thread will use this initially
-      [](Napi::Env) {  // Finalizer used to clean threads up
+      1,              // Only one thread will use this initially
+      [](Napi::Env) { // Finalizer used to clean threads up
         // nativeThread.join();
       });
   glob_tsfn = Napi::ThreadSafeFunction::New(
-      glob_callback_ref.Env(),
-      glob_callback_ref.Value(),
-      "Node Filesystem Callback", 
+      glob_callback_ref.Env(), glob_callback_ref.Value(),
+      "Node Filesystem Callback",
       0,              // Unlimited queue
-      1,               // Only one thread will use this initially
-      [](Napi::Env) {  // Finalizer used to clean threads up
+      1,              // Only one thread will use this initially
+      [](Napi::Env) { // Finalizer used to clean threads up
         // nativeThread.join();
       });
   get_file_size_tsfn = Napi::ThreadSafeFunction::New(
-      get_file_size_callback_ref.Env(),
-      get_file_size_callback_ref.Value(),
-      "Node Filesystem Callback", 
+      get_file_size_callback_ref.Env(), get_file_size_callback_ref.Value(),
+      "Node Filesystem Callback",
       0,              // Unlimited queue
-      1,               // Only one thread will use this initially
-      [](Napi::Env) {  // Finalizer used to clean threads up
+      1,              // Only one thread will use this initially
+      [](Napi::Env) { // Finalizer used to clean threads up
         // nativeThread.join();
       });
   open_file_tsfn = Napi::ThreadSafeFunction::New(
-      open_file_callback_ref.Env(),
-      open_file_callback_ref.Value(),
-      "Node Filesystem Callback", 
+      open_file_callback_ref.Env(), open_file_callback_ref.Value(),
+      "Node Filesystem Callback",
       0,              // Unlimited queue
-      1,               // Only one thread will use this initially
-      [](Napi::Env) {  // Finalizer used to clean threads up
+      1,              // Only one thread will use this initially
+      [](Napi::Env) { // Finalizer used to clean threads up
         // nativeThread.join();
       });
 
-  nativeConfig.file_system = duckdb::make_unique<NodeFileSystem>(read_with_location_callback_tsfn, read_tsfn, glob_tsfn, get_file_size_tsfn, open_file_tsfn);
+  nativeConfig.file_system = duckdb::make_unique<NodeFileSystem>(
+      read_with_location_callback_tsfn, read_tsfn, glob_tsfn,
+      get_file_size_tsfn, open_file_tsfn);
   database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
   database->LoadExtension<duckdb::ParquetExtension>();
 }

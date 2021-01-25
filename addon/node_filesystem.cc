@@ -1,36 +1,41 @@
 #include "node_filesystem.h"
-#include "duckdb/common/file_system.hpp"
-#include <iostream>
 #include "duckdb.hpp"
-#include <unistd.h>
+#include "duckdb/common/file_system.hpp"
 #include <fcntl.h>
+#include <iostream>
+#include <unistd.h>
 using namespace duckdb;
 using namespace std;
 using namespace Napi;
 namespace NodeDuckDB {
 struct UnixFileHandle : public FileHandle {
 public:
-	UnixFileHandle(FileSystem &file_system, string path, int fd) : FileHandle(file_system, path), fd(fd) {
-	}
-	virtual ~UnixFileHandle() {
-		Close();
-	}
+  UnixFileHandle(FileSystem &file_system, string path, int fd)
+      : FileHandle(file_system, path), fd(fd) {}
+  virtual ~UnixFileHandle() { Close(); }
 
 protected:
-	void Close() override {
-		if (fd != -1) {
-			close(fd);
-		}
-	};
+  void Close() override {
+    if (fd != -1) {
+      close(fd);
+    }
+  };
 
 public:
-	int fd;
+  int fd;
 };
 
-NodeFileSystem::NodeFileSystem(Napi::ThreadSafeFunction &read_with_location_callback_tsfn, Napi::ThreadSafeFunction &read_tsfn, Napi::ThreadSafeFunction &glob_tsfn, Napi::ThreadSafeFunction &get_file_size_tsfn, Napi::ThreadSafeFunction &open_file_tsfn)
-    : read_with_location_callback_tsfn{read_with_location_callback_tsfn}, read_tsfn{read_tsfn}, glob_tsfn{glob_tsfn}, get_file_size_tsfn{get_file_size_tsfn}, open_file_tsfn{open_file_tsfn} {}
+NodeFileSystem::NodeFileSystem(
+    Napi::ThreadSafeFunction &read_with_location_callback_tsfn,
+    Napi::ThreadSafeFunction &read_tsfn, Napi::ThreadSafeFunction &glob_tsfn,
+    Napi::ThreadSafeFunction &get_file_size_tsfn,
+    Napi::ThreadSafeFunction &open_file_tsfn)
+    : read_with_location_callback_tsfn{read_with_location_callback_tsfn},
+      read_tsfn{read_tsfn}, glob_tsfn{glob_tsfn},
+      get_file_size_tsfn{get_file_size_tsfn}, open_file_tsfn{open_file_tsfn} {}
 
-unique_ptr<duckdb::FileHandle> NodeFileSystem::OpenFile(const char *path, uint8_t flags,
+unique_ptr<duckdb::FileHandle>
+NodeFileSystem::OpenFile(const char *path, uint8_t flags,
                          FileLockType lock_type) {
   std::condition_variable condition_variable;
   std::mutex mutex;
@@ -43,8 +48,9 @@ unique_ptr<duckdb::FileHandle> NodeFileSystem::OpenFile(const char *path, uint8_
         env,
         [&](const Napi::CallbackInfo &info) {
           auto result = info[0].As<Napi::Number>();
-          
-          file_handle = duckdb::make_unique<UnixFileHandle>(*this, path, result.Int64Value());
+
+          file_handle = duckdb::make_unique<UnixFileHandle>(
+              *this, path, result.Int64Value());
           js_callback_fired = true;
           condition_variable.notify_one();
         },
@@ -53,9 +59,11 @@ unique_ptr<duckdb::FileHandle> NodeFileSystem::OpenFile(const char *path, uint8_
     auto napi_path = Napi::String::New(env, path);
     // replicate bitwise logic for flags?
     auto napi_flags = Napi::Number::New(env, O_RDONLY);
-    auto napi_lock_type = Napi::Number::New(env, static_cast<double>(lock_type));
+    auto napi_lock_type =
+        Napi::Number::New(env, static_cast<double>(lock_type));
 
-    js_callback.Call({napi_path, napi_flags, napi_lock_type, read_finished_callback});
+    js_callback.Call(
+        {napi_path, napi_flags, napi_lock_type, read_finished_callback});
   };
 
   open_file_tsfn.BlockingCall(threadsafe_fn_callback);
@@ -86,9 +94,11 @@ int64_t NodeFileSystem::Read(FileHandle &handle, void *buffer,
         "nodeFileSystemCallback");
 
     auto napi_buffer = Napi::Buffer<char>::New(env, nr_bytes);
-    auto napi_fd = Napi::Number::New(env, dynamic_cast<UnixFileHandle&>(handle).fd);
+    auto napi_fd =
+        Napi::Number::New(env, dynamic_cast<UnixFileHandle &>(handle).fd);
     auto napi_length = Napi::Number::New(env, nr_bytes);
-    js_callback.Call({napi_fd, napi_buffer, napi_length, read_finished_callback});
+    js_callback.Call(
+        {napi_fd, napi_buffer, napi_length, read_finished_callback});
   };
 
   read_tsfn.BlockingCall(threadsafe_fn_callback);
@@ -116,10 +126,12 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
         "nodeFileSystemCallback");
 
     auto napi_buffer = Napi::Buffer<char>::New(env, nr_bytes);
-    auto napi_fd = Napi::Number::New(env, dynamic_cast<UnixFileHandle&>(handle).fd);
+    auto napi_fd =
+        Napi::Number::New(env, dynamic_cast<UnixFileHandle &>(handle).fd);
     auto napi_length = Napi::Number::New(env, nr_bytes);
     auto napi_position = Napi::Number::New(env, location);
-    js_callback.Call({napi_fd, napi_buffer, napi_length, napi_position, read_finished_callback});
+    js_callback.Call({napi_fd, napi_buffer, napi_length, napi_position,
+                      read_finished_callback});
   };
 
   read_with_location_callback_tsfn.BlockingCall(threadsafe_fn_callback);
@@ -128,7 +140,7 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
 }
 
 int64_t NodeFileSystem::GetFileSize(FileHandle &handle) {
-std::condition_variable condition_variable;
+  std::condition_variable condition_variable;
   std::mutex mutex;
   std::unique_lock<std::mutex> lock(mutex);
   bool js_callback_fired = false;
@@ -161,7 +173,8 @@ bool NodeFileSystem::DirectoryExists(const string &directory) {
   return duckdb::FileSystem::DirectoryExists(directory);
 }
 
-bool NodeFileSystem::ListFiles(const string &directory, std::function<void(string, bool)> callback) {
+bool NodeFileSystem::ListFiles(const string &directory,
+                               std::function<void(string, bool)> callback) {
   cout << "ListFiles" << endl;
   return duckdb::FileSystem::ListFiles(directory, callback);
 }
@@ -206,7 +219,9 @@ vector<string> NodeFileSystem::Glob(string path) {
 
           matches = vector<string>(result.Length());
           for (int i = 0; i < result.Length(); i++) {
-            matches[i] = result.Get(static_cast<uint32_t>(i)).As<Napi::String>().Utf8Value();
+            matches[i] = result.Get(static_cast<uint32_t>(i))
+                             .As<Napi::String>()
+                             .Utf8Value();
           }
           js_callback_fired = true;
           condition_variable.notify_one();
