@@ -42,15 +42,20 @@ NodeFileSystem::OpenFile(const char *path, uint8_t flags,
   std::unique_lock<std::mutex> lock(mutex);
   bool js_callback_fired = false;
   unique_ptr<duckdb::FileHandle> file_handle;
+  string error;
 
   auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
-          auto result = info[0].As<Napi::Number>();
+          if (!info[0].IsNull()) {
+            error = info[0].As<Napi::Error>().Message();
+          } else {
+            auto result = info[1].As<Napi::Number>();
 
-          file_handle = duckdb::make_unique<UnixFileHandle>(
-              *this, path, result.Int64Value());
+            file_handle = duckdb::make_unique<UnixFileHandle>(
+                *this, path, result.Int64Value());
+          }
           js_callback_fired = true;
           condition_variable.notify_one();
         },
@@ -70,6 +75,9 @@ NodeFileSystem::OpenFile(const char *path, uint8_t flags,
   while (!js_callback_fired)
     condition_variable.wait(lock);
 
+  if (!error.empty()) {
+    throw std::runtime_error(error);
+  }
   return file_handle;
 }
 
@@ -80,14 +88,19 @@ int64_t NodeFileSystem::Read(FileHandle &handle, void *buffer,
   std::unique_lock<std::mutex> lock(mutex);
   bool js_callback_fired = false;
   auto bytes_read = 0;
+  string error;
 
   auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
-          std::memcpy(buffer, info[0].As<Napi::Buffer<char>>().Data(),
-                      nr_bytes);
-          bytes_read = info[1].As<Napi::Number>().Int64Value();
+          if (!info[0].IsNull()) {
+            error = info[0].As<Napi::Error>().Message();
+          } else {
+            std::memcpy(buffer, info[1].As<Napi::Buffer<char>>().Data(),
+                        nr_bytes);
+          }
+          bytes_read = info[2].As<Napi::Number>().Int64Value();
           js_callback_fired = true;
           condition_variable.notify_one();
         },
@@ -104,6 +117,9 @@ int64_t NodeFileSystem::Read(FileHandle &handle, void *buffer,
   read_tsfn.BlockingCall(threadsafe_fn_callback);
   while (!js_callback_fired)
     condition_variable.wait(lock);
+  if (!error.empty()) {
+    throw std::runtime_error(error);
+  }
   return bytes_read;
 }
 
@@ -153,13 +169,18 @@ int64_t NodeFileSystem::GetFileSize(FileHandle &handle) {
   std::unique_lock<std::mutex> lock(mutex);
   bool js_callback_fired = false;
   int64_t file_size;
+  string error;
 
   auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
-          auto result = info[0].As<Napi::Number>();
-          file_size = result.Int64Value();
+          if (!info[0].IsNull()) {
+            error = info[0].As<Napi::Error>().Message();
+          } else {
+            auto result = info[1].As<Napi::Number>();
+            file_size = result.Int64Value();
+          }
           js_callback_fired = true;
           condition_variable.notify_one();
         },
@@ -173,42 +194,38 @@ int64_t NodeFileSystem::GetFileSize(FileHandle &handle) {
   while (!js_callback_fired)
     condition_variable.wait(lock);
 
+  if (!error.empty()) {
+    throw std::runtime_error(error);
+  }
   return file_size;
 }
 
 bool NodeFileSystem::DirectoryExists(const string &directory) {
-  cout << "DirectoryExists" << endl;
   return duckdb::FileSystem::DirectoryExists(directory);
 }
 
 bool NodeFileSystem::ListFiles(const string &directory,
                                std::function<void(string, bool)> callback) {
-  cout << "ListFiles" << endl;
   return duckdb::FileSystem::ListFiles(directory, callback);
 }
 
 bool NodeFileSystem::FileExists(const string &filename) {
-  cout << "FileExists" << endl;
   return duckdb::FileSystem::FileExists(filename);
 }
 
 string NodeFileSystem::PathSeparator() {
-  cout << "PathSeparator" << endl;
   return duckdb::FileSystem::PathSeparator();
 }
 
 string NodeFileSystem::JoinPath(const string &a, const string &path) {
-  cout << "JoinPath" << endl;
   return duckdb::FileSystem::JoinPath(a, path);
 }
 
 void NodeFileSystem::SetWorkingDirectory(string path) {
-  cout << "SetWorkingDirectory" << endl;
   return duckdb::FileSystem::SetWorkingDirectory(path);
 }
 
 string NodeFileSystem::GetWorkingDirectory() {
-  cout << "GetWorkingDirectory" << endl;
   return duckdb::FileSystem::GetWorkingDirectory();
 }
 
@@ -218,18 +235,23 @@ vector<string> NodeFileSystem::Glob(string path) {
   std::unique_lock<std::mutex> lock(mutex);
   bool js_callback_fired = false;
   vector<string> matches;
+  string error;
 
   auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
-          auto result = info[0].As<Napi::Array>();
+          if (!info[0].IsNull()) {
+            error = info[0].As<Napi::Error>().Message();
+          } else {
+            auto result = info[1].As<Napi::Array>();
 
-          matches = vector<string>(result.Length());
-          for (int i = 0; i < result.Length(); i++) {
-            matches[i] = result.Get(static_cast<uint32_t>(i))
-                             .As<Napi::String>()
-                             .Utf8Value();
+            matches = vector<string>(result.Length());
+            for (int i = 0; i < result.Length(); i++) {
+              matches[i] = result.Get(static_cast<uint32_t>(i))
+                               .As<Napi::String>()
+                               .Utf8Value();
+            }
           }
           js_callback_fired = true;
           condition_variable.notify_one();
@@ -243,6 +265,10 @@ vector<string> NodeFileSystem::Glob(string path) {
   glob_tsfn.BlockingCall(threadsafe_fn_callback);
   while (!js_callback_fired)
     condition_variable.wait(lock);
+
+  if (!error.empty()) {
+    throw std::runtime_error(error);
+  }
 
   return matches;
 }

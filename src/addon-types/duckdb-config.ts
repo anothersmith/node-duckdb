@@ -123,8 +123,18 @@ export interface IFileSystem {
     position: number,
     callback: (err: Error | null, buffer: Buffer) => void,
   ) => void;
-  read: (fd: number, buffer: Buffer, length: number, callback: (buffer: Buffer) => void) => void;
-  glob: (path: string, callback: (paths: string[]) => void) => void;
-  getFileSize: (path: string, callback: (size: number) => void) => void;
-  openFile: (path: string, flags: number, fileLockType: number, callback: (fd: number) => void) => void;
+  read: (
+    fd: number,
+    buffer: Buffer,
+    length: number,
+    callback: (error: Error | null, buffer: Buffer, bytesRead: number) => void,
+  ) => void;
+  glob: (path: string, callback: (error: Error | null, paths: string[]) => void) => void;
+  getFileSize: (path: string, callback: (error: Error | null, size: number) => void) => void;
+  openFile: (
+    path: string,
+    flags: number,
+    fileLockType: number,
+    callback: (error: Error | null, fd: number) => void,
+  ) => void;
 }
