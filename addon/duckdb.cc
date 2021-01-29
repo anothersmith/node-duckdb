@@ -67,7 +67,6 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
 
 Napi::Value DuckDB::Close(const Napi::CallbackInfo &info) {
   if (database) {
-    cout << "closing" << endl;
     database.reset();
   }
   return info.Env().Undefined();

@@ -39,7 +39,7 @@ int64_t GetDate(int64_t timestamp) {
 
 int64_t GetTime(int64_t timestamp) { return (int64_t)(timestamp & 0xFFFFFFFFFFFFFFFF); }
 
-#define EPOCH_DATE 5399200
+#define EPOCH_DATE 719528
 #define SECONDS_PER_DAY (60 * 60 * 24)
 
 int64_t Epoch(int64_t date) {
@@ -67,13 +67,6 @@ Napi::Value ResultIterator::FetchRow(const Napi::CallbackInfo &info) {
     }
     chunk_offset = 0;
   }
-  // if (!current_chunk) {
-  //   Napi::Error::New(
-  //       env, "No data has been returned (possibly stream has been closed: only "
-  //            "one stream can be active on one connection at a time)")
-  //       .ThrowAsJavaScriptException();
-  //   return env.Undefined();
-  // }
   if (!current_chunk || current_chunk->size() == 0) {
     return env.Null();
   }
