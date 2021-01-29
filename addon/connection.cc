@@ -106,13 +106,20 @@ Napi::Value Connection::Execute(const Napi::CallbackInfo &info) {
 }
 
 Napi::Value Connection::Close(const Napi::CallbackInfo &info) {
-  for (auto &result : *results) {
-    if (result != nullptr) {
-      result->close();
-    }
+  // the following gives segfaults for some reason now
+  // for (auto &result : *results) {
+  //   if (result != nullptr) {
+  //     result->close();
+  //   }
+  // }
+  if (connection) {
+    connection.reset();
+
   }
-  connection.reset();
+  if (database) {
   database.reset();
+
+  }
   return info.Env().Undefined();
 }
 Napi::Value Connection::IsClosed(const Napi::CallbackInfo &info) {
