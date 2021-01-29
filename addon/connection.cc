@@ -117,7 +117,7 @@ Napi::Value Connection::Close(const Napi::CallbackInfo &info) {
 }
 Napi::Value Connection::IsClosed(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  bool isClosed = connection == nullptr || connection->context->is_invalidated;
+  bool isClosed = connection == nullptr;
   return Napi::Boolean::New(env, isClosed);
 }
 } // namespace NodeDuckDB

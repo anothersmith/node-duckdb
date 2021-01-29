@@ -23,7 +23,7 @@ describe("Result iterator (streaming)", () => {
     const result2 = await connection.executeIterator(query, executeOptions);
 
     expect(() => result1.fetchRow()).toThrow(
-      "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
+      "Attempting to fetch from an unsuccessful or closed streaming query result: only one stream can be active on one connection at a time)",
     );
     expect(result2.fetchRow()).toEqual([60n]);
   });
@@ -36,7 +36,7 @@ describe("Result iterator (streaming)", () => {
     });
 
     expect(() => result1.fetchRow()).toThrow(
-      "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
+      "Attempting to fetch from an unsuccessful or closed streaming query result: only one stream can be active on one connection at a time)",
     );
     expect(result2.fetchRow()).toEqual([60n]);
   });

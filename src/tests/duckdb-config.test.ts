@@ -37,6 +37,7 @@ describe("DuckDB configuration", () => {
     const connection1 = new Connection(db1);
     await connection1.executeIterator("CREATE TABLE test2 (a INTEGER);");
     await connection1.executeIterator("INSERT INTO test2 SELECT 1;");
+    connection1.close();
     db1.close();
     const fd = await statAsync(dbPath);
     expect(fd.isFile()).toBe(true);

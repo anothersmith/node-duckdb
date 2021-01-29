@@ -5,18 +5,18 @@ const query = "SELECT * FROM parquet_scan('src/tests/test-fixtures/alltypes_plai
 const jsonResult = {
   bigint_col: 0n,
   bool_col: true,
-  date_string_col: "03/01/09",
+  date_string_col: Buffer.from("03/01/09"),
   double_col: 0,
   float_col: 0,
   id: 4,
   int_col: 0,
   smallint_col: 0,
-  string_col: "0",
+  string_col: Buffer.from("0"),
   timestamp_col: 1235865600000,
   tinyint_col: 0,
 };
 
-const arrayResult = [4, true, 0, 0, 0, 0n, 0, 0, "03/01/09", "0", 1235865600000];
+const arrayResult = [4, true, 0, 0, 0, 0n, 0, 0, Buffer.from("03/01/09"), Buffer.from("0"), 1235865600000];
 describe("Result format", () => {
   let db: DuckDB;
   let connection: Connection;
