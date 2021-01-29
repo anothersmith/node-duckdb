@@ -6,7 +6,7 @@ import { Connection, DuckDB } from "@addon";
  * For now this is a useful way to gauge performance
  */
 // eslint-disable-next-line jest/no-disabled-tests
-describe("Perfomance test suite", () => {
+describe.skip("Perfomance test suite", () => {
   let db: DuckDB;
   let connection: Connection;
   beforeEach(async () => {
@@ -150,7 +150,7 @@ describe("Perfomance test suite", () => {
     ]);
   });
 
-  // eslint-disable-next-line jest/expect-expect
+  // eslint-disable-next-line jest/expect-expect, jest/no-focused-tests
   it.only("q-all", async () => {
     await Promise.all([
       (async () => {

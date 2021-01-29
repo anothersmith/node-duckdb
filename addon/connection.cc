@@ -114,11 +114,9 @@ Napi::Value Connection::Close(const Napi::CallbackInfo &info) {
   // }
   if (connection) {
     connection.reset();
-
   }
   if (database) {
-  database.reset();
-
+    database.reset();
   }
   return info.Env().Undefined();
 }

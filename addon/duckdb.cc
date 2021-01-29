@@ -80,8 +80,8 @@ bool DuckDB::IsClosed() { return database == nullptr; }
 
 Napi::Value DuckDB::GetAccessMode(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Number::New(env,
-                           static_cast<double>(database->instance->config.access_mode));
+  return Napi::Number::New(
+      env, static_cast<double>(database->instance->config.access_mode));
 }
 Napi::Value DuckDB::GetCheckPointWALSize(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
@@ -97,7 +97,8 @@ Napi::Value DuckDB::GetMaximumMemory(const Napi::CallbackInfo &info) {
 }
 Napi::Value DuckDB::GetUseTemporaryDirectory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->instance->config.use_temporary_directory);
+  return Napi::Boolean::New(env,
+                            database->instance->config.use_temporary_directory);
 }
 Napi::Value DuckDB::GetTemporaryDirectory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();

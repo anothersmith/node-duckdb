@@ -33,11 +33,11 @@ Napi::Object ResultIterator::Create() { return constructor.New({}); }
 
 typedef uint64_t idx_t;
 
-int64_t GetDate(int64_t timestamp) {
-  return timestamp;
-}
+int64_t GetDate(int64_t timestamp) { return timestamp; }
 
-int64_t GetTime(int64_t timestamp) { return (int64_t)(timestamp & 0xFFFFFFFFFFFFFFFF); }
+int64_t GetTime(int64_t timestamp) {
+  return (int64_t)(timestamp & 0xFFFFFFFFFFFFFFFF);
+}
 
 #define EPOCH_DATE 719528
 #define SECONDS_PER_DAY (60 * 60 * 24)
@@ -55,11 +55,15 @@ Napi::Value ResultIterator::FetchRow(const Napi::CallbackInfo &info) {
   if (!current_chunk || chunk_offset >= current_chunk->size()) {
     try {
       current_chunk = result->Fetch();
-    } catch (const duckdb::InvalidInputException& e) {
-      if (strncmp(e.what(), "Invalid Input Error: Attempting to fetch from an unsuccessful or closed streaming query result", 50) == 0) {
+    } catch (const duckdb::InvalidInputException &e) {
+      if (strncmp(e.what(),
+                  "Invalid Input Error: Attempting to fetch from an "
+                  "unsuccessful or closed streaming query result",
+                  50) == 0) {
         Napi::Error::New(
-            env, "Attempting to fetch from an unsuccessful or closed streaming query result: only "
-                "one stream can be active on one connection at a time)")
+            env, "Attempting to fetch from an unsuccessful or closed streaming "
+                 "query result: only "
+                 "one stream can be active on one connection at a time)")
             .ThrowAsJavaScriptException();
         return env.Undefined();
       }
@@ -187,11 +191,12 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
       throw runtime_error("expected int64 for timestamp");
     }
     int64_t tval = val.GetValue<int64_t>();
-    return Napi::Number::New(env, tval/1000);
+    return Napi::Number::New(env, tval / 1000);
   }
   // case duckdb::LogicalTypeId::DATE: {
   //   cout << "DATE" << endl;
-  //   if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT32) {
+  //   if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT32)
+  //   {
   //     throw runtime_error("expected int32 for date");
   //   }
   //   return Napi::Number::New(env, Epoch(val.GetValue<int32_t>()) * 1000);

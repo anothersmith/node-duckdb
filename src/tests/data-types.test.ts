@@ -140,10 +140,9 @@ describe("Data type mapping", () => {
   });
 
   it("supports DATE", async () => {
-    const result = await connection.executeIterator<any[]>(
-      `SELECT DATE '2000-05-05'`,
-      { rowResultFormat: RowResultFormat.Array },
-    );
+    const result = await connection.executeIterator<any[]>(`SELECT DATE '2000-05-05'`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
 
     expect(result.fetchRow()).toEqual(["2000-05-05"]);
   });
