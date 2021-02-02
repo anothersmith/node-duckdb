@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - master
+      - release/*
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master
+      - name: Checkout
         uses: actions/checkout@master
       - name: Setup node
         uses: actions/setup-node@v1

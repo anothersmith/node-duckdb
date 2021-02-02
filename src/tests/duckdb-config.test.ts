@@ -35,9 +35,8 @@ describe("DuckDB configuration", () => {
   it("allows to specify access mode - read only read operation succeeds", async () => {
     const db1 = new DuckDB({ path: dbPath });
     const connection1 = new Connection(db1);
-    await connection1.executeIterator("CREATE TABLE test2 (a INTEGER);");
-    const r = await connection1.executeIterator("INSERT INTO test2 SELECT 1;");
-    r.close();
+    await connection1.executeIterator("CREATE TABLE test2 (a INTEGER)");
+    await connection1.executeIterator("INSERT INTO test2 SELECT 1");
     connection1.close();
     db1.close();
     const fd = await statAsync(dbPath);
@@ -45,10 +44,10 @@ describe("DuckDB configuration", () => {
     const db2 = new DuckDB({ path: dbPath, options: { accessMode: AccessMode.ReadOnly } });
     expect(db2.accessMode).toBe(AccessMode.ReadOnly);
     const connection2 = new Connection(db2);
-    const iterator = await connection2.executeIterator("SELECT * FROM test2;", {
+    const iterator = await connection2.executeIterator("SELECT * FROM test2", {
       rowResultFormat: RowResultFormat.Array,
     });
-    expect(iterator.fetchRow()).toEqual([1]);
+    expect(iterator.fetchAllRows()).toEqual([[1]]);
     db2.close();
     await unlinkAsync(dbPath);
   });

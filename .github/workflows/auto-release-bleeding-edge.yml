@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: master
+          ref: release/duckdb-bleeding-edge
           token: ${{secrets.BRANCH_PROTECTION_TOKEN}}
       - name: Setup node
         uses: actions/setup-node@v1
@@ -34,7 +34,7 @@ jobs:
         with:
           access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
           enforce_admins: false
-          branch: master
+          branch: release/duckdb-bleeding-edge
       - name: Install modules with frozen lockfile and build
         run: |
           echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
@@ -60,4 +60,4 @@ jobs:
         with:
           access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
           enforce_admins: true
-          branch: master
+          branch: release/duckdb-bleeding-edge
