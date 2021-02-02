@@ -193,14 +193,6 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
     int64_t tval = val.GetValue<int64_t>();
     return Napi::Number::New(env, tval / 1000);
   }
-  // case duckdb::LogicalTypeId::DATE: {
-  //   cout << "DATE" << endl;
-  //   if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT32)
-  //   {
-  //     throw runtime_error("expected int32 for date");
-  //   }
-  //   return Napi::Number::New(env, Epoch(val.GetValue<int32_t>()) * 1000);
-  // }
   case duckdb::LogicalTypeId::TIME: {
     if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT64) {
       throw runtime_error("expected int64 for time");
