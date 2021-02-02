@@ -151,7 +151,7 @@ describe.skip("Perfomance test suite", () => {
   });
 
   // eslint-disable-next-line jest/expect-expect, jest/no-focused-tests
-  it.only("q-all", async () => {
+  it("q-all", async () => {
     await Promise.all([
       (async () => {
         const connection = new Connection(db);
