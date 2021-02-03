@@ -1,4 +1,4 @@
-name: Auto Release Bleeding Edge
+name: Auto Release DuckDB Bleeding Edge
 
 on: workflow_dispatch
 
