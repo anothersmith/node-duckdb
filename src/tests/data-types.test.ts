@@ -120,8 +120,7 @@ describe("Data type mapping", () => {
               1.1,        
               CAST(1.1 AS DOUBLE),
               'stringy',
-              TIMESTAMP '1971-02-02 01:01:01.001',
-              DATE '1971-02-02'
+              TIMESTAMP '1971-02-02 01:01:01.001'
             `,
       { rowResultFormat: RowResultFormat.Array },
     );
@@ -137,8 +136,15 @@ describe("Data type mapping", () => {
       1.1,
       "stringy",
       Date.UTC(71, 1, 2, 1, 1, 1, 1),
-      Date.UTC(71, 1, 2),
     ]);
+  });
+
+  it("supports DATE", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT DATE '2000-05-05'`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+
+    expect(result.fetchRow()).toEqual(["2000-05-05"]);
   });
 
   // Note: even though there is a CHAR type in the source code, it is simply an alias to VARCHAR
@@ -153,7 +159,7 @@ describe("Data type mapping", () => {
     const result = await connection.executeIterator<number[]>(`SELECT TIME '01:01:01.001'`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    expect(result.fetchRow()).toMatchObject([1 + 1000 + 60000 + 60000 * 60]);
+    expect(result.fetchRow()).toMatchObject([(1 + 1000 + 60 * 1000 + 60 * 1000 * 60) * 1000]);
   });
 
   it("supports BLOB", async () => {

@@ -18,8 +18,8 @@ private:
   Napi::Value Close(const Napi::CallbackInfo &info);
   Napi::Value IsClosed(const Napi::CallbackInfo &info);
 
-  shared_ptr<duckdb::DuckDB> database;
-  shared_ptr<duckdb::Connection> connection;
+  duckdb::shared_ptr<duckdb::DuckDB> database;
+  duckdb::shared_ptr<duckdb::Connection> connection;
   std::shared_ptr<std::vector<ResultIterator *>> results;
 };
 } // namespace NodeDuckDB

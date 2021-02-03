@@ -150,7 +150,7 @@ describe.skip("Perfomance test suite", () => {
     ]);
   });
 
-  // eslint-disable-next-line jest/expect-expect
+  // eslint-disable-next-line jest/expect-expect, jest/no-focused-tests
   it("q-all", async () => {
     await Promise.all([
       (async () => {
