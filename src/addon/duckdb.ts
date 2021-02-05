@@ -61,6 +61,13 @@ export class DuckDB {
   public close(): void {
     return this.duckdb.close();
   }
+
+  public init(): Promise<void> {
+    // eslint-disable-next-line 
+    return new Promise((resolve, _reject) => {
+      this.duckdb.init(resolve);
+    });
+  }
   /**
    * Returns underlying binding instance.
    * @internal

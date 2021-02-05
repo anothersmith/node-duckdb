@@ -29,10 +29,11 @@ NodeFileSystem::NodeFileSystem(
     Napi::ThreadSafeFunction &read_with_location_callback_tsfn,
     Napi::ThreadSafeFunction &read_tsfn, Napi::ThreadSafeFunction &glob_tsfn,
     Napi::ThreadSafeFunction &get_file_size_tsfn,
-    Napi::ThreadSafeFunction &open_file_tsfn)
+    Napi::ThreadSafeFunction &open_file_tsfn,
+    Napi::ThreadSafeFunction &truncate_tsfn)
     : read_with_location_callback_tsfn{read_with_location_callback_tsfn},
       read_tsfn{read_tsfn}, glob_tsfn{glob_tsfn},
-      get_file_size_tsfn{get_file_size_tsfn}, open_file_tsfn{open_file_tsfn}
+      get_file_size_tsfn{get_file_size_tsfn}, open_file_tsfn{open_file_tsfn}, truncate_tsfn{truncate_tsfn}
       {}
 
 unique_ptr<duckdb::FileHandle>
@@ -63,7 +64,7 @@ NodeFileSystem::OpenFile(const char *path, uint8_t flags,
         "openFile");
 
     auto napi_path = Napi::String::New(env, path);
-    // replicate bitwise logic for flags?
+    // TODO: replicate bitwise logic for flags?
     auto napi_flags = Napi::Number::New(env, O_RDONLY);
     auto napi_lock_type =
         Napi::Number::New(env, static_cast<double>(lock_type));
@@ -259,6 +260,49 @@ void NodeFileSystem::SetWorkingDirectory(string path) {
 
 string NodeFileSystem::GetWorkingDirectory() {
   return duckdb::FileSystem::GetWorkingDirectory();
+}
+
+void NodeFileSystem::Truncate(FileHandle &handle, int64_t new_size) {
+  std::condition_variable condition_variable;
+  std::mutex mutex;
+  std::unique_lock<std::mutex> lock(mutex);
+  bool js_callback_fired = false;
+  string error;
+
+  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function
+  js_callback) {
+    auto read_finished_callback = Napi::Function::New(
+        env,
+        [&](const Napi::CallbackInfo &info) {
+          if (!info[0].IsNull()) {
+            cout << "ERR HERE" << endl;
+            error = info[0].As<Napi::Error>().Message();
+          }
+          js_callback_fired = true;
+          condition_variable.notify_one();
+        },
+        "Truncate");
+
+    auto napi_fd =
+        Napi::Number::New(env, dynamic_cast<UnixFileHandle &>(handle).fd);
+    auto napi_new_size = Napi::Number::New(env, new_size);
+    js_callback.Call(
+        {napi_fd, napi_new_size, read_finished_callback});
+  };
+
+  truncate_tsfn.Acquire();
+    auto status = truncate_tsfn.BlockingCall(threadsafe_fn_callback);
+  if (status != napi_status::napi_ok) {
+    throw std::runtime_error("Napi status:" +
+                             to_string(static_cast<int>(status)));
+  }
+
+  while (!js_callback_fired)
+    condition_variable.wait(lock);
+  truncate_tsfn.Release();
+  if (!error.empty()) {
+    throw std::runtime_error(error);
+  }
 }
 
 vector<string> NodeFileSystem::Glob(string path) {

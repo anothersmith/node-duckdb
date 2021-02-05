@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { read, stat, open } from "fs";
+import { read, stat, open, ftruncate } from "fs";
 
 import { IFileSystem } from "@addon-types";
 import glob from "fast-glob";
@@ -51,4 +51,11 @@ export const fileSystem: IFileSystem = {
       callback(error, fd);
     });
   },
+  truncate: (fd: number, len: number, callback: (error: Error | null) => void) => {
+    ftruncate(fd, len, (err) => {
+      console.log("here");
+      console.log(err);
+      callback(err)
+    });
+  }
 };

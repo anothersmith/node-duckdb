@@ -21,6 +21,7 @@ Napi::Object DuckDB::Init(Napi::Env env, Napi::Object exports) {
       env, "DuckDB",
       {
           InstanceMethod("close", &DuckDB::Close),
+          InstanceMethod("init", &DuckDB::Init),
           InstanceAccessor<&DuckDB::IsClosed>("isClosed"),
           InstanceAccessor<&DuckDB::GetAccessMode>("accessMode"),
           InstanceAccessor<&DuckDB::GetCheckPointWALSize>("checkPointWALSize"),
@@ -44,9 +45,6 @@ Napi::Object DuckDB::Init(Napi::Env env, Napi::Object exports) {
 DuckDB::DuckDB(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<DuckDB>(info) {
   Napi::Env env = info.Env();
-
-  string path;
-  duckdb::DBConfig nativeConfig;
 
   if (!info[0].IsUndefined()) {
     if (!info[0].IsObject()) {
@@ -76,6 +74,8 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
         file_system_object.Value().Get("getFileSize").As<Napi::Function>());
     open_file_callback_ref = Napi::Persistent(
         file_system_object.Value().Get("openFile").As<Napi::Function>());
+    truncate_callback_ref = Napi::Persistent(
+        file_system_object.Value().Get("truncate").As<Napi::Function>());
 
     read_with_location_callback_tsfn = Napi::ThreadSafeFunction::New(
         read_with_location_callback_ref.Env(),
@@ -117,23 +117,82 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
         [](Napi::Env) { // Finalizer used to clean threads up
           // nativeThread.join();
         });
+    truncate_tsfn = Napi::ThreadSafeFunction::New(
+        truncate_callback_ref.Env(), truncate_callback_ref.Value(),
+        "Node Filesystem Callback",
+        0,              // Unlimited queue
+        1,              // Only one thread will use this initially
+        [](Napi::Env) { // Finalizer used to clean threads up
+          // nativeThread.join();
+        });
 
     nativeConfig.file_system = duckdb::make_unique<NodeFileSystem>(
         read_with_location_callback_tsfn, read_tsfn, glob_tsfn,
-        get_file_size_tsfn, open_file_tsfn);
+        get_file_size_tsfn, open_file_tsfn, truncate_tsfn);
   }
+}
 
-  database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
-  database->LoadExtension<duckdb::ParquetExtension>();
+Napi::Value DuckDB::Init(const Napi::CallbackInfo &info) {
+  cout << "aaa" << endl;
+  // Create a ThreadSafeFunction
+  cout << "bbb" << endl;
+  init_tsfn = Napi::ThreadSafeFunction::New(
+      info.Env(),
+      info[0].As<Napi::Function>(),  // JavaScript function called asynchronously
+      "Resource Name",         // Name
+      0,                       // Unlimited queue
+      1,                       // Only one thread will use this initially
+      [&]( Napi::Env ) {        // Finalizer used to clean threads up
+        nativeThread.join();
+      } );
+  cout << "ccc" << endl;
+
+  // Create a native thread
+  nativeThread = std::thread( [&] {
+    cout << "ddd" << endl;
+
+    database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
+    database->LoadExtension<duckdb::ParquetExtension>();  
+    cout << "eee" << endl;
+
+    napi_status status = init_tsfn.BlockingCall();
+    cout << "fff" << endl;
+    // if ( status != napi_ok )
+    // {
+    //   // Handle error
+    //   break;
+    // }
+    
+    // Release the thread-safe function
+    init_tsfn.Release();
+    cout << "ggg" << endl;
+  } );
+  cout << "hhh" << endl;
+
+  return info.Env().Undefined();
 }
 
 Napi::Value DuckDB::Close(const Napi::CallbackInfo &info) {
   database.reset();
-  read_with_location_callback_tsfn.Release();
-  read_tsfn.Release();
-  glob_tsfn.Release();
-  get_file_size_tsfn.Release();
-  open_file_tsfn.Release();
+  if (read_with_location_callback_tsfn) {
+    cout << "RELEASE" << endl;
+    read_with_location_callback_tsfn.Release();
+  }
+  if (read_tsfn) {
+    read_tsfn.Release();
+  }
+  if (glob_tsfn) {
+    glob_tsfn.Release();
+  }
+  if (get_file_size_tsfn) {
+    get_file_size_tsfn.Release();
+  }
+  if (open_file_tsfn) {
+    open_file_tsfn.Release();
+  }
+  if (truncate_tsfn) {
+    truncate_tsfn.Release();
+  }
   return info.Env().Undefined();
 }
 Napi::Value DuckDB::IsClosed(const Napi::CallbackInfo &info) {

@@ -10,7 +10,8 @@ public:
                  Napi::ThreadSafeFunction &read_tsfn,
                  Napi::ThreadSafeFunction &glob_tsfn,
                  Napi::ThreadSafeFunction &get_file_size_tsfn,
-                 Napi::ThreadSafeFunction &open_file_tsfn);
+                 Napi::ThreadSafeFunction &open_file_tsfn,
+                 Napi::ThreadSafeFunction &truncate_tsfn);
   unique_ptr<FileHandle> OpenFile(const char *path, uint8_t flags,
                                   FileLockType lock_type) override;
   int64_t GetFileSize(FileHandle &handle) override;
@@ -26,6 +27,7 @@ public:
   int64_t Read(FileHandle &handle, void *buffer, int64_t nr_bytes) override;
   void Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
             idx_t location) override;
+  void Truncate(FileHandle &handle, int64_t new_size) override;
 
 private:
   Napi::ThreadSafeFunction &read_with_location_callback_tsfn;
@@ -33,5 +35,6 @@ private:
   Napi::ThreadSafeFunction &glob_tsfn;
   Napi::ThreadSafeFunction &get_file_size_tsfn;
   Napi::ThreadSafeFunction &open_file_tsfn;
+  Napi::ThreadSafeFunction &truncate_tsfn;
 };
 } // namespace NodeDuckDB

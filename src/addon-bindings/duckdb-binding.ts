@@ -11,6 +11,7 @@ const { DuckDB } = require("../../build/Release/node-duckdb-addon.node");
 export declare class DuckDBClass {
   constructor(config: IDuckDBConfig, fileSystem?: IFileSystem);
   public close(): void;
+  public init(callback: () => void): void;
   public isClosed: boolean;
   public accessMode: AccessMode;
   public checkPointWALSize: number;

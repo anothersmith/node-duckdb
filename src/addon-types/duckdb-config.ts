@@ -137,4 +137,5 @@ export interface IFileSystem {
     fileLockType: number,
     callback: (error: Error | null, fd: number) => void,
   ) => void;
+  truncate: (fd: number, len: number, callback: (error: Error | null) => void) => void;
 }
