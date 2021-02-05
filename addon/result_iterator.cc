@@ -62,7 +62,7 @@ Napi::Value ResultIterator::FetchRow(const Napi::CallbackInfo &info) {
         .ThrowAsJavaScriptException();
     return env.Undefined();
   }
-  if (current_chunk->size() == 0) {
+  if (!current_chunk || current_chunk->size() == 0) {
     return env.Null();
   }
   Napi::Value row;

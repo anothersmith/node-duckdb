@@ -54,11 +54,12 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",
-    "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
+    "test": "yarn build:ts && node --expose-gc ./node_modules/.bin/jest --runInBand --testTimeout=60000 --detectOpenHandles"
   },
   "dependencies": {
     "@microsoft/api-extractor": "^7.12.0",
     "cmake-js": "^6.1.0",
+    "fast-glob": "^3.2.5",
     "glob": "^7.1.6",
     "node-addon-api": "^3.0.2",
     "prebuild-install": "^6.0.0",

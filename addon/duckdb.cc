@@ -129,6 +129,11 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
 
 Napi::Value DuckDB::Close(const Napi::CallbackInfo &info) {
   database.reset();
+  read_with_location_callback_tsfn.Release();
+  read_tsfn.Release();
+  glob_tsfn.Release();
+  get_file_size_tsfn.Release();
+  open_file_tsfn.Release();
   return info.Env().Undefined();
 }
 Napi::Value DuckDB::IsClosed(const Napi::CallbackInfo &info) {

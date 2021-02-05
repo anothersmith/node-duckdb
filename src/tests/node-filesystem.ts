@@ -2,7 +2,7 @@
 import { read, stat, open } from "fs";
 
 import { IFileSystem } from "@addon-types";
-import glob from "glob";
+import glob from "fast-glob";
 
 export const fileSystem: IFileSystem = {
   readWithLocation: (
@@ -12,7 +12,6 @@ export const fileSystem: IFileSystem = {
     position: number,
     callback: (err: Error | null, buffer: Buffer) => void,
   ) => {
-    console.log("sdadsadsa");
     read(fd, buffer, 0, length, position, (error, _bytesRead, filledBuffer) => {
       callback(error, filledBuffer);
     });
@@ -23,19 +22,20 @@ export const fileSystem: IFileSystem = {
     length: number,
     callback: (error: Error | null, buffer: Buffer, bytesRead: number) => void,
   ) => {
-    console.log("sdadsadsa");
     read(fd, buffer, 0, length, null, (error, bytesRead, filledBuffer) => {
+
       callback(error, filledBuffer, bytesRead);
     });
   },
-  glob: (path: string, callback) => {
-    console.log("sdadsadsa");
-    glob(path, (error, matches) => {
-      callback(error, matches);
-    });
+  glob: async (path: string, callback) => {
+    try {
+      const matches = await glob(path);
+      callback(null, matches);
+    } catch (e) {
+      callback(e, []);
+    }
   },
   getFileSize: (path: string, callback: (error: Error | null, size: number) => void) => {
-    console.log("sdadsadsa");
     stat(path, (error, stats) => {
       callback(error, stats.size);
     });
@@ -47,7 +47,6 @@ export const fileSystem: IFileSystem = {
     _fileLockType: number,
     callback: (error: Error | null, fd: number) => void,
   ) => {
-    console.log("sdadsadsa");
     open(path, flags, (error, fd) => {
       callback(error, fd);
     });

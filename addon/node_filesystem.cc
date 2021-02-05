@@ -32,7 +32,8 @@ NodeFileSystem::NodeFileSystem(
     Napi::ThreadSafeFunction &open_file_tsfn)
     : read_with_location_callback_tsfn{read_with_location_callback_tsfn},
       read_tsfn{read_tsfn}, glob_tsfn{glob_tsfn},
-      get_file_size_tsfn{get_file_size_tsfn}, open_file_tsfn{open_file_tsfn} {}
+      get_file_size_tsfn{get_file_size_tsfn}, open_file_tsfn{open_file_tsfn}
+      {}
 
 unique_ptr<duckdb::FileHandle>
 NodeFileSystem::OpenFile(const char *path, uint8_t flags,
@@ -43,8 +44,8 @@ NodeFileSystem::OpenFile(const char *path, uint8_t flags,
   bool js_callback_fired = false;
   unique_ptr<duckdb::FileHandle> file_handle;
   string error;
-
-  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
+  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function
+  js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
@@ -59,7 +60,7 @@ NodeFileSystem::OpenFile(const char *path, uint8_t flags,
           js_callback_fired = true;
           condition_variable.notify_one();
         },
-        "nodeFileSystemCallback");
+        "openFile");
 
     auto napi_path = Napi::String::New(env, path);
     // replicate bitwise logic for flags?
@@ -71,9 +72,15 @@ NodeFileSystem::OpenFile(const char *path, uint8_t flags,
         {napi_path, napi_flags, napi_lock_type, read_finished_callback});
   };
 
-  open_file_tsfn.BlockingCall(threadsafe_fn_callback);
+  open_file_tsfn.Acquire();
+  auto status = open_file_tsfn.BlockingCall(threadsafe_fn_callback);
+  if (status != napi_status::napi_ok) {
+    throw std::runtime_error("Napi status:" +
+                             to_string(static_cast<int>(status)));
+  }
   while (!js_callback_fired)
     condition_variable.wait(lock);
+  open_file_tsfn.Release();
 
   if (!error.empty()) {
     throw std::runtime_error(error);
@@ -90,7 +97,8 @@ int64_t NodeFileSystem::Read(FileHandle &handle, void *buffer,
   auto bytes_read = 0;
   string error;
 
-  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
+  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function
+  js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
@@ -104,7 +112,7 @@ int64_t NodeFileSystem::Read(FileHandle &handle, void *buffer,
           js_callback_fired = true;
           condition_variable.notify_one();
         },
-        "nodeFileSystemCallback");
+        "Read");
 
     auto napi_buffer = Napi::Buffer<char>::New(env, nr_bytes);
     auto napi_fd =
@@ -114,9 +122,16 @@ int64_t NodeFileSystem::Read(FileHandle &handle, void *buffer,
         {napi_fd, napi_buffer, napi_length, read_finished_callback});
   };
 
-  read_tsfn.BlockingCall(threadsafe_fn_callback);
+  read_tsfn.Acquire();
+    auto status = read_tsfn.BlockingCall(threadsafe_fn_callback);
+  if (status != napi_status::napi_ok) {
+    throw std::runtime_error("Napi status:" +
+                             to_string(static_cast<int>(status)));
+  }
+
   while (!js_callback_fired)
     condition_variable.wait(lock);
+  read_tsfn.Release();
   if (!error.empty()) {
     throw std::runtime_error(error);
   }
@@ -131,7 +146,8 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
   bool js_callback_fired = false;
   string error;
 
-  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
+  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function
+  js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
@@ -144,7 +160,7 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
           js_callback_fired = true;
           condition_variable.notify_one();
         },
-        "nodeFileSystemCallback");
+        "Read");
 
     auto napi_buffer = Napi::Buffer<char>::New(env, nr_bytes);
     auto napi_fd =
@@ -155,9 +171,17 @@ void NodeFileSystem::Read(FileHandle &handle, void *buffer, int64_t nr_bytes,
                       read_finished_callback});
   };
 
-  read_with_location_callback_tsfn.BlockingCall(threadsafe_fn_callback);
+  read_with_location_callback_tsfn.Acquire();
+    auto status =
+    read_with_location_callback_tsfn.BlockingCall(threadsafe_fn_callback);
+  if (status != napi_status::napi_ok) {
+    throw std::runtime_error("Napi status:" +
+                             to_string(static_cast<int>(status)));
+  }
+
   while (!js_callback_fired)
     condition_variable.wait(lock);
+  read_with_location_callback_tsfn.Release();
   if (!error.empty()) {
     throw std::runtime_error(error);
   }
@@ -171,7 +195,8 @@ int64_t NodeFileSystem::GetFileSize(FileHandle &handle) {
   int64_t file_size;
   string error;
 
-  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
+  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function
+  js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
@@ -184,15 +209,22 @@ int64_t NodeFileSystem::GetFileSize(FileHandle &handle) {
           js_callback_fired = true;
           condition_variable.notify_one();
         },
-        "nodeFileSystemCallback");
+        "GetFileSize");
 
     auto napi_path = Napi::String::New(env, handle.path);
     js_callback.Call({napi_path, read_finished_callback});
   };
 
-  get_file_size_tsfn.BlockingCall(threadsafe_fn_callback);
+  get_file_size_tsfn.Acquire();
+    auto status = get_file_size_tsfn.BlockingCall(threadsafe_fn_callback);
+  if (status != napi_status::napi_ok) {
+    throw std::runtime_error("Napi status:" +
+                             to_string(static_cast<int>(status)));
+  }
+
   while (!js_callback_fired)
     condition_variable.wait(lock);
+  get_file_size_tsfn.Release();
 
   if (!error.empty()) {
     throw std::runtime_error(error);
@@ -237,7 +269,8 @@ vector<string> NodeFileSystem::Glob(string path) {
   vector<string> matches;
   string error;
 
-  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function js_callback) {
+  auto threadsafe_fn_callback = [&](Napi::Env env, Napi::Function
+  js_callback) {
     auto read_finished_callback = Napi::Function::New(
         env,
         [&](const Napi::CallbackInfo &info) {
@@ -256,16 +289,23 @@ vector<string> NodeFileSystem::Glob(string path) {
           js_callback_fired = true;
           condition_variable.notify_one();
         },
-        "nodeFileSystemCallback");
+        "Glob");
 
     auto napi_path = Napi::String::New(env, path);
     js_callback.Call({napi_path, read_finished_callback});
   };
 
-  glob_tsfn.BlockingCall(threadsafe_fn_callback);
+  glob_tsfn.Acquire();
+    auto status = glob_tsfn.BlockingCall(threadsafe_fn_callback);
+
+  if (status != napi_status::napi_ok) {
+    throw std::runtime_error("Napi status:" +
+                             to_string(static_cast<int>(status)));
+  }
+
   while (!js_callback_fired)
     condition_variable.wait(lock);
-
+  glob_tsfn.Release();
   if (!error.empty()) {
     throw std::runtime_error(error);
   }
