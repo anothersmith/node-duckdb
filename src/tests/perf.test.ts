@@ -15,6 +15,7 @@ describe.skip("Perfomance test suite", () => {
   let connection: Connection;
   beforeEach(async () => {
     db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, fileSystem);
+    await db.init();
     // connection = new Connection(db);
     // await connection.executeIterator("PRAGMA threads=8;");
   });
@@ -166,34 +167,34 @@ describe.skip("Perfomance test suite", () => {
         const connection = new Connection(db);
         await connection.executeIterator("PRAGMA threads=1;");
         const result = await connection.executeIterator(
-          "SELECT http_status_code, COUNT(url), AVG(deeprank), COUNT(links_in_count), COUNT(backlink_count) FROM parquet_scan('/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000') GROUP BY http_status_code ORDER BY http_status_code",
+          "SELECT count(*) FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
         );
         // console.log(result.fetchAllRows());
       })(),
-      (async () => {
-        const connection = new Connection(db);
-        await connection.executeIterator("PRAGMA threads=1;");
-        const result = await connection.executeIterator(
-          "SELECT level, COUNT(url), AVG(deeprank), COUNT(links_in_count), COUNT(backlink_count) FROM parquet_scan('/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000') GROUP BY level ORDER BY level",
-        );
-        // console.log(result.fetchAllRows());
-      })(),
-      (async () => {
-        const connection = new Connection(db);
-        await connection.executeIterator("PRAGMA threads=1;");
-        const result = await connection.executeIterator(
-          "SELECT count(url) FROM parquet_scan('/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000') WHERE (http_status_code = 200 AND meta_redirect = FALSE AND primary_page = TRUE AND indexable = TRUE AND canonicalized_page = FALSE AND (paginated_page = FALSE OR (paginated_page = TRUE AND page_1 = TRUE))) AND ((css != TRUE AND js != TRUE AND is_image != TRUE AND internal = TRUE) AND (header_content_type = 'text/html' OR header_content_type = '')) ORDER BY count(url) DESC",
-        );
-        // console.log(result.fetchAllRows());
-      })(),
-      (async () => {
-        const connection = new Connection(db);
-        await connection.executeIterator("PRAGMA threads=1;");
-        const result = await connection.executeIterator(
-          "SELECT count(url) FROM parquet_scan('/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000') WHERE ((http_status_code = 200 AND meta_redirect = FALSE AND primary_page = TRUE AND indexable = TRUE AND canonicalized_page = FALSE AND (paginated_page = FALSE OR (paginated_page = TRUE AND page_1 = TRUE))) AND ((css != TRUE AND js != TRUE AND is_image != TRUE AND internal = TRUE) AND (header_content_type = 'text/html' OR header_content_type = ''))) ORDER BY count(url) DESC",
-        );
-        // console.log(result.fetchAllRows());
-      })(),
+      // (async () => {
+      //   const connection = new Connection(db);
+      //   // await connection.executeIterator("PRAGMA threads=1;");
+      //   const result = await connection.executeIterator(
+      //     "SELECT level, COUNT(url), AVG(deeprank), COUNT(links_in_count), COUNT(backlink_count) FROM parquet_scan('/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000') GROUP BY level ORDER BY level",
+      //   );
+      //   // console.log(result.fetchAllRows());
+      // })(),
+      // (async () => {
+      //   const connection = new Connection(db);
+      //   // await connection.executeIterator("PRAGMA threads=1;");
+      //   const result = await connection.executeIterator(
+      //     "SELECT count(url) FROM parquet_scan('/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000') WHERE (http_status_code = 200 AND meta_redirect = FALSE AND primary_page = TRUE AND indexable = TRUE AND canonicalized_page = FALSE AND (paginated_page = FALSE OR (paginated_page = TRUE AND page_1 = TRUE))) AND ((css != TRUE AND js != TRUE AND is_image != TRUE AND internal = TRUE) AND (header_content_type = 'text/html' OR header_content_type = '')) ORDER BY count(url) DESC",
+      //   );
+      //   // console.log(result.fetchAllRows());
+      // })(),
+      // (async () => {
+      //   const connection = new Connection(db);
+      //   // await connection.executeIterator("PRAGMA threads=1;");
+      //   const result = await connection.executeIterator(
+      //     "SELECT count(url) FROM parquet_scan('/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000') WHERE ((http_status_code = 200 AND meta_redirect = FALSE AND primary_page = TRUE AND indexable = TRUE AND canonicalized_page = FALSE AND (paginated_page = FALSE OR (paginated_page = TRUE AND page_1 = TRUE))) AND ((css != TRUE AND js != TRUE AND is_image != TRUE AND internal = TRUE) AND (header_content_type = 'text/html' OR header_content_type = ''))) ORDER BY count(url) DESC",
+      //   );
+      //   // console.log(result.fetchAllRows());
+      // })(),
     ]);
   });
 });

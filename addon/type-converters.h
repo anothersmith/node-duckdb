@@ -1,3 +1,6 @@
+// #ifndef TYPECONVERTERS_H
+// #define TYPECONVERTERS_H
+
 #include "duckdb.h"
 #include "duckdb.hpp"
 

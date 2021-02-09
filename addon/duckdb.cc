@@ -1,5 +1,4 @@
 #include "duckdb.h"
-#include "async_executor.h"
 #include "connection.h"
 #include "duckdb.hpp"
 #include "duckdb/main/client_context.hpp"
@@ -79,7 +78,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
 
     read_with_location_callback_tsfn = Napi::ThreadSafeFunction::New(
         read_with_location_callback_ref.Env(),
-        read_with_location_callback_ref.Value(), "Node Filesystem Callback",
+        read_with_location_callback_ref.Value(), "read_with_location_callback_tsfn",
         0,              // Unlimited queue
         1,              // Only one thread will use this initially
         [](Napi::Env) { // Finalizer used to clean threads up
@@ -87,7 +86,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
         });
     read_tsfn = Napi::ThreadSafeFunction::New(
         read_callback_ref.Env(), read_callback_ref.Value(),
-        "Node Filesystem Callback",
+        "read_tsfn",
         0,              // Unlimited queue
         1,              // Only one thread will use this initially
         [](Napi::Env) { // Finalizer used to clean threads up
@@ -95,7 +94,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
         });
     glob_tsfn = Napi::ThreadSafeFunction::New(
         glob_callback_ref.Env(), glob_callback_ref.Value(),
-        "Node Filesystem Callback",
+        "glob_tsfn",
         0,              // Unlimited queue
         1,              // Only one thread will use this initially
         [](Napi::Env) { // Finalizer used to clean threads up
@@ -103,7 +102,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
         });
     get_file_size_tsfn = Napi::ThreadSafeFunction::New(
         get_file_size_callback_ref.Env(), get_file_size_callback_ref.Value(),
-        "Node Filesystem Callback",
+        "get_file_size_tsfn",
         0,              // Unlimited queue
         1,              // Only one thread will use this initially
         [](Napi::Env) { // Finalizer used to clean threads up
@@ -111,7 +110,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
         });
     open_file_tsfn = Napi::ThreadSafeFunction::New(
         open_file_callback_ref.Env(), open_file_callback_ref.Value(),
-        "Node Filesystem Callback",
+        "open_file_tsfn",
         0,              // Unlimited queue
         1,              // Only one thread will use this initially
         [](Napi::Env) { // Finalizer used to clean threads up
@@ -119,7 +118,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
         });
     truncate_tsfn = Napi::ThreadSafeFunction::New(
         truncate_callback_ref.Env(), truncate_callback_ref.Value(),
-        "Node Filesystem Callback",
+        "truncate_tsfn",
         0,              // Unlimited queue
         1,              // Only one thread will use this initially
         [](Napi::Env) { // Finalizer used to clean threads up
@@ -133,49 +132,33 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
 }
 
 Napi::Value DuckDB::Init(const Napi::CallbackInfo &info) {
-  cout << "aaa" << endl;
-  // Create a ThreadSafeFunction
-  cout << "bbb" << endl;
   init_tsfn = Napi::ThreadSafeFunction::New(
       info.Env(),
-      info[0].As<Napi::Function>(),  // JavaScript function called asynchronously
-      "Resource Name",         // Name
-      0,                       // Unlimited queue
-      1,                       // Only one thread will use this initially
-      [&]( Napi::Env ) {        // Finalizer used to clean threads up
+      info[0].As<Napi::Function>(), // JavaScript function called asynchronously
+      "DuckDB Init",              // Name
+      0,                            // Unlimited queue
+      1,                            // Only one thread will use this initially
+      [&](Napi::Env) {              // Finalizer used to clean threads up
         nativeThread.join();
-      } );
-  cout << "ccc" << endl;
+      });
 
-  // Create a native thread
-  nativeThread = std::thread( [&] {
-    cout << "ddd" << endl;
-
+  nativeThread = std::thread([&] {
     database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
-    database->LoadExtension<duckdb::ParquetExtension>();  
-    cout << "eee" << endl;
-
+    database->LoadExtension<duckdb::ParquetExtension>();
     napi_status status = init_tsfn.BlockingCall();
-    cout << "fff" << endl;
     // if ( status != napi_ok )
     // {
     //   // Handle error
     //   break;
     // }
-    
-    // Release the thread-safe function
     init_tsfn.Release();
-    cout << "ggg" << endl;
-  } );
-  cout << "hhh" << endl;
-
+  });
   return info.Env().Undefined();
 }
 
 Napi::Value DuckDB::Close(const Napi::CallbackInfo &info) {
   database.reset();
   if (read_with_location_callback_tsfn) {
-    cout << "RELEASE" << endl;
     read_with_location_callback_tsfn.Release();
   }
   if (read_tsfn) {

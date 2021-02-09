@@ -11,11 +11,12 @@ import { fileSystem } from "./node-filesystem";
 const { stat, unlink } = promises;
 
 describe("Node filesystem", () => {
-  beforeAll(async () => {
-    await promises.chmod("src/tests/test-fixtures/alltypes_plain_unreadable.parquet", 0o000);
-  });
+  // beforeAll(async () => {
+  //   await promises.chmod("src/tests/test-fixtures/alltypes_plain_unreadable.parquet", 0o000);
+  // });
   it("allows reading from file", async () => {
     const db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, fileSystem);
+    await db.init();
     const connection1 = new Connection(db);
     const result = await connection1.executeIterator(
       "SELECT count(*) FROM parquet_scan('src/tests/test-fixtures/alltypes_plain.parquet')",
@@ -26,6 +27,7 @@ describe("Node filesystem", () => {
   });
   it("allows reading from file - multiple at once", async () => {
     const db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, fileSystem);
+    await db.init();
     await Promise.all([
       (async () => {
         const connection1 = new Connection(db);
@@ -65,7 +67,7 @@ describe("Node filesystem", () => {
     await connection1.close();
     await db.close();
   });
-  it.only("reads from a database", async () => {
+  it("reads from a database", async () => {
     const dbPath = join(__dirname, "../../mydb");
     try {
       await unlink(dbPath);

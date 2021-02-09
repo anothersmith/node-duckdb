@@ -68,8 +68,10 @@ export class Connection {
    * ```
    */
   public async execute<T>(command: string, options?: IExecuteOptions): Promise<Readable> {
-    const resultIteratorBinding = await this.connectionBinding.execute<T>(command, options);
-    return getResultStream(new ResultIterator(resultIteratorBinding));
+    // eslint-disable-next-line promise/param-names
+    return new Promise((resolve, _reject) => {
+      this.connectionBinding.execute<T>(command, resultIteratorBinding => resolve(getResultStream(new ResultIterator(resultIteratorBinding))), options);
+    })
   }
   /**
    * Asynchronously executes the query and returns an iterator that points to the first result in the result set.
@@ -108,7 +110,10 @@ export class Connection {
    * ```
    */
   public async executeIterator<T>(command: string, options?: IExecuteOptions): Promise<ResultIterator<T>> {
-    return new ResultIterator(await this.connectionBinding.execute<T>(command, options));
+    // eslint-disable-next-line promise/param-names
+    return new Promise((resolve, _reject) => {
+      this.connectionBinding.execute<T>(command, resultIterator => resolve(new ResultIterator(resultIterator)), options)
+    });
   }
   /**
    * Close the connection (also closes all {@link https://nodejs.org/api/stream.html#stream_class_stream_readable | Readable} or {@link ResultIterator | ResultIterator} objects associated with this connection).
