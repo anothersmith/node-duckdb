@@ -93,10 +93,9 @@ Napi::Value Connection::Execute(const Napi::CallbackInfo &info) {
     async_executors->push_back(duckdb::make_unique<NodeDuckDB::AsyncExecutor>(info, query, connection, forceMaterializedValue, rowResultFormatValue));
     async_executors->back()->Execute();
   } catch (Napi::Error &e) {
-    // call tsfn with error
+    throw e;
   } catch (...) {
-    // call tsfn with error
-
+    throw Napi::Error::New(env, "Unknown error occured during execution");
   }
   return info.Env().Undefined();
 }

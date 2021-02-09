@@ -43,30 +43,27 @@ void AsyncExecutor::Execute() {
   nativeThread = std::thread([&] {
     auto threadsafe_fn_callback = [&](Napi::Env env,
                                       Napi::Function js_callback) {
+      if (!result->success) {
+        // TODO: why can't pass Error?
+        js_callback.Call({Napi::String::New(env, result->error), env.Null()});
+        return;
+      }
       Napi::Object result_iterator = ResultIterator::Create();
       ResultIterator *result_unwrapped = ResultIterator::Unwrap(result_iterator);
+
       result_unwrapped->result = std::move(result);
       result_unwrapped->rowResultFormat = rowResultFormat;
       js_callback.Call(
-          {result_iterator});
+          {env.Null(), result_iterator});
     };
 
-    try {
-      if (forceMaterialized) {
-        result = connection->Query(query);
-      } else {
-        result = connection->SendQuery(query);
-      }
-      if (!result.get()->success) {
-        // SetError(result.get()->error);
-      }
-      napi_status status = execute_tsfn.BlockingCall(threadsafe_fn_callback);
-      execute_tsfn.Release();
-
-    } catch (...) {
-      // SetError(
-      //     "Unknown Error: Something happened during execution of the query");
+    if (forceMaterialized) {
+      result = connection->Query(query);
+    } else {
+      result = connection->SendQuery(query);
     }
+    napi_status status = execute_tsfn.BlockingCall(threadsafe_fn_callback);
+    execute_tsfn.Release();
 
   });
 }

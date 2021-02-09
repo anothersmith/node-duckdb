@@ -58,6 +58,7 @@ describe("Node filesystem", () => {
   });
   it("handles errors - non existent file", async () => {
     const db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, fileSystem);
+    await db.init();
     const connection1 = new Connection(db);
     await expect(
       connection1.executeIterator(

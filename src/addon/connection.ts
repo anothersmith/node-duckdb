@@ -68,9 +68,14 @@ export class Connection {
    * ```
    */
   public async execute<T>(command: string, options?: IExecuteOptions): Promise<Readable> {
-    // eslint-disable-next-line promise/param-names
-    return new Promise((resolve, _reject) => {
-      this.connectionBinding.execute<T>(command, resultIteratorBinding => resolve(getResultStream(new ResultIterator(resultIteratorBinding))), options);
+    return new Promise((resolve, reject) => {
+      this.connectionBinding.execute<T>(command, (error, resultIteratorBinding) => {
+        if (error !== null) {
+          reject(new Error(error));
+        } else {
+          resolve(getResultStream(new ResultIterator(resultIteratorBinding)));
+        }
+      }, options);
     })
   }
   /**
@@ -110,9 +115,14 @@ export class Connection {
    * ```
    */
   public async executeIterator<T>(command: string, options?: IExecuteOptions): Promise<ResultIterator<T>> {
-    // eslint-disable-next-line promise/param-names
-    return new Promise((resolve, _reject) => {
-      this.connectionBinding.execute<T>(command, resultIterator => resolve(new ResultIterator(resultIterator)), options)
+    return new Promise((resolve, reject) => {
+      this.connectionBinding.execute<T>(command, (error, resultIterator) => {
+        if (error !== null) {
+          reject(new Error(error));
+        } else {
+          resolve(new ResultIterator(resultIterator));
+        }
+      }, options)
     });
   }
   /**
