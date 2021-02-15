@@ -11,9 +11,12 @@ import { fileSystem } from "./node-filesystem";
 const { stat, unlink } = promises;
 
 describe("Node filesystem", () => {
-  // beforeAll(async () => {
-  //   await promises.chmod("src/tests/test-fixtures/alltypes_plain_unreadable.parquet", 0o000);
-  // });
+  beforeAll(async () => {
+    await promises.chmod("src/tests/test-fixtures/alltypes_plain_unreadable.parquet", 0o000);
+  });
+  afterAll(async () => {
+    await promises.chmod("src/tests/test-fixtures/alltypes_plain_unreadable.parquet", 0o666);
+  });
   it("allows reading from file", async () => {
     const db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, fileSystem);
     await db.init();

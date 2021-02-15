@@ -13,6 +13,7 @@ public:
   shared_ptr<duckdb::DuckDB> database;
   static Napi::FunctionReference constructor;
   bool IsClosed(void);
+  bool IsInitialized(void);
 
 private:
   Napi::Reference<Napi::Object> file_system_object;
@@ -45,6 +46,7 @@ private:
   string path;
   duckdb::DBConfig nativeConfig;
   std::thread nativeThread;
+  bool initialized;
 };
 } // namespace NodeDuckDB
 

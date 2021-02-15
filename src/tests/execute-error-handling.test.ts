@@ -7,8 +7,9 @@ LINE 1: an invalid query
 describe("executeIterator method error handling", () => {
   let db: DuckDB;
   let connection: Connection;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
   });
 

@@ -6,8 +6,9 @@ const query = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_p
 describe("Streaming/materialized capability", () => {
   let db: DuckDB;
   let connection: Connection;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
   });
 

@@ -8,8 +8,9 @@ const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array
 describe("Result iterator (streaming)", () => {
   let db: DuckDB;
   let connection: Connection;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
   });
 
@@ -74,6 +75,7 @@ describe("Result iterator (streaming)", () => {
     const query3 = "SELECT * FROM test ORDER BY a ASC;";
     const db1 = db;
     const db2 = new DuckDB();
+    await db2.init();
     const connection1 = connection;
     const connection2 = new Connection(db2);
     await Promise.all([

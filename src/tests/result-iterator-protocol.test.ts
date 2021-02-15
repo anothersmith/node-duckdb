@@ -4,8 +4,9 @@ import { RowResultFormat } from "@addon-types";
 describe("Result iterator as well formed JS iterator/iterable", () => {
   let db: DuckDB;
   let connection: Connection;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
   });
 

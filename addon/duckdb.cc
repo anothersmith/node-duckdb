@@ -44,6 +44,7 @@ Napi::Object DuckDB::Init(Napi::Env env, Napi::Object exports) {
 DuckDB::DuckDB(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<DuckDB>(info) {
   Napi::Env env = info.Env();
+  initialized = false;
 
   if (!info[0].IsUndefined()) {
     if (!info[0].IsObject()) {
@@ -132,6 +133,10 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
 }
 
 Napi::Value DuckDB::Init(const Napi::CallbackInfo &info) {
+  if (initialized) {
+      throw Napi::Error::New(info.Env(), "Has already been initialized");
+  }
+  initialized = true;
   init_tsfn = Napi::ThreadSafeFunction::New(
       info.Env(),
       info[0].As<Napi::Function>(), // JavaScript function called asynchronously
@@ -145,12 +150,7 @@ Napi::Value DuckDB::Init(const Napi::CallbackInfo &info) {
   nativeThread = std::thread([&] {
     database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
     database->LoadExtension<duckdb::ParquetExtension>();
-    napi_status status = init_tsfn.BlockingCall();
-    // if ( status != napi_ok )
-    // {
-    //   // Handle error
-    //   break;
-    // }
+    init_tsfn.BlockingCall();
     init_tsfn.Release();
   });
   return info.Env().Undefined();
@@ -183,49 +183,50 @@ Napi::Value DuckDB::IsClosed(const Napi::CallbackInfo &info) {
   return Napi::Boolean::New(env, IsClosed());
 }
 
-bool DuckDB::IsClosed() { return database == nullptr; }
+bool DuckDB::IsClosed() { return initialized && (database == nullptr); }
+bool DuckDB::IsInitialized() { return initialized; }
 
 Napi::Value DuckDB::GetAccessMode(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   return Napi::Number::New(env,
-                           static_cast<double>(database->config.access_mode));
+                           static_cast<double>(nativeConfig.access_mode));
 }
 Napi::Value DuckDB::GetCheckPointWALSize(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Number::New(env, database->config.checkpoint_wal_size);
+  return Napi::Number::New(env, nativeConfig.checkpoint_wal_size);
 }
 Napi::Value DuckDB::GetUseDirectIO(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->config.use_direct_io);
+  return Napi::Boolean::New(env, nativeConfig.use_direct_io);
 }
 Napi::Value DuckDB::GetMaximumMemory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Number::New(env, database->config.maximum_memory);
+  return Napi::Number::New(env, nativeConfig.maximum_memory);
 }
 Napi::Value DuckDB::GetUseTemporaryDirectory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->config.use_temporary_directory);
+  return Napi::Boolean::New(env, nativeConfig.use_temporary_directory);
 }
 Napi::Value DuckDB::GetTemporaryDirectory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::String::New(env, database->config.temporary_directory);
+  return Napi::String::New(env, nativeConfig.temporary_directory);
 }
 Napi::Value DuckDB::GetCollation(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::String::New(env, database->config.collation);
+  return Napi::String::New(env, nativeConfig.collation);
 }
 Napi::Value DuckDB::GetDefaultOrderType(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   return Napi::Number::New(
-      env, static_cast<double>(database->config.default_order_type));
+      env, static_cast<double>(nativeConfig.default_order_type));
 }
 Napi::Value DuckDB::GetDefaultNullOrder(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   return Napi::Number::New(
-      env, static_cast<double>(database->config.default_null_order));
+      env, static_cast<double>(nativeConfig.default_null_order));
 }
 Napi::Value DuckDB::GetEnableCopy(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->config.enable_copy);
+  return Napi::Boolean::New(env, nativeConfig.enable_copy);
 }
 } // namespace NodeDuckDB

@@ -50,6 +50,9 @@ Connection::Connection(const Napi::CallbackInfo &info)
   auto unwrappedDb = DuckDB::Unwrap(info[0].ToObject());
   if (unwrappedDb->IsClosed()) {
     throw Napi::TypeError::New(env, "Database is closed");
+  }  
+  if (!unwrappedDb->IsInitialized()) {
+    throw Napi::TypeError::New(env, "Database hasn't been initialized");
   }
   connection = duckdb::make_shared<duckdb::Connection>(*unwrappedDb->database);
 }

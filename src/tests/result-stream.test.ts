@@ -19,8 +19,9 @@ function readStream<T>(rs: Readable): Promise<T[]> {
 describe("Result stream", () => {
   let db: DuckDB;
   let connection: Connection;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
   });
 
