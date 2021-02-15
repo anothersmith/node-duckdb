@@ -9,9 +9,9 @@ import { fileSystem } from "./node-filesystem";
  * For now this is a useful way to gauge performance
  */
 // eslint-disable-next-line jest/no-disabled-tests
-describe("Perfomance test suite", () => {
+describe.skip("Perfomance test suite", () => {
   let db: DuckDB;
-  const path = "/Users/rostislavprovodenko/Downloads/20200929_093122_00057_hafyi_bucket-00000";
+  const path = "";
   beforeEach(async () => {
     db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, fileSystem);
     await db.init();
