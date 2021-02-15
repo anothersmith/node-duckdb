@@ -24,6 +24,7 @@ describe("Perfomance test suite against synthetic data set", () => {
 
   beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
     await connection.executeIterator("PRAGMA threads=4;");
   });
