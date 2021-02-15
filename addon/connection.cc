@@ -42,7 +42,6 @@ Connection::Connection(const Napi::CallbackInfo &info)
 
   bool read_only = false;
   string database_name = "";
-  // results = std::make_shared<std::vector<ResultIterator *>>();
 
   duckdb::DBConfig config;
   if (read_only)
@@ -106,17 +105,8 @@ Napi::Value Connection::Execute(const Napi::CallbackInfo &info) {
 }
 
 Napi::Value Connection::Close(const Napi::CallbackInfo &info) {
-  // for (auto &result : *results) {
-  //   if (result != nullptr) {
-  //     result->close();
-  //   }
-  // }
   connection.reset();
   database.reset();
-  // if (async_executor) {
-  //   cout << "444" << endl;
-  //   // async_executor.reset();
-  // }
   return info.Env().Undefined();
 }
 Napi::Value Connection::IsClosed(const Napi::CallbackInfo &info) {

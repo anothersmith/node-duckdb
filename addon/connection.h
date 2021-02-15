@@ -1,9 +1,8 @@
 #ifndef connection_H
 #define connection_H
 
-#include "duckdb.hpp"
-// #include "result_iterator.h"
 #include "async_executor.h"
+#include "duckdb.hpp"
 #include <napi.h>
 #include <thread>
 #include <vector>

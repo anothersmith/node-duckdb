@@ -15,17 +15,6 @@ AsyncExecutor::AsyncExecutor(const Napi::CallbackInfo &info, std::string &query,
     : info{info}, query{query}, connection{connection},
       forceMaterialized{forceMaterialized}, rowResultFormat{rowResultFormat} {}
 
-// AsyncExecutor::~AsyncExecutor() {
-//   cout << "herexx" << endl;
-//   if (connection) {
-//     cout << "heryyx" << endl;
-//     connection.reset();
-//   }
-//   cout << "herezz" << endl;
-//   execute_tsfn.Release();
-//   cout << "hereqqq" << endl;
-// }
-
 void AsyncExecutor::Execute() {
   execute_tsfn = Napi::ThreadSafeFunction::New(
       info.Env(),
