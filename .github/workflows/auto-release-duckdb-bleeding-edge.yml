@@ -1,21 +1,16 @@
-name: Release
+name: Auto Release DuckDB Bleeding Edge
 
-on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "New Node-DuckDB version"
-        required: true
+on: workflow_dispatch
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: master
+          ref: release/duckdb-bleeding-edge
           token: ${{secrets.BRANCH_PROTECTION_TOKEN}}
       - name: Setup node
         uses: actions/setup-node@v1
@@ -39,7 +34,7 @@ jobs:
         with:
           access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
           enforce_admins: false
-          branch: master
+          branch: release/duckdb-bleeding-edge
       - name: Install modules with frozen lockfile and build
         run: |
           echo -e "always-auth=true\n//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
@@ -50,9 +45,9 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           yarn install --frozen-lockfile
-          yarn version --new-version "${{ github.event.inputs.version }}"
+          yarn standard-version
           yarn publish --tag provisional-release --access public
-          git push -f
+          git push --follow-tags -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
@@ -65,4 +60,4 @@ jobs:
         with:
           access-token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
           enforce_admins: true
-          branch: master
+          branch: release/duckdb-bleeding-edge
