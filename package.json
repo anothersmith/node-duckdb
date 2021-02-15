@@ -53,8 +53,9 @@
     "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",
-    "test": "yarn build:ts && node --expose-gc ./node_modules/.bin/jest --runInBand --testTimeout=60000 --detectOpenHandles"
+    "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",    
+    "test": "yarn build:ts && node --expose_gc ./node_modules/.bin/jest --runInBand --testTimeout=6000000",
+    "test-valgrind": "yarn build:ts && valgrind --trace-children=yes --log-file='valgrind-2.log' --leak-check=full --show-leak-kinds=all --verbose node --expose_gc ./node_modules/.bin/jest --runInBand --testTimeout=6000000"
   },
   "dependencies": {
     "@microsoft/api-extractor": "^7.12.0",

@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <iostream>
 #include <unistd.h>
+#include <condition_variable>
 using namespace duckdb;
 using namespace std;
 using namespace Napi;
