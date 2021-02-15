@@ -1,6 +1,3 @@
-// #ifndef NODEFILESYSTEM_H
-// #define NODEFILESYSTEM_H
-
 #include "duckdb/common/file_system.hpp"
 #include <napi.h>
 

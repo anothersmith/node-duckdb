@@ -13,7 +13,11 @@ const { Connection } = require("../../build/Release/node-duckdb-addon.node");
 
 export declare class ConnectionClass {
   constructor(db: InstanceType<typeof DuckDBBinding>);
-  public execute<T>(command: string, callback: (error: string|null, resultIterator: ResultIteratorClass<T>) => void, options?: IExecuteOptions): void;
+  public execute<T>(
+    command: string,
+    callback: (error: string | null, resultIterator: ResultIteratorClass<T>) => void,
+    options?: IExecuteOptions,
+  ): void;
   public close(): void;
   public isClosed: boolean;
 }

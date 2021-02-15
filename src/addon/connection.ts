@@ -69,14 +69,18 @@ export class Connection {
    */
   public async execute<T>(command: string, options?: IExecuteOptions): Promise<Readable> {
     return new Promise((resolve, reject) => {
-      this.connectionBinding.execute<T>(command, (error, resultIteratorBinding) => {
-        if (error !== null) {
-          reject(new Error(error));
-        } else {
-          resolve(getResultStream(new ResultIterator(resultIteratorBinding)));
-        }
-      }, options);
-    })
+      this.connectionBinding.execute<T>(
+        command,
+        (error, resultIteratorBinding) => {
+          if (error !== null) {
+            reject(new Error(error));
+          } else {
+            resolve(getResultStream(new ResultIterator(resultIteratorBinding)));
+          }
+        },
+        options,
+      );
+    });
   }
   /**
    * Asynchronously executes the query and returns an iterator that points to the first result in the result set.
@@ -116,13 +120,17 @@ export class Connection {
    */
   public async executeIterator<T>(command: string, options?: IExecuteOptions): Promise<ResultIterator<T>> {
     return new Promise((resolve, reject) => {
-      this.connectionBinding.execute<T>(command, (error, resultIterator) => {
-        if (error !== null) {
-          reject(new Error(error));
-        } else {
-          resolve(new ResultIterator(resultIterator));
-        }
-      }, options)
+      this.connectionBinding.execute<T>(
+        command,
+        (error, resultIterator) => {
+          if (error !== null) {
+            reject(new Error(error));
+          } else {
+            resolve(new ResultIterator(resultIterator));
+          }
+        },
+        options,
+      );
     });
   }
   /**

@@ -23,7 +23,6 @@ export const fileSystem: IFileSystem = {
     callback: (error: Error | null, buffer: Buffer, bytesRead: number) => void,
   ) => {
     read(fd, buffer, 0, length, null, (error, bytesRead, filledBuffer) => {
-
       callback(error, filledBuffer, bytesRead);
     });
   },
@@ -52,10 +51,10 @@ export const fileSystem: IFileSystem = {
     });
   },
   truncate: (fd: number, len: number, callback: (error: Error | null) => void) => {
-    ftruncate(fd, len, (err) => {
+    ftruncate(fd, len, err => {
       console.log("here");
       console.log(err);
-      callback(err)
+      callback(err);
     });
-  }
+  },
 };

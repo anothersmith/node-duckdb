@@ -43,7 +43,7 @@ describe("DuckDB", () => {
     expect(connection.isClosed).toBe(true);
   });
 
-  it("throws when uninitialized", async () => {
+  it("throws when uninitialized", () => {
     const db = new DuckDB();
     expect(() => new Connection(db)).toThrow("Database hasn't been initialized");
   });

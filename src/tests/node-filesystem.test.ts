@@ -1,11 +1,10 @@
 /* eslint-disable */
-import { read, open, promises } from "fs";
+import { promises } from "fs";
 
 import { Connection, DuckDB } from "@addon";
 import { AccessMode, IFileSystem, RowResultFormat } from "@addon-types";
 import { join } from "path";
 
-import glob from "glob";
 import { fileSystem } from "./node-filesystem";
 
 const { stat, unlink } = promises;
@@ -55,8 +54,8 @@ describe("Node filesystem", () => {
         );
         expect(result.fetchRow()).toMatchObject({ "count()": 8n });
         await connection1.close();
-      })()
-    ])
+      })(),
+    ]);
     await db.close();
   });
   it("handles errors - non existent file", async () => {
@@ -72,14 +71,13 @@ describe("Node filesystem", () => {
     await db.close();
   });
   it("reads from a database", async () => {
-    const dbPath = join(__dirname, "../../mydb");
+    const dbPath = join(__dirname, "./mydb");
     try {
       await unlink(dbPath);
-    } catch(e) {}
-    console.log(dbPath);
+      await unlink(dbPath + ".wal");
+    } catch (e) {}
     const db1 = new DuckDB({ path: dbPath, options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } });
     await db1.init();
-    console.log("----aaaa")
     const connection1 = new Connection(db1);
     await connection1.executeIterator("CREATE TABLE test2 (a INTEGER);");
     const r = await connection1.executeIterator("INSERT INTO test2 SELECT 1;");
@@ -97,5 +95,6 @@ describe("Node filesystem", () => {
     expect(iterator.fetchRow()).toEqual([1]);
     db2.close();
     await unlink(dbPath);
+    await unlink(dbPath + ".wal");
   });
 });

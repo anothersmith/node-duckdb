@@ -32,7 +32,8 @@ Napi::Object Connection::Init(Napi::Env env, Napi::Object exports) {
 Connection::Connection(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<Connection>(info) {
   Napi::Env env = info.Env();
-  async_executors = duckdb::make_unique<std::vector<duckdb::unique_ptr<AsyncExecutor>>>();
+  async_executors =
+      duckdb::make_unique<std::vector<duckdb::unique_ptr<AsyncExecutor>>>();
 
   if (!info[0].IsObject() ||
       !info[0].ToObject().InstanceOf(DuckDB::constructor.Value())) {
@@ -50,7 +51,7 @@ Connection::Connection(const Napi::CallbackInfo &info)
   auto unwrappedDb = DuckDB::Unwrap(info[0].ToObject());
   if (unwrappedDb->IsClosed()) {
     throw Napi::TypeError::New(env, "Database is closed");
-  }  
+  }
   if (!unwrappedDb->IsInitialized()) {
     throw Napi::TypeError::New(env, "Database hasn't been initialized");
   }
@@ -93,7 +94,8 @@ Napi::Value Connection::Execute(const Napi::CallbackInfo &info) {
                                         static_cast<int>(ResultFormat::ARRAY)));
       }
     }
-    async_executors->push_back(duckdb::make_unique<NodeDuckDB::AsyncExecutor>(info, query, connection, forceMaterializedValue, rowResultFormatValue));
+    async_executors->push_back(duckdb::make_unique<NodeDuckDB::AsyncExecutor>(
+        info, query, connection, forceMaterializedValue, rowResultFormatValue));
     async_executors->back()->Execute();
   } catch (Napi::Error &e) {
     throw e;

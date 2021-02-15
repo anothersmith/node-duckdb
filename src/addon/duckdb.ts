@@ -63,9 +63,12 @@ export class DuckDB {
   }
 
   public init(): Promise<void> {
-    // eslint-disable-next-line 
-    return new Promise((resolve, _reject) => {
-      this.duckdb.init(resolve);
+    return new Promise((resolve, reject) => {
+      try {
+        this.duckdb.init(resolve);
+      } catch (e) {
+        reject(e);
+      }
     });
   }
   /**

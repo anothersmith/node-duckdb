@@ -1,6 +1,3 @@
-// #ifndef ASYNCEXECUTOR_H
-// #define ASYNCEXECUTOR_H
-
 #include "duckdb.hpp"
 #include "result_iterator.h"
 #include <memory>
@@ -12,10 +9,8 @@ namespace NodeDuckDB {
 class AsyncExecutor {
 public:
   AsyncExecutor(const Napi::CallbackInfo &info, std::string &query,
-    std::shared_ptr<duckdb::Connection> &connection,
-    bool forceMaterialized,
-    ResultFormat &rowResultFormat);
-  // ~AsyncExecutor();
+                std::shared_ptr<duckdb::Connection> &connection,
+                bool forceMaterialized, ResultFormat &rowResultFormat);
   void Execute();
 
 private:
