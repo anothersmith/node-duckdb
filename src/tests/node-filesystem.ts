@@ -1,6 +1,7 @@
 import { read, stat, open, ftruncate } from "fs";
 
 import { IFileSystem } from "@addon-types";
+// eslint-disable-next-line node/no-unpublished-import
 import glob from "fast-glob";
 
 export const fileSystem: IFileSystem = {
