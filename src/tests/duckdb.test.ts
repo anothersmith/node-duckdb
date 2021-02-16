@@ -4,15 +4,13 @@ import "jest-extended";
 
 describe("DuckDB", () => {
   it("is able to close - no new connections can be created", async () => {
-    const db = new DuckDB();
-    await db.init();
+    const db = await new DuckDB().init();
     db.close();
     expect(() => new Connection(db)).toThrow("Database is closed");
   });
 
   it("is able to close - pre existing connections are closed", async () => {
-    const db = new DuckDB();
-    await db.init();
+    const db = await new DuckDB().init();
     const connection1 = new Connection(db);
     expect(connection1.isClosed).toBe(false);
     db.close();
@@ -26,8 +24,7 @@ describe("DuckDB", () => {
     const query1 = "CREATE TABLE test (a INTEGER, b INTEGER);";
     const query2 =
       "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 30000) tbl2(c)";
-    const db = new DuckDB();
-    await db.init();
+    const db = await new DuckDB().init();
     const connection = new Connection(db);
     await connection.executeIterator(query1);
     const p = connection.executeIterator(query2);
@@ -48,13 +45,11 @@ describe("DuckDB", () => {
     expect(() => new Connection(db)).toThrow("Database hasn't been initialized");
   });
   it("doesn't throw when initialized", async () => {
-    const db = new DuckDB();
-    await db.init();
+    const db = await new DuckDB().init();
     expect(() => new Connection(db)).not.toThrow();
   });
   it("throws when initialized twice", async () => {
-    const db = new DuckDB();
-    await db.init();
+    const db = await new DuckDB().init();
     await expect(db.init()).rejects.toThrow("Has already been initialized");
   });
 });

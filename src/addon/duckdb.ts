@@ -62,10 +62,12 @@ export class DuckDB {
     return this.duckdb.close();
   }
 
-  public init(): Promise<void> {
+  public init(): Promise<DuckDB> {
     return new Promise((resolve, reject) => {
       try {
-        this.duckdb.init(resolve);
+        this.duckdb.init(() => {
+          resolve(this);
+        });
       } catch (e) {
         reject(e);
       }

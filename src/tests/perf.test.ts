@@ -15,7 +15,6 @@ describe.skip("Perfomance test suite", () => {
   beforeEach(async () => {
     db = new DuckDB({ options: { accessMode: AccessMode.ReadWrite, useDirectIO: false } }, fileSystem);
     await db.init();
-    // await connection.executeIterator("PRAGMA threads=1;");
   });
 
   afterEach(() => {
