@@ -12,6 +12,7 @@ const dbPath = join(__dirname, "./mydb");
 describe("DuckDB configuration", () => {
   it("allows to create database on disk", async () => {
     const db = new DuckDB({ path: dbPath });
+    await db.init();
     db.close();
     const fd = await statAsync(dbPath);
     expect(fd.isFile()).toBe(true);
@@ -20,10 +21,12 @@ describe("DuckDB configuration", () => {
 
   it("allows to specify access mode - read only write operation rejects", async () => {
     const db1 = new DuckDB({ path: dbPath });
+    await db1.init();
     db1.close();
     const fd = await statAsync(dbPath);
     expect(fd.isFile()).toBe(true);
     const db2 = new DuckDB({ path: dbPath, options: { accessMode: AccessMode.ReadOnly } });
+    await db2.init();
     expect(db2.accessMode).toBe(AccessMode.ReadOnly);
     const connection2 = new Connection(db2);
     await expect(connection2.executeIterator("CREATE TABLE test2 (a INTEGER);")).rejects.toMatchObject({
@@ -34,6 +37,7 @@ describe("DuckDB configuration", () => {
 
   it("allows to specify access mode - read only read operation succeeds", async () => {
     const db1 = new DuckDB({ path: dbPath });
+    await db1.init();
     const connection1 = new Connection(db1);
     await connection1.executeIterator("CREATE TABLE test2 (a INTEGER);");
     await connection1.executeIterator("INSERT INTO test2 SELECT 1;");
@@ -41,6 +45,7 @@ describe("DuckDB configuration", () => {
     const fd = await statAsync(dbPath);
     expect(fd.isFile()).toBe(true);
     const db2 = new DuckDB({ path: dbPath, options: { accessMode: AccessMode.ReadOnly } });
+    await db2.init();
     expect(db2.accessMode).toBe(AccessMode.ReadOnly);
     const connection2 = new Connection(db2);
     const iterator = await connection2.executeIterator("SELECT * FROM test2;", {
@@ -93,10 +98,9 @@ describe("DuckDB configuration", () => {
     );
   });
 
-  // Note: looks like a duckdb bug: sets useTemporaryDirectory to true (although at the same time removes temporaryDirectory value)
   it("allows to specify whether to use temp dir", () => {
     const db = new DuckDB({ options: { useTemporaryDirectory: false, temporaryDirectory: __dirname } });
-    expect(db.temporaryDirectory).toBeFalsy();
+    expect(db.useTemporaryDirectory).toBeFalsy();
     db.close();
   });
 

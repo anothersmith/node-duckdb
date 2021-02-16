@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import { join } from "path";
 
 import { DuckDBBinding, DuckDBClass } from "@addon-bindings";
-import { IDuckDBConfig, AccessMode, OrderType, OrderByNullType } from "@addon-types";
+import { IDuckDBConfig, AccessMode, OrderType, OrderByNullType, IFileSystem } from "@addon-types";
 
 /**
  * The DuckDB class represents a DuckDB database instance.
@@ -49,8 +49,8 @@ export class DuckDB {
    *
    * @public
    */
-  constructor(config: IDuckDBConfig = {}) {
-    this.duckdb = new DuckDBBinding(config);
+  constructor(config: IDuckDBConfig = {}, fileSystem?: IFileSystem) {
+    this.duckdb = new DuckDBBinding(config, fileSystem);
   }
   /**
    * Closes the underlying duckdb database, frees associated memory and renders it unusuable.
@@ -60,6 +60,18 @@ export class DuckDB {
    */
   public close(): void {
     return this.duckdb.close();
+  }
+
+  public init(): Promise<DuckDB> {
+    return new Promise((resolve, reject) => {
+      try {
+        this.duckdb.init(() => {
+          resolve(this);
+        });
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
   /**
    * Returns underlying binding instance.

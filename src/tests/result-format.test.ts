@@ -20,8 +20,9 @@ const arrayResult = [4, true, 0, 0, 0, 0n, 0, 0, "03/01/09", "0", 1235865600000]
 describe("Result format", () => {
   let db: DuckDB;
   let connection: Connection;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
   });
 

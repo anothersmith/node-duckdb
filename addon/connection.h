@@ -1,9 +1,10 @@
 #ifndef connection_H
 #define connection_H
 
+#include "async_executor.h"
 #include "duckdb.hpp"
-#include "result_iterator.h"
 #include <napi.h>
+#include <thread>
 #include <vector>
 
 namespace NodeDuckDB {
@@ -20,7 +21,10 @@ private:
 
   shared_ptr<duckdb::DuckDB> database;
   shared_ptr<duckdb::Connection> connection;
-  std::shared_ptr<std::vector<ResultIterator *>> results;
+  Napi::ThreadSafeFunction execute_tsfn;
+  std::thread nativeThread;
+  duckdb::unique_ptr<std::vector<duckdb::unique_ptr<NodeDuckDB::AsyncExecutor>>>
+      async_executors;
 };
 } // namespace NodeDuckDB
 #endif

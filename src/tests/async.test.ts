@@ -25,8 +25,9 @@ const executeOptions: IExecuteOptions = { forceMaterialized: true, rowResultForm
 
 describe("Async executeIterator", () => {
   let db: DuckDB;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
   });
 
   afterEach(() => {

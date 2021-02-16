@@ -6,8 +6,9 @@ const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array
 describe("executeIterator on csv", () => {
   let db: DuckDB;
   let connection: Connection;
-  beforeEach(() => {
+  beforeEach(async () => {
     db = new DuckDB();
+    await db.init();
     connection = new Connection(db);
   });
 

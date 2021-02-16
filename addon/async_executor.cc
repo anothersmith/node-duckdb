@@ -8,44 +8,48 @@
 using namespace duckdb;
 
 namespace NodeDuckDB {
-AsyncExecutor::AsyncExecutor(
-    Napi::Env &env, std::string &query,
-    std::shared_ptr<duckdb::Connection> &connection,
-    Napi::Promise::Deferred &deferred, bool forceMaterialized,
-    ResultFormat &rowResultFormat,
-    std::shared_ptr<std::vector<ResultIterator *>> results)
-    : Napi::AsyncWorker(env), query(query), connection(connection),
-      deferred(deferred), forceMaterialized(forceMaterialized),
-      rowResultFormat(rowResultFormat), results(std::move(results)) {}
-
-AsyncExecutor::~AsyncExecutor() {}
+AsyncExecutor::AsyncExecutor(const Napi::CallbackInfo &info, std::string &query,
+                             std::shared_ptr<duckdb::Connection> &connection,
+                             bool forceMaterialized,
+                             ResultFormat &rowResultFormat)
+    : info{info}, query{query}, connection{connection},
+      forceMaterialized{forceMaterialized}, rowResultFormat{rowResultFormat} {}
 
 void AsyncExecutor::Execute() {
-  try {
+  execute_tsfn = Napi::ThreadSafeFunction::New(
+      info.Env(),
+      info[1].As<Napi::Function>(), // JavaScript function called asynchronously
+      "AsyncExecutor Execute",      // Name
+      0,                            // Unlimited queue
+      1,                            // Only one thread will use this initially
+      [&](Napi::Env) {              // Finalizer used to clean threads up
+        nativeThread.join();
+      });
+
+  nativeThread = std::thread([&] {
+    auto threadsafe_fn_callback = [&](Napi::Env env,
+                                      Napi::Function js_callback) {
+      if (!result->success) {
+        // TODO: why can't pass Error?
+        js_callback.Call({Napi::String::New(env, result->error), env.Null()});
+        return;
+      }
+      Napi::Object result_iterator = ResultIterator::Create();
+      ResultIterator *result_unwrapped =
+          ResultIterator::Unwrap(result_iterator);
+
+      result_unwrapped->result = std::move(result);
+      result_unwrapped->rowResultFormat = rowResultFormat;
+      js_callback.Call({env.Null(), result_iterator});
+    };
+
     if (forceMaterialized) {
       result = connection->Query(query);
     } else {
       result = connection->SendQuery(query);
     }
-    if (!result.get()->success) {
-      SetError(result.get()->error);
-    }
-  } catch (...) {
-    SetError("Unknown Error: Something happened during execution of the query");
-  }
-}
-
-void AsyncExecutor::OnOK() {
-  Napi::HandleScope scope(Env());
-  Napi::Object result_iterator = ResultIterator::Create();
-  ResultIterator *result_unwrapped = ResultIterator::Unwrap(result_iterator);
-  result_unwrapped->result = std::move(result);
-  result_unwrapped->rowResultFormat = rowResultFormat;
-  results->push_back(result_unwrapped);
-  deferred.Resolve(result_iterator);
-}
-
-void AsyncExecutor::OnError(const Napi::Error &e) {
-  deferred.Reject(e.Value());
+    napi_status status = execute_tsfn.BlockingCall(threadsafe_fn_callback);
+    execute_tsfn.Release();
+  });
 }
 } // namespace NodeDuckDB

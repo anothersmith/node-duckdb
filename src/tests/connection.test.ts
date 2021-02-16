@@ -6,8 +6,9 @@ const errorMessage = "Must provide a valid DuckDB object";
 const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array };
 
 describe("Connection class", () => {
-  it("accepts a database instance", () => {
+  it("accepts a database instance", async () => {
     const db = new DuckDB();
+    await db.init();
     expect(() => new Connection(db)).not.toThrow();
     db.close();
   });
@@ -26,6 +27,7 @@ describe("Connection class", () => {
 
   it("is able to be closed - but does not close the database", async () => {
     const db = new DuckDB();
+    await db.init();
     const connection1 = new Connection(db);
     connection1.close();
     expect(connection1.isClosed).toBe(true);
@@ -47,6 +49,7 @@ describe("Connection class", () => {
     const query2 =
       "INSERT INTO test SELECT a, b FROM (VALUES (11, 22), (13, 22), (12, 21)) tbl1(a,b), repeat(0, 30000) tbl2(c)";
     const db = new DuckDB();
+    await db.init();
     const connection = new Connection(db);
     await connection.executeIterator(query1, executeOptions);
     const p = connection.executeIterator(query2, executeOptions);

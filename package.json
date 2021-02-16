@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.59",
+  "version": "0.0.59-fs",
   "private": false,
   "description": "DuckDB for Node.JS",
   "keywords": [
@@ -54,7 +54,8 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",
-    "test": "yarn build:ts && NODE_OPTIONS='--max-old-space-size=8192' jest --runInBand --testTimeout=60000"
+    "test": "yarn build:ts && NODE_OPTIONS='--max-old-space-size=8192' node --expose_gc ./node_modules/.bin/jest --runInBand --testTimeout=6000000",
+    "test-valgrind": "yarn build:ts && valgrind --trace-children=yes --log-file='valgrind-2.log' --leak-check=full --show-leak-kinds=all --verbose node --expose_gc ./node_modules/.bin/jest --runInBand --testTimeout=6000000"
   },
   "dependencies": {
     "@microsoft/api-extractor": "^7.12.0",
@@ -88,6 +89,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-sonarjs": "^0.5.0",
+    "fast-glob": "^3.2.5",
     "jest": "^26.2.2",
     "jest-extended": "^0.11.5",
     "nodemon": "^2.0.4",
