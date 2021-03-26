@@ -61,8 +61,17 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
       setDBConfig(env, config, nativeConfig);
     }
   }
-  database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
-  database->LoadExtension<duckdb::ParquetExtension>();
+  try {
+    database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
+    database->LoadExtension<duckdb::ParquetExtension>();
+  } catch (duckdb::IOException e) {
+    throw Napi::Error::New(env, e.what());
+  } catch (std::exception e) {
+    throw Napi::Error::New(env, e.what());
+  } catch (...) {
+    throw Napi::Error::New(env,
+                           "An error occured during DuckDB initialisation");
+  }
 }
 
 Napi::Value DuckDB::Close(const Napi::CallbackInfo &info) {
