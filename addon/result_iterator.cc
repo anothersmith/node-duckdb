@@ -203,6 +203,13 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
   case duckdb::LogicalTypeId::INTERVAL: {
     return Napi::String::New(env, val.ToString());
   }
+  case duckdb::LogicalTypeId::UTINYINT:
+    return Napi::Number::New(env, val.GetValue<uint8_t>());
+  case duckdb::LogicalTypeId::USMALLINT:
+    return Napi::Number::New(env, val.GetValue<uint16_t>());
+  case duckdb::LogicalTypeId::UINTEGER:
+    // GetValue is not supported for uint32_t, so using the wider type
+    return Napi::Number::New(env, val.GetValue<int64_t>());
   default:
     // default to getting string representation
     return Napi::String::New(env, val.ToString());
