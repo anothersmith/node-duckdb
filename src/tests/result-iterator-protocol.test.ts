@@ -27,7 +27,7 @@ describe("Result iterator as well formed JS iterator/iterable", () => {
     expect(results[0]).toEqual([
       1,
       "AAAAAAAABAAAAAAA",
-      873244800000,
+      "1997-09-03",
       null,
       2450810,
       2452620,

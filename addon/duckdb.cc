@@ -74,7 +74,9 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
 }
 
 Napi::Value DuckDB::Close(const Napi::CallbackInfo &info) {
-  database.reset();
+  if (database) {
+    database.reset();
+  }
   return info.Env().Undefined();
 }
 Napi::Value DuckDB::IsClosed(const Napi::CallbackInfo &info) {
@@ -86,45 +88,46 @@ bool DuckDB::IsClosed() { return database == nullptr; }
 
 Napi::Value DuckDB::GetAccessMode(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Number::New(env,
-                           static_cast<double>(database->config.access_mode));
+  return Napi::Number::New(
+      env, static_cast<double>(database->instance->config.access_mode));
 }
 Napi::Value DuckDB::GetCheckPointWALSize(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Number::New(env, database->config.checkpoint_wal_size);
+  return Napi::Number::New(env, database->instance->config.checkpoint_wal_size);
 }
 Napi::Value DuckDB::GetUseDirectIO(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->config.use_direct_io);
+  return Napi::Boolean::New(env, database->instance->config.use_direct_io);
 }
 Napi::Value DuckDB::GetMaximumMemory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Number::New(env, database->config.maximum_memory);
+  return Napi::Number::New(env, database->instance->config.maximum_memory);
 }
 Napi::Value DuckDB::GetUseTemporaryDirectory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->config.use_temporary_directory);
+  return Napi::Boolean::New(env,
+                            database->instance->config.use_temporary_directory);
 }
 Napi::Value DuckDB::GetTemporaryDirectory(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::String::New(env, database->config.temporary_directory);
+  return Napi::String::New(env, database->instance->config.temporary_directory);
 }
 Napi::Value DuckDB::GetCollation(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::String::New(env, database->config.collation);
+  return Napi::String::New(env, database->instance->config.collation);
 }
 Napi::Value DuckDB::GetDefaultOrderType(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   return Napi::Number::New(
-      env, static_cast<double>(database->config.default_order_type));
+      env, static_cast<double>(database->instance->config.default_order_type));
 }
 Napi::Value DuckDB::GetDefaultNullOrder(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   return Napi::Number::New(
-      env, static_cast<double>(database->config.default_null_order));
+      env, static_cast<double>(database->instance->config.default_null_order));
 }
 Napi::Value DuckDB::GetEnableCopy(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->config.enable_copy);
+  return Napi::Boolean::New(env, database->instance->config.enable_copy);
 }
 } // namespace NodeDuckDB
