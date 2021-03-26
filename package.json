@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.61",
+  "version": "0.0.62",
   "private": false,
   "description": "DuckDB for Node.JS",
   "keywords": [
@@ -39,7 +39,7 @@
     "clang:check": "yarn clang-format --dry-run --Werror addon/**",
     "clang:fix": "yarn clang-format -i addon/**",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
-    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/6fe57339948ece25ced86b20c97476358756983c.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-6fe57339948ece25ced86b20c97476358756983c duckdb && rm duckdb.tar.gz",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.5.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.5 duckdb && rm duckdb.tar.gz",
     "eslint:check": "eslint --ext .js,.json,.ts ./",
     "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
     "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./docs/replace.sh",
