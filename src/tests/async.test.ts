@@ -6,7 +6,7 @@ const query2 = "SELECT count(*) FROM read_csv_auto('src/tests/test-fixtures/web_
 const expectedResult1 = [
   1,
   "AAAAAAAABAAAAAAA",
-  873244800000,
+  "1997-09-03",
   null,
   2450810,
   2452620,

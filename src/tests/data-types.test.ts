@@ -54,6 +54,15 @@ describe("Data type mapping", () => {
     expect(resultValue).toEqual(bigInt);
   });
 
+  it("supports BIGINT - negative", async () => {
+    const bigInt = -1n;
+    const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${bigInt} AS BIGINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+    const resultValue = result.fetchRow()[0];
+    expect(resultValue).toEqual(bigInt);
+  });
+
   it("supports HUGEINT - positive max", async () => {
     const hugeInt = 170141183460469231731687303715884105727n;
     const result = await connection.executeIterator<Array<bigint>>(`SELECT CAST (${hugeInt} AS HUGEINT)`, {
@@ -120,8 +129,7 @@ describe("Data type mapping", () => {
               1.1,        
               CAST(1.1 AS DOUBLE),
               'stringy',
-              TIMESTAMP '1971-02-02 01:01:01.001',
-              DATE '1971-02-02'
+              TIMESTAMP '1971-02-02 01:01:01.001'
             `,
       { rowResultFormat: RowResultFormat.Array },
     );
@@ -137,11 +145,24 @@ describe("Data type mapping", () => {
       1.1,
       "stringy",
       Date.UTC(71, 1, 2, 1, 1, 1, 1),
-      Date.UTC(71, 1, 2),
     ]);
   });
 
-  // Note: even though there is a CHAR type in the source code, it is simply an alias to VARCHAR
+  it("supports DATE", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT DATE '2000-05-05'`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+
+    expect(result.fetchRow()).toEqual(["2000-05-05"]);
+  });
+
+  it("supports VARCHAR", async () => {
+    const result = await connection.executeIterator<string[]>(`SELECT CAST('a' AS VARCHAR)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+    expect(result.fetchRow()).toMatchObject(["a"]);
+  });
+
   it("supports CHAR", async () => {
     const result = await connection.executeIterator<string[]>(`SELECT CAST('a' AS CHAR)`, {
       rowResultFormat: RowResultFormat.Array,
@@ -153,7 +174,7 @@ describe("Data type mapping", () => {
     const result = await connection.executeIterator<number[]>(`SELECT TIME '01:01:01.001'`, {
       rowResultFormat: RowResultFormat.Array,
     });
-    expect(result.fetchRow()).toMatchObject([1 + 1000 + 60000 + 60000 * 60]);
+    expect(result.fetchRow()).toMatchObject([(1 + 1000 + 60 * 1000 + 60 * 1000 * 60) * 1000]);
   });
 
   it("supports BLOB", async () => {
@@ -174,5 +195,29 @@ describe("Data type mapping", () => {
       rowResultFormat: RowResultFormat.Array,
     });
     expect(result.fetchRow()).toMatchObject(["1 month"]);
+  });
+
+  it("supports UTINYINT", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT CAST(1 AS UTINYINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+
+    expect(result.fetchRow()).toMatchObject([1]);
+  });
+
+  it("supports USMALLINT", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT CAST(1 AS USMALLINT)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+
+    expect(result.fetchRow()).toMatchObject([1]);
+  });
+
+  it("supports UINTEGER", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT CAST(1 AS UINTEGER)`, {
+      rowResultFormat: RowResultFormat.Array,
+    });
+
+    expect(result.fetchRow()).toMatchObject([1]);
   });
 });

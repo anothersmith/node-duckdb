@@ -2,9 +2,10 @@
 #include "duckdb.h"
 #include "duckdb.hpp"
 
-string NodeDuckDB::TypeConverters::convertString(const Napi::Env &env,
-                                                 const Napi::Object &options,
-                                                 const string propertyName) {
+duckdb::string
+NodeDuckDB::TypeConverters::convertString(const Napi::Env &env,
+                                          const Napi::Object &options,
+                                          const std::string propertyName) {
   if (!options.Get(propertyName).IsString()) {
     throw Napi::TypeError::New(env, "Invalid " + propertyName +
                                         ": must be a string");
@@ -12,9 +13,10 @@ string NodeDuckDB::TypeConverters::convertString(const Napi::Env &env,
   return options.Get(propertyName).ToString().Utf8Value();
 }
 
-int32_t NodeDuckDB::TypeConverters::convertNumber(const Napi::Env &env,
-                                                  const Napi::Object &options,
-                                                  const string propertyName) {
+int32_t
+NodeDuckDB::TypeConverters::convertNumber(const Napi::Env &env,
+                                          const Napi::Object &options,
+                                          const std::string propertyName) {
   if (!options.Get(propertyName).IsNumber()) {
     throw Napi::TypeError::New(env, "Invalid " + propertyName +
                                         ": must be a number");
@@ -22,9 +24,9 @@ int32_t NodeDuckDB::TypeConverters::convertNumber(const Napi::Env &env,
   return options.Get(propertyName).ToNumber().Int32Value();
 }
 
-bool NodeDuckDB::TypeConverters::convertBoolean(const Napi::Env &env,
-                                                const Napi::Object &options,
-                                                const string propertyName) {
+bool NodeDuckDB::TypeConverters::convertBoolean(
+    const Napi::Env &env, const Napi::Object &options,
+    const std::string propertyName) {
   if (!options.Get(propertyName).IsBoolean()) {
     throw Napi::TypeError::New(env, "Invalid " + propertyName +
                                         ": must be a boolean");
@@ -34,9 +36,9 @@ bool NodeDuckDB::TypeConverters::convertBoolean(const Napi::Env &env,
 
 int32_t NodeDuckDB::TypeConverters::convertEnum(const Napi::Env &env,
                                                 const Napi::Object &options,
-                                                const string propertyName,
+                                                const std::string propertyName,
                                                 const int min, const int max) {
-  const string errorMessage =
+  const std::string errorMessage =
       "Invalid " + propertyName + ": must be of appropriate enum type";
   if (!options.Get(propertyName).IsNumber()) {
     throw Napi::TypeError::New(env, errorMessage);
