@@ -141,12 +141,12 @@ Napi::Value ResultIterator::getRowObject(Napi::Env env) {
 }
 
 Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
-  auto &nullmask = duckdb::FlatVector::Nullmask(current_chunk->data[col_idx]);
-  if (nullmask[chunk_offset]) {
+  auto val = current_chunk->data[col_idx].GetValue(chunk_offset);
+
+  if (val.is_null) {
     return env.Null();
   }
 
-  auto val = current_chunk->data[col_idx].GetValue(chunk_offset);
   switch (result->types[col_idx].id()) {
   case duckdb::LogicalTypeId::BOOLEAN:
     return Napi::Boolean::New(env, val.GetValue<bool>());
