@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.62",
+  "version": "0.0.63",
   "private": false,
   "description": "DuckDB for Node.JS",
   "keywords": [
