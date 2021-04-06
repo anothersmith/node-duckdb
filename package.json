@@ -57,6 +57,9 @@
     "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",
     "test": "yarn build:ts && NODE_OPTIONS='--max-old-space-size=8192' jest --runInBand --testTimeout=60000"
   },
+  "resolutions": {
+    "cmake-js/yargs/y18n": ">=5.0.5||>=4.0.1 <5.0.0||>=3.2.2 <4.0.0"
+  },
   "dependencies": {
     "cmake-js": "^6.1.0",
     "node-addon-api": "^3.0.2",
