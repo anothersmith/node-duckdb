@@ -141,12 +141,12 @@ Napi::Value ResultIterator::getRowObject(Napi::Env env) {
 }
 
 Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
-  auto &nullmask = duckdb::FlatVector::Nullmask(current_chunk->data[col_idx]);
-  if (nullmask[chunk_offset]) {
+  auto val = current_chunk->data[col_idx].GetValue(chunk_offset);
+
+  if (val.is_null) {
     return env.Null();
   }
 
-  auto val = current_chunk->data[col_idx].GetValue(chunk_offset);
   switch (result->types[col_idx].id()) {
   case duckdb::LogicalTypeId::BOOLEAN:
     return Napi::Boolean::New(env, val.GetValue<bool>());
@@ -203,6 +203,13 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
   case duckdb::LogicalTypeId::INTERVAL: {
     return Napi::String::New(env, val.ToString());
   }
+  case duckdb::LogicalTypeId::UTINYINT:
+    return Napi::Number::New(env, val.GetValue<uint8_t>());
+  case duckdb::LogicalTypeId::USMALLINT:
+    return Napi::Number::New(env, val.GetValue<uint16_t>());
+  case duckdb::LogicalTypeId::UINTEGER:
+    // GetValue is not supported for uint32_t, so using the wider type
+    return Napi::Number::New(env, val.GetValue<int64_t>());
   default:
     // default to getting string representation
     return Napi::String::New(env, val.ToString());
