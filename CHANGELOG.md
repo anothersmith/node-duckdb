@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.67](https://github.com/deepcrawl/node-duckdb/compare/v0.0.66...v0.0.67) (2021-04-07)
+
+
+### Bug Fixes
+
+* [ODIN-512] bumping logic ([#91](https://github.com/deepcrawl/node-duckdb/issues/91)) ([27b412d](https://github.com/deepcrawl/node-duckdb/commit/27b412d1967834f549261443bfd474a8d49297af))
+
+### [0.0.66](https://github.com/deepcrawl/node-duckdb/compare/v0.0.64...v0.0.66) (2021-04-06)
+
 ### [0.0.64](https://github.com/deepcrawl/node-duckdb/compare/v0.0.61...v0.0.64) (2021-03-26)
 
 
