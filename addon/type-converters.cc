@@ -103,7 +103,4 @@ void NodeDuckDB::TypeConverters::setDBConfig(const Napi::Env &env,
                     static_cast<int>(duckdb::OrderByNullType::NULLS_LAST)));
   }
 
-  if (!optionsObject.Get("enableCopy").IsUndefined()) {
-    nativeConfig.enable_copy = convertBoolean(env, optionsObject, "enableCopy");
-  }
 }

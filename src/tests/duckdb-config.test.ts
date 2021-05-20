@@ -154,16 +154,6 @@ describe("DuckDB configuration", () => {
     );
   });
 
-  it("allows to specify enable copy", () => {
-    const db = new DuckDB({ options: { enableCopy: false } });
-    expect(db.enableCopy).toBe(false);
-    db.close();
-  });
-
-  it("does not allow to specify invalid enableCopy", () => {
-    expect(() => new DuckDB(<any>{ options: { enableCopy: 10 } })).toThrow("Invalid enableCopy: must be a boolean");
-  });
-
   it("returns package version", async () => {
     const version = await DuckDB.getBindingsVersion();
     expect(version).toMatch(/\d+\.\d+\.\d+/);
