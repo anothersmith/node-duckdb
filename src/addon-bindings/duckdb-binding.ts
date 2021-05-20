@@ -20,7 +20,6 @@ export declare class DuckDBClass {
   public collation: string;
   public defaultOrderType: OrderType;
   public defaultNullOrder: OrderByNullType;
-  public enableCopy: boolean;
 }
 
 export const DuckDBBinding: typeof DuckDBClass = DuckDB;

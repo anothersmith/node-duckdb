@@ -83,10 +83,6 @@ export interface IDuckDBOptionsConfig {
    * Default order for Null values
    */
   defaultNullOrder?: OrderByNullType;
-  /**
-   * Enable Copy
-   */
-  enableCopy?: boolean;
 }
 /**
  * Configuration object for DuckDB

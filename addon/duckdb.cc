@@ -32,7 +32,6 @@ Napi::Object DuckDB::Init(Napi::Env env, Napi::Object exports) {
           InstanceAccessor<&DuckDB::GetCollation>("collation"),
           InstanceAccessor<&DuckDB::GetDefaultOrderType>("defaultOrderType"),
           InstanceAccessor<&DuckDB::GetDefaultNullOrder>("defaultNullOrder"),
-          InstanceAccessor<&DuckDB::GetEnableCopy>("enableCopy"),
       });
   constructor = Napi::Persistent(func);
   constructor.SuppressDestruct();
@@ -126,9 +125,5 @@ Napi::Value DuckDB::GetDefaultNullOrder(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   return Napi::Number::New(
       env, static_cast<double>(database->instance->config.default_null_order));
-}
-Napi::Value DuckDB::GetEnableCopy(const Napi::CallbackInfo &info) {
-  Napi::Env env = info.Env();
-  return Napi::Boolean::New(env, database->instance->config.enable_copy);
 }
 } // namespace NodeDuckDB
