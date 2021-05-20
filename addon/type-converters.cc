@@ -102,5 +102,4 @@ void NodeDuckDB::TypeConverters::setDBConfig(const Napi::Env &env,
                     static_cast<int>(duckdb::OrderByNullType::INVALID),
                     static_cast<int>(duckdb::OrderByNullType::NULLS_LAST)));
   }
-
 }
