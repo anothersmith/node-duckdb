@@ -25,7 +25,6 @@ private:
   Napi::Value GetCollation(const Napi::CallbackInfo &info);
   Napi::Value GetDefaultOrderType(const Napi::CallbackInfo &info);
   Napi::Value GetDefaultNullOrder(const Napi::CallbackInfo &info);
-  Napi::Value GetEnableCopy(const Napi::CallbackInfo &info);
 };
 } // namespace NodeDuckDB
 
