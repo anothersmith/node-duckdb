@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.69",
+  "version": "0.0.70",
   "private": false,
   "description": "DuckDB for Node.JS",
   "keywords": [
@@ -40,7 +40,7 @@
     "clang:check": "yarn clang-format --dry-run --Werror addon/**",
     "clang:fix": "yarn clang-format -i addon/**",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
-    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/7c1a2f2867dfe5b02717e7bd7cf7ed46fbe08a34.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-7c1a2f2867dfe5b02717e7bd7cf7ed46fbe08a34 duckdb && rm duckdb.tar.gz",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/6d3586322e55390fd5d9280febaf4d53fdc927c0.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-6d3586322e55390fd5d9280febaf4d53fdc927c0 duckdb && rm duckdb.tar.gz",
     "eslint:check": "eslint --ext .js,.json,.ts ./",
     "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
     "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./docs/replace.sh",
