@@ -220,4 +220,69 @@ describe("Data type mapping", () => {
 
     expect(result.fetchRow()).toMatchObject([1]);
   });
+
+  it("supports LIST - integers", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT array_slice([1,2,3], 1, NULL)`);
+    expect(result.fetchRow()).toMatchObject({ "array_slice(list_value(1, 2, 3), 1, NULL)": [2, 3] });
+  });
+
+  it("supports LIST - strings", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT array_slice(['a','b','c'], 1, NULL)`);
+    expect(result.fetchRow()).toEqual({ "array_slice(list_value(a, b, c), 1, NULL)": ["b", "c"] });
+  });
+
+  it("supports LIST - STRUCTs", async () => {
+    const result = await connection.executeIterator<any[]>(
+      `SELECT raw_header from parquet_scan('src/tests/test-fixtures/crawl_urls.parquet')`,
+    );
+    expect(result.fetchRow()).toEqual({
+      raw_header: [
+        {
+          key: "Content-Encoding",
+          value: "gzip",
+        },
+        {
+          key: "X-Frame-Options",
+          value: "SAMEORIGIN",
+        },
+        {
+          key: "Connection",
+          value: "keep-alive",
+        },
+        {
+          key: "X-Xss-Protection",
+          value: "1; mode=block",
+        },
+        {
+          key: "Content-Type",
+          value: "text/html;charset=utf-8",
+        },
+        {
+          key: "Date",
+          value: "Tue, 18 Aug 2020 13:46:36 GMT",
+        },
+        {
+          key: "Vary",
+          value: "User-agent,Accept-Encoding",
+        },
+        {
+          key: "Server",
+          value: "nginx/1.10.3",
+        },
+        {
+          key: "X-Content-Type-Options",
+          value: "nosniff",
+        },
+        {
+          key: "Content-Length",
+          value: "1180",
+        },
+      ],
+    });
+  });
+
+  it("supports STRUCT", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT struct_pack(i := 4, s := 'string')`);
+    expect(result.fetchRow()).toEqual({ "struct_pack(4, string)": { i: 4, s: "string" } });
+  });
 });

@@ -141,29 +141,32 @@ Napi::Value ResultIterator::getRowObject(Napi::Env env) {
 }
 
 Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
-  auto val = current_chunk->data[col_idx].GetValue(chunk_offset);
+  auto value = current_chunk->data[col_idx].GetValue(chunk_offset);
+  return getMappedValue(env, value);
+}
 
-  if (val.is_null) {
+Napi::Value ResultIterator::getMappedValue(Napi::Env env, duckdb::Value value) {
+  if (value.is_null) {
     return env.Null();
   }
 
-  switch (result->types[col_idx].id()) {
+  switch (value.type().id()) {
   case duckdb::LogicalTypeId::BOOLEAN:
-    return Napi::Boolean::New(env, val.GetValue<bool>());
+    return Napi::Boolean::New(env, value.GetValue<bool>());
   case duckdb::LogicalTypeId::TINYINT:
-    return Napi::Number::New(env, val.GetValue<int8_t>());
+    return Napi::Number::New(env, value.GetValue<int8_t>());
   case duckdb::LogicalTypeId::SMALLINT:
-    return Napi::Number::New(env, val.GetValue<int16_t>());
+    return Napi::Number::New(env, value.GetValue<int16_t>());
   case duckdb::LogicalTypeId::INTEGER:
-    return Napi::Number::New(env, val.GetValue<int32_t>());
+    return Napi::Number::New(env, value.GetValue<int32_t>());
   case duckdb::LogicalTypeId::BIGINT:
-    return Napi::BigInt::New(env, val.GetValue<int64_t>());
+    return Napi::BigInt::New(env, value.GetValue<int64_t>());
   case duckdb::LogicalTypeId::HUGEINT: {
     // hugeint_t represents a signed 128 bit integer in two's complement
     // notation napi's BigInt is basically a regular signed integer (MSB) so we
     // want to make sure we pass the absolute value of the huge int into napi
     // plus the sign bit
-    auto huge_int = val.GetValue<duckdb::hugeint_t>();
+    auto huge_int = value.GetValue<duckdb::hugeint_t>();
     int is_negative = huge_int.upper < 0;
     duckdb::hugeint_t positive_huge_int =
         is_negative ? huge_int * duckdb::hugeint_t(-1) : huge_int;
@@ -171,50 +174,70 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
     return Napi::BigInt::New(env, is_negative, 2, &arr[0]);
   }
   case duckdb::LogicalTypeId::FLOAT:
-    return Napi::Number::New(env, val.GetValue<float>());
+    return Napi::Number::New(env, value.GetValue<float>());
   case duckdb::LogicalTypeId::DOUBLE:
-    return Napi::Number::New(env, val.GetValue<double>());
+    return Napi::Number::New(env, value.GetValue<double>());
   case duckdb::LogicalTypeId::DECIMAL:
     return Napi::Number::New(
-        env, val.CastAs(duckdb::LogicalType::DOUBLE).GetValue<double>());
+        env, value.CastAs(duckdb::LogicalType::DOUBLE).GetValue<double>());
   case duckdb::LogicalTypeId::VARCHAR:
-    return Napi::String::New(env, val.GetValue<string>());
+    return Napi::String::New(env, value.GetValue<string>());
   case duckdb::LogicalTypeId::BLOB: {
-    int array_length = val.str_value.length();
+    int array_length = value.str_value.length();
     char char_array[array_length + 1];
     // TODO: multiple copies, improve
-    strcpy(char_array, val.str_value.c_str());
+    strcpy(char_array, value.str_value.c_str());
     return Napi::Buffer<char>::Copy(env, char_array, array_length);
   }
   case duckdb::LogicalTypeId::TIMESTAMP: {
-    if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT64) {
+    if (value.type().InternalType() != duckdb::PhysicalType::INT64) {
       throw runtime_error("expected int64 for timestamp");
     }
-    int64_t tval = val.GetValue<int64_t>();
+    int64_t tval = value.GetValue<int64_t>();
     return Napi::Number::New(env, tval / 1000);
   }
   case duckdb::LogicalTypeId::TIME: {
-    if (result->types[col_idx].InternalType() != duckdb::PhysicalType::INT64) {
+    if (value.type().InternalType() != duckdb::PhysicalType::INT64) {
       throw runtime_error("expected int64 for time");
     }
-    int64_t tval = val.GetValue<int64_t>();
+    int64_t tval = value.GetValue<int64_t>();
     return Napi::Number::New(env, GetTime(tval));
   }
   case duckdb::LogicalTypeId::INTERVAL: {
-    return Napi::String::New(env, val.ToString());
+    return Napi::String::New(env, value.ToString());
   }
   case duckdb::LogicalTypeId::UTINYINT:
-    return Napi::Number::New(env, val.GetValue<uint8_t>());
+    return Napi::Number::New(env, value.GetValue<uint8_t>());
   case duckdb::LogicalTypeId::USMALLINT:
-    return Napi::Number::New(env, val.GetValue<uint16_t>());
+    return Napi::Number::New(env, value.GetValue<uint16_t>());
   case duckdb::LogicalTypeId::UINTEGER:
     // GetValue is not supported for uint32_t, so using the wider type
-    return Napi::Number::New(env, val.GetValue<int64_t>());
+    return Napi::Number::New(env, value.GetValue<int64_t>());
+  case duckdb::LogicalTypeId::LIST: {
+    auto array = Napi::Array::New(env);
+    for (size_t i = 0; i < value.list_value.size(); i++) {
+      auto &element = value.list_value[i];
+      auto mapped_value = getMappedValue(env, element);
+      array.Set(i, mapped_value);
+    }
+    return array;
+  }
+  case duckdb::LogicalTypeId::STRUCT: {
+    auto object = Napi::Object::New(env);
+    for (size_t i = 0; i < value.struct_value.size(); i++) {
+      auto &key = value.type().child_types()[i].first;
+      auto &element = value.struct_value[i];
+      auto child_value = getMappedValue(env, element);
+      object.Set(key, child_value);
+    }
+    return object;
+  }
   default:
     // default to getting string representation
-    return Napi::String::New(env, val.ToString());
+    return Napi::String::New(env, value.ToString());
   }
 }
+
 Napi::Value ResultIterator::Close(const Napi::CallbackInfo &info) {
   result.reset();
   return info.Env().Undefined();
