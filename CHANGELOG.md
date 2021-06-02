@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.71](https://github.com/deepcrawl/node-duckdb/compare/v0.0.70...v0.0.71) (2021-06-02)
+
+
+### Features
+
+* [ODIN-895] LIST and STRUCT types ([#99](https://github.com/deepcrawl/node-duckdb/issues/99)) ([6effe12](https://github.com/deepcrawl/node-duckdb/commit/6effe12e997298906bd6c176697b3dd29541cf69))
+
 ### [0.0.70](https://github.com/deepcrawl/node-duckdb/compare/v0.0.69...v0.0.70) (2021-06-01)
 
 ### [0.0.69](https://github.com/deepcrawl/node-duckdb/compare/v0.0.68...v0.0.69) (2021-05-20)
