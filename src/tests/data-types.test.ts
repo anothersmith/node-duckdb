@@ -223,12 +223,12 @@ describe("Data type mapping", () => {
 
   it("supports LIST - integers", async () => {
     const result = await connection.executeIterator<any[]>(`SELECT array_slice([1,2,3], 1, NULL)`);
-    expect(result.fetchRow()).toMatchObject({"array_slice(list_value(1, 2, 3), 1, NULL)": [2, 3]});
+    expect(result.fetchRow()).toMatchObject({ "array_slice(list_value(1, 2, 3), 1, NULL)": [2, 3] });
   });
 
   it("supports LIST - strings", async () => {
     const result = await connection.executeIterator<any[]>(`SELECT array_slice(['a','b','c'], 1, NULL)`);
-    expect(result.fetchRow()).toEqual({"array_slice(list_value(a, b, c), 1, NULL)": ["b", "c"]});
+    expect(result.fetchRow()).toEqual({ "array_slice(list_value(a, b, c), 1, NULL)": ["b", "c"] });
   });
 
   it("supports LIST - STRUCTs", async () => {
@@ -236,46 +236,46 @@ describe("Data type mapping", () => {
       `SELECT raw_header from parquet_scan('src/tests/test-fixtures/crawl_urls.parquet')`,
     );
     expect(result.fetchRow()).toEqual({
-      "raw_header": [
+      raw_header: [
         {
-          "key": "Content-Encoding",
-          "value": "gzip",
+          key: "Content-Encoding",
+          value: "gzip",
         },
         {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN",
+          key: "X-Frame-Options",
+          value: "SAMEORIGIN",
         },
         {
-          "key": "Connection",
-          "value": "keep-alive",
+          key: "Connection",
+          value: "keep-alive",
         },
         {
-          "key": "X-Xss-Protection",
-          "value": "1; mode=block",
+          key: "X-Xss-Protection",
+          value: "1; mode=block",
         },
         {
-          "key": "Content-Type",
-          "value": "text/html;charset=utf-8",
+          key: "Content-Type",
+          value: "text/html;charset=utf-8",
         },
         {
-          "key": "Date",
-          "value": "Tue, 18 Aug 2020 13:46:36 GMT",
+          key: "Date",
+          value: "Tue, 18 Aug 2020 13:46:36 GMT",
         },
         {
-          "key": "Vary",
-          "value": "User-agent,Accept-Encoding",
+          key: "Vary",
+          value: "User-agent,Accept-Encoding",
         },
         {
-          "key": "Server",
-          "value": "nginx/1.10.3",
+          key: "Server",
+          value: "nginx/1.10.3",
         },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff",
+          key: "X-Content-Type-Options",
+          value: "nosniff",
         },
         {
-          "key": "Content-Length",
-          "value": "1180",
+          key: "Content-Length",
+          value: "1180",
         },
       ],
     });
@@ -283,6 +283,6 @@ describe("Data type mapping", () => {
 
   it("supports STRUCT", async () => {
     const result = await connection.executeIterator<any[]>(`SELECT struct_pack(i := 4, s := 'string')`);
-    expect(result.fetchRow()).toEqual({"struct_pack(4, string)": {"i": 4, "s": "string"}});
+    expect(result.fetchRow()).toEqual({ "struct_pack(4, string)": { i: 4, s: "string" } });
   });
 });
