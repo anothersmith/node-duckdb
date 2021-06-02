@@ -220,4 +220,11 @@ describe("Data type mapping", () => {
 
     expect(result.fetchRow()).toMatchObject([1]);
   });
+
+
+  it.only("supports MAP", async () => {
+    const result = await connection.executeIterator<any[]>(`SELECT raw_header from parquet_scan('src/tests/test-fixtures/crawl_urls.parquet')`);
+    console.log(result.fetchRow());
+    expect(result.fetchRow()).toEqual(["2000-05-05"]);
+  });
 });

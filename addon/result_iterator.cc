@@ -146,7 +146,6 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
   if (val.is_null) {
     return env.Null();
   }
-
   switch (result->types[col_idx].id()) {
   case duckdb::LogicalTypeId::BOOLEAN:
     return Napi::Boolean::New(env, val.GetValue<bool>());
@@ -210,7 +209,29 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
   case duckdb::LogicalTypeId::UINTEGER:
     // GetValue is not supported for uint32_t, so using the wider type
     return Napi::Number::New(env, val.GetValue<int64_t>());
+  case duckdb::LogicalTypeId::LIST: {
+    auto return_array = Napi::Array::New(env);
+    cout << "dsadsads" << endl;
+    cout << val.ToString() << endl;
+
+		for (size_t i = 0; i < val.list_value.size(); i++) {
+			auto &child = val.list_value[i];
+      if (child.type().id() ==  duckdb::LogicalTypeId::STRUCT) {
+        auto object = Napi::Object::New(env);
+        for (size_t t = 0; t < child.struct_value.size(); t++) {
+          auto &name = child.type().child_types()[t].first;
+          auto &subchild = child.struct_value[t];
+          object.Set(name, subchild.ToString());
+        }
+        return_array.Set(i, object);
+      }
+			cout << child.ToString() << endl;
+		}
+
+    return return_array;
+  }
   default:
+    cout << "321312321" << endl;
     // default to getting string representation
     return Napi::String::New(env, val.ToString());
   }
