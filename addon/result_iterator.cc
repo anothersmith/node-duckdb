@@ -225,7 +225,8 @@ Napi::Value ResultIterator::getMappedValue(Napi::Env env, duckdb::Value value) {
   case duckdb::LogicalTypeId::STRUCT: {
     auto object = Napi::Object::New(env);
     for (size_t i = 0; i < value.struct_value.size(); i++) {
-      auto &key = value.type().child_types()[i].first;
+      auto &child_types = duckdb::StructType::GetChildTypes(value.type());
+      auto &key = child_types[i].first;
       auto &element = value.struct_value[i];
       auto child_value = getMappedValue(env, element);
       object.Set(key, child_value);
