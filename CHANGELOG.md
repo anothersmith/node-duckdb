@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.72](https://github.com/deepcrawl/node-duckdb/compare/v0.0.71...v0.0.72) (2021-06-21)
+
+
+### Features
+
+* upgrade to duckdb v. 0.2.7 ([#102](https://github.com/deepcrawl/node-duckdb/issues/102)) ([3832678](https://github.com/deepcrawl/node-duckdb/commit/38326781d75fb125da2a7f417903ac83148c991e))
+
 ### [0.0.71](https://github.com/deepcrawl/node-duckdb/compare/v0.0.70...v0.0.71) (2021-06-02)
 
 
