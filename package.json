@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.69",
+  "version": "0.0.72",
   "private": false,
   "description": "DuckDB for Node.JS",
   "keywords": [
@@ -40,7 +40,7 @@
     "clang:check": "yarn clang-format --dry-run --Werror addon/**",
     "clang:fix": "yarn clang-format -i addon/**",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
-    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/7c1a2f2867dfe5b02717e7bd7cf7ed46fbe08a34.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-7c1a2f2867dfe5b02717e7bd7cf7ed46fbe08a34 duckdb && rm duckdb.tar.gz",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.7.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.7 duckdb && rm duckdb.tar.gz",
     "eslint:check": "eslint --ext .js,.json,.ts ./",
     "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
     "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./docs/replace.sh",
@@ -58,7 +58,8 @@
     "test": "yarn build:ts && NODE_OPTIONS='--max-old-space-size=8192' jest --runInBand --testTimeout=60000"
   },
   "resolutions": {
-    "cmake-js/yargs/y18n": ">=5.0.5||>=4.0.1 <5.0.0||>=3.2.2 <4.0.0"
+    "cmake-js/yargs/y18n": ">=5.0.5||>=4.0.1 <5.0.0||>=3.2.2 <4.0.0",
+    "trim-newlines": ">=3.0.1 <4.0.0 || >=4.0.1"
   },
   "dependencies": {
     "cmake-js": "^6.1.0",
@@ -99,7 +100,7 @@
     "standard-version": "^9.1.1",
     "ttypescript": "^1.5.12",
     "typescript": "^4.0.3",
-    "yarn-audit-fix": "^5.0.0"
+    "yarn-audit-fix": "6.3.2"
   },
   "engines": {
     "node": ">= 12.17.0"
