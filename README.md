@@ -30,7 +30,7 @@ or
 yarn add node-duckdb
 ```
 
-Note: this will download the duckdb binary for your platform (currently Linux and MacOS are supported), or if it's not available will attempt to build it.
+Note: this will download the DuckDB binary for your platform (currently Linux and MacOS are supported), or if it's not available will attempt to build it.
 
 ### Usage
 
