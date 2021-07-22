@@ -34,7 +34,7 @@ Note: this will download the DuckDB binary for your platform (currently Linux an
 
 ### Usage
 
-Using node-duckdb is easy:
+Using Node-DuckDB is easy:
 
 ```ts
 const db = new DuckDB();
