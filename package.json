@@ -50,10 +50,8 @@
     "prebuild:current-target": "yarn prebuild --all --backend cmake-js -r napi --include-regex \"((libduckdb)|(libparquet_extension)|(node-duckdb-addon.node))\" --verbose",
     "prebuild:linux": "docker-compose run --rm linux-build 'yarn install'",
     "prebuild:upload": "yarn prebuild --upload-all ${GITHUB_TOKEN}",
-    "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",
     "test": "yarn build:ts && NODE_OPTIONS='--max-old-space-size=8192' jest --runInBand --testTimeout=60000"
   },
   "resolutions": {
