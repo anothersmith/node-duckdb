@@ -46,8 +46,8 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           yarn install --frozen-lockfile
           yarn standard-version
+          git push --follow-tags
           yarn publish --tag provisional-release --access public
-          git push --follow-tags -f
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
