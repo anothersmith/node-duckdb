@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.75",
+  "version": "0.0.76",
   "private": false,
   "description": "DuckDB for Node.JS",
   "keywords": [
@@ -40,7 +40,7 @@
     "clang:check": "yarn clang-format --dry-run --Werror addon/**",
     "clang:fix": "yarn clang-format -i addon/**",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
-    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/d39da82e5ac4c41ec2a228782a8cc3d7221affdf.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-d39da82e5ac4c41ec2a228782a8cc3d7221affdf duckdb && rm duckdb.tar.gz",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.8.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.8 duckdb && rm duckdb.tar.gz",
     "eslint:check": "eslint --ext .js,.json,.ts ./",
     "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
     "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./docs/replace.sh",
@@ -59,6 +59,7 @@
   },
   "resolutions": {
     "cmake-js/yargs/y18n": ">=5.0.5||>=4.0.1 <5.0.0||>=3.2.2 <4.0.0",
+    "tar": " >=3.2.3 <4.0.0 || >=4.4.15  <5.0.0 || >=5.0.7 <6.0.0 || >=6.1.2",
     "trim-newlines": ">=3.0.1 <4.0.0 || >=4.0.1"
   },
   "dependencies": {
