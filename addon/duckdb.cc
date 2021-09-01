@@ -4,6 +4,7 @@
 #include "duckdb.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
+#include "httpfs-extension.hpp"
 #include "parquet-extension.hpp"
 #include "result_iterator.h"
 #include "type-converters.h"
@@ -63,6 +64,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
   try {
     database = duckdb::make_unique<duckdb::DuckDB>(path, &nativeConfig);
     database->LoadExtension<duckdb::ParquetExtension>();
+    database->LoadExtension<duckdb::HTTPFsExtension>();
   } catch (duckdb::IOException e) {
     throw Napi::Error::New(env, e.what());
   } catch (std::exception e) {
