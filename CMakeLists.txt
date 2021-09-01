@@ -17,7 +17,7 @@ add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 find_package(OpenSSL REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB} duckdb parquet_extension httpfs_extension "/usr/lib64/libssl.so")
+target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB} duckdb parquet_extension httpfs_extension ${OPENSSL_CRYPTO_LIBRARY} ${OPENSSL_SSL_LIBRARY})
 if(APPLE)
   message("Building for MacOS")
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-Wl,-rpath,@loader_path/.")
