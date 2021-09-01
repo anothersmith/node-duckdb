@@ -36,7 +36,7 @@ describe("Result stream", () => {
     expect(elements[0]).toEqual([
       1,
       "AAAAAAAABAAAAAAA",
-      873244800000,
+      "1997-09-03",
       null,
       2450810,
       2452620,
@@ -68,7 +68,7 @@ describe("Result stream", () => {
     rs1.on("close", () => (hasClosedFired = true));
     await expect(readStream(rs1)).rejects.toMatchObject({
       message:
-        "No data has been returned (possibly stream has been closed: only one stream can be active on one connection at a time)",
+        "Attempting to fetch from an unsuccessful or closed streaming query result: only one stream can be active on one connection at a time)",
     });
     expect(hasClosedFired).toBe(true);
   });

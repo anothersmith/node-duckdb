@@ -9,7 +9,7 @@ class DuckDB : public Napi::ObjectWrap<DuckDB> {
 public:
   static Napi::Object Init(Napi::Env env, Napi::Object exports);
   DuckDB(const Napi::CallbackInfo &info);
-  shared_ptr<duckdb::DuckDB> database;
+  duckdb::shared_ptr<duckdb::DuckDB> database;
   static Napi::FunctionReference constructor;
   bool IsClosed(void);
 
@@ -25,7 +25,6 @@ private:
   Napi::Value GetCollation(const Napi::CallbackInfo &info);
   Napi::Value GetDefaultOrderType(const Napi::CallbackInfo &info);
   Napi::Value GetDefaultNullOrder(const Napi::CallbackInfo &info);
-  Napi::Value GetEnableCopy(const Napi::CallbackInfo &info);
 };
 } // namespace NodeDuckDB
 

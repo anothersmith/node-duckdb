@@ -1,11 +1,13 @@
 version: "3"
 services:
   linux-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: linux-build
     working_dir: /root/node-duckdb
     tty: true
     stdin_open: true
-    image: 059037012730.dkr.ecr.us-east-1.amazonaws.com/deepcrawl/odin-api:latest
     environment:
       YARN_CACHE_FOLDER: /yarn_cache
       GITHUB_TOKEN: $GITHUB_TOKEN

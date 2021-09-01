@@ -33,7 +33,7 @@ describe("executeIterator on csv", () => {
     expect(result.fetchRow()).toMatchObject([
       1,
       "AAAAAAAABAAAAAAA",
-      873244800000,
+      "1997-09-03",
       null,
       2450810,
       2452620,

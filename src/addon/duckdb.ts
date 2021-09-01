@@ -131,11 +131,4 @@ export class DuckDB {
   public get defaultNullOrder(): OrderByNullType {
     return this.duckdb.defaultNullOrder;
   }
-  /**
-   * Returns true of copying is enabled, false otherwise.
-   * @public
-   */
-  public get enableCopy(): boolean {
-    return this.duckdb.enableCopy;
-  }
 }

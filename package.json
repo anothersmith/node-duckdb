@@ -1,6 +1,6 @@
 {
   "name": "node-duckdb",
-  "version": "0.0.59",
+  "version": "0.0.78",
   "private": false,
   "description": "DuckDB for Node.JS",
   "keywords": [
@@ -31,42 +31,50 @@
     ]
   },
   "scripts": {
+    "audit:fix": "yarn-audit-fix",
     "build": "yarn build:duckdb && yarn build:addon && yarn build:ts",
     "build:addon": "rimraf build && cmake-js compile --CDnapi_build_version=6",
-    "build:duckdb": "cd duckdb && make && cd -",
+    "build:duckdb": "cd duckdb && make BUILD_HTTPFS=1 && cd -",
     "build:test:watch": "nodemon --exec 'yarn build && yarn jest --testTimeout=60000'",
     "build:ts": "rimraf dist && ttsc",
     "clang:check": "yarn clang-format --dry-run --Werror addon/**",
     "clang:fix": "yarn clang-format -i addon/**",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
-    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.2.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.2 duckdb && rm duckdb.tar.gz",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.8.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.8 duckdb && rm duckdb.tar.gz",
+    "download-duckdb:master": "rm -rf duckdb && git clone https://github.com/duckdb/duckdb.git && cd duckdb && git checkout 31308be8cb5b8382920b6e39ae1d2923da682edc",
     "eslint:check": "eslint --ext .js,.json,.ts ./",
     "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
     "generate-doc": "yarn build:ts && rm -rf temp etc && mkdir etc && yarn api-extractor run --local --verbose &&  yarn api-documenter markdown -i temp -o docs/api && ./docs/replace.sh",
-    "install": "prebuild-install --verbose -d -r napi || (yarn download-duckdb && yarn build:duckdb && yarn prebuild:current-target)",
+    "install": "prebuild-install --verbose -d -r napi || (yarn download-duckdb:master && yarn build:duckdb && yarn prebuild:current-target)",
     "lint:check": "yarn prettier:check && yarn eslint:check && yarn clang:check",
     "lint:fix": "yarn prettier:fix && yarn eslint:fix && yarn clang:fix",
     "prebuild:all-targets": "yarn install && yarn prebuild:linux",
-    "prebuild:current-target": "yarn prebuild --all --backend cmake-js -r napi --include-regex \"((libduckdb)|(libparquet_extension)|(node-duckdb-addon.node))\" --verbose",
+    "prebuild:current-target": "yarn prebuild --all --backend cmake-js -r napi --include-regex \"((libduckdb)|(libparquet_extension)|(libhttpfs_extension)|(node-duckdb-addon.node))\" --verbose",
     "prebuild:linux": "docker-compose run --rm linux-build 'yarn install'",
     "prebuild:upload": "yarn prebuild --upload-all ${GITHUB_TOKEN}",
     "prepublishOnly": "yarn build:ts",
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
-    "postpublish": "yarn cleanup:binaries && yarn install && yarn prebuild:upload",
-    "test": "yarn build:ts && jest --runInBand --testTimeout=60000"
+    "postpublish": "yarn prebuild:upload",
+    "test": "yarn build:ts && NODE_OPTIONS='--max-old-space-size=8192' jest --runInBand --testTimeout=60000"
+  },
+  "resolutions": {
+    "cmake-js/yargs/y18n": ">=5.0.5||>=4.0.1 <5.0.0||>=3.2.2 <4.0.0",
+    "tar": " >=3.2.3 <4.0.0 || >=4.4.15  <5.0.0 || >=5.0.7 <6.0.0 || >=6.1.2",
+    "trim-newlines": ">=3.0.1 <4.0.0 || >=4.0.1"
   },
   "dependencies": {
-    "@microsoft/api-extractor": "^7.12.0",
     "cmake-js": "^6.1.0",
     "node-addon-api": "^3.0.2",
-    "prebuild-install": "^6.0.0",
-    "rimraf": "^3.0.2",
-    "standard-version": "^9.0.0"
+    "prebuild": "^10.0.1",
+    "prebuild-install": "^6.0.0"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.11.3",
+    "@microsoft/api-extractor": "^7.13.2",
     "@types/jest": "^26.0.14",
+    "@types/lodash": "^4.14.167",
+    "@types/parquetjs": "^0.10.2",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
     "clang-format": "^1.4.0",
@@ -86,11 +94,15 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "jest": "^26.2.2",
     "jest-extended": "^0.11.5",
+    "lodash": "^4.17.21",
     "nodemon": "^2.0.4",
-    "prebuild": "^10.0.1",
+    "parquetjs": "^0.11.2",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "standard-version": "^9.1.1",
     "ttypescript": "^1.5.12",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "yarn-audit-fix": "6.3.2"
   },
   "engines": {
     "node": ">= 12.17.0"

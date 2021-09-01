@@ -35,18 +35,20 @@ describe("DuckDB configuration", () => {
   it("allows to specify access mode - read only read operation succeeds", async () => {
     const db1 = new DuckDB({ path: dbPath });
     const connection1 = new Connection(db1);
-    await connection1.executeIterator("CREATE TABLE test2 (a INTEGER);");
-    await connection1.executeIterator("INSERT INTO test2 SELECT 1;");
+    await connection1.executeIterator("CREATE TABLE test2 (a INTEGER)");
+    const r = await connection1.executeIterator("INSERT INTO test2 SELECT 1");
+    r.close();
+    connection1.close();
     db1.close();
     const fd = await statAsync(dbPath);
     expect(fd.isFile()).toBe(true);
     const db2 = new DuckDB({ path: dbPath, options: { accessMode: AccessMode.ReadOnly } });
     expect(db2.accessMode).toBe(AccessMode.ReadOnly);
     const connection2 = new Connection(db2);
-    const iterator = await connection2.executeIterator("SELECT * FROM test2;", {
+    const iterator = await connection2.executeIterator("SELECT * FROM test2", {
       rowResultFormat: RowResultFormat.Array,
     });
-    expect(iterator.fetchRow()).toEqual([1]);
+    expect(iterator.fetchAllRows()).toEqual([[1]]);
     db2.close();
     await unlinkAsync(dbPath);
   });
@@ -150,16 +152,6 @@ describe("DuckDB configuration", () => {
     expect(() => new DuckDB(<any>{ options: { defaultNullOrder: 10 } })).toThrow(
       "Invalid defaultNullOrder: must be of appropriate enum type",
     );
-  });
-
-  it("allows to specify enable copy", () => {
-    const db = new DuckDB({ options: { enableCopy: false } });
-    expect(db.enableCopy).toBe(false);
-    db.close();
-  });
-
-  it("does not allow to specify invalid enableCopy", () => {
-    expect(() => new DuckDB(<any>{ options: { enableCopy: 10 } })).toThrow("Invalid enableCopy: must be a boolean");
   });
 
   it("returns package version", async () => {
