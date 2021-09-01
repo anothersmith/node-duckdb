@@ -18,7 +18,7 @@ describe("Http/s3 interface", () => {
 
   it("allows reading from https", async () => {
     const result = await connection.executeIterator(
-      "SELECT * FROM parquet_scan('https://github.com/deepcrawl/node-duckdb/raw/ODIN-1093-http-s3/src/tests/test-fixtures/alltypes_plain.parquet')",
+      "SELECT * FROM parquet_scan('https://github.com/deepcrawl/node-duckdb/raw/master/src/tests/test-fixtures/alltypes_plain.parquet')",
       executeOptions,
     );
     expect(result.fetchRow()).toMatchObject([
