@@ -33,7 +33,7 @@ export class ResultIterator<T> implements IterableIterator<T> {
   /**
    * Describe the result set schema.
    */
-  public describe(): string[][] {
+  public describe(): Array<[string, string]> {
     return this.resultInterator.describe();
   }
   /**
