@@ -54,6 +54,8 @@ jobs:
           USERNAME: ${{secrets.USERNAME}}
           EMAIL: ${{secrets.EMAIL}}
           GH_TOKEN: ${{secrets.BRANCH_PROTECTION_TOKEN}}
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       - name: Enable "include administrators" branch protection
         uses: benjefferies/branch-protection-bot@master
         if: always() # Force to always run this step to ensure "include administrators" is always turned back on
