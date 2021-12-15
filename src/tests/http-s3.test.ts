@@ -36,7 +36,9 @@ describe("Http/s3 interface", () => {
     ]);
   });
 
-  // Note, the github actions test uses "dforsber-duckdb-test" user in dev
+  // Note, this test uses "dforsber-duckdb-test" user in dev
+  // (won't pass with your regular DC creds since they don't have permissions to the bucket
+  // and it also needs the session token)
   it("allows reading from s3 - github actions", async () => {
     await connection.executeIterator(`SET s3_region='us-east-1'`);
     await connection.executeIterator(`SET s3_access_key_id='${process.env.AWS_ACCESS_KEY_ID}'`);
@@ -65,7 +67,9 @@ describe("Http/s3 interface", () => {
   });
 
   // TODO: merge the two s3 tests in one by using the same s3 bucket but different users
-  it("allows reading from s3 - local", async () => {
+  // Use DC Dev creds for this test (need to export AWS_ACCESS_KEY_ID, etc)
+  // Note, won't pass in github actions since that user doesn't have DC Dev perms
+  it.skip("allows reading from s3 - local", async () => {
     await connection.executeIterator(`SET s3_region='us-east-1'`);
     await connection.executeIterator(`SET s3_access_key_id='${process.env.AWS_ACCESS_KEY_ID}'`);
     await connection.executeIterator(`SET s3_secret_access_key='${process.env.AWS_SECRET_ACCESS_KEY}'`);
