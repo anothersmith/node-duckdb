@@ -55,7 +55,10 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn prebuild:upload",
-    "test": "yarn build:ts && NODE_OPTIONS='--max-old-space-size=8192' jest --runInBand --testTimeout=60000"
+    "test": "yarn setup-test-environment && yarn test:run",
+    "test:ci": "yarn test:run",
+    "test:run": "yarn build:ts && jest --max-workers=1",
+    "setup-test-environment": "./scripts/setup-test-environment.sh"
   },
   "resolutions": {
     "cmake-js/yargs/y18n": ">=5.0.5||>=4.0.1 <5.0.0||>=3.2.2 <4.0.0",

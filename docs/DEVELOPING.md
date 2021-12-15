@@ -2,6 +2,10 @@
 
 ### First build:
 
+Prerequisites:
+
+- aws cli tools (for the s3 test)
+
 1. `yarn install` - installs dependencies including downloading duckdb
 2. `yarn build:ts` - builds typescript
 3. `yarn test` - runs all tests
