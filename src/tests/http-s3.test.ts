@@ -42,7 +42,7 @@ describe("Http/s3 interface", () => {
    * - when running in github actions "dforsber-duckdb-test" (Dev environment) user is used
    * - when running locally the "run-tests-locally" script loads credentials from your aws setup
    */
-  it("allows reading from s3 - github actions", async () => {
+  it("allows reading from s3", async () => {
     await connection.executeIterator(`SET s3_region='us-east-1'`);
     await connection.executeIterator(`SET s3_access_key_id='${process.env.AWS_ACCESS_KEY_ID}'`);
     await connection.executeIterator(`SET s3_secret_access_key='${process.env.AWS_SECRET_ACCESS_KEY}'`);
