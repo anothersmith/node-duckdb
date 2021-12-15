@@ -34,8 +34,6 @@ jobs:
       - name: Install modules with frozen lockfile and build
         run: |
           yarn install --frozen-lockfile
-          yarn lint:check
-          yarn audit
           yarn test
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
