@@ -21,4 +21,4 @@ test_script:
   - rm -rf ./*
   - git reset --hard
   - yarn install --frozen-lockfile
-  - yarn test
+  - yarn test:ci
