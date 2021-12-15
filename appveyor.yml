@@ -2,8 +2,8 @@ branches:
   only:
     - master
 
-only_commits:
-  message: /chore\(release\):/
+#only_commits:
+#  message: /chore\(release\):/
 
 image: macos
 
@@ -11,6 +11,8 @@ environment:
   nodejs_version: "12"
 
 install:
+  - brew install openssl
+  - export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
   - npm install -g yarn
   - yarn install --frozen-lockfile
   - yarn prebuild:upload
