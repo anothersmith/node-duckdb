@@ -7,6 +7,12 @@ describe("Http/s3 interface", () => {
   let db: DuckDB;
   let connection: Connection;
   beforeEach(() => {
+    // eslint-disable-next-line no-console
+    console.log("------aaaa");
+    // eslint-disable-next-line no-console
+    console.log(process.env.AWS_ACCESS_KEY_ID);
+    // eslint-disable-next-line no-console
+    console.log(process.env.AWS_SECRET_ACCESS_KEY);
     db = new DuckDB();
     connection = new Connection(db);
   });
