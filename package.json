@@ -40,7 +40,7 @@
     "clang:check": "yarn clang-format --dry-run --Werror addon/**",
     "clang:fix": "yarn clang-format -i addon/**",
     "cleanup:binaries": "rm -rf build prebuilds duckdb",
-    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/v0.2.8.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-0.2.8 duckdb && rm duckdb.tar.gz",
+    "download-duckdb": "rm -rf duckdb && curl -L https://github.com/cwida/duckdb/archive/c07e229072595e086dc0adfac72638e8cc72de40.tar.gz > duckdb.tar.gz && tar xf duckdb.tar.gz && mv duckdb-c07e229072595e086dc0adfac72638e8cc72de40 duckdb && rm duckdb.tar.gz",
     "download-duckdb:master": "rm -rf duckdb && git clone https://github.com/duckdb/duckdb.git && cd duckdb && git checkout 31308be8cb5b8382920b6e39ae1d2923da682edc",
     "eslint:check": "eslint --ext .js,.json,.ts ./",
     "eslint:fix": "eslint --fix --ext .js,.json,.ts ./",
