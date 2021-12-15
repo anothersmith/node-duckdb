@@ -11,14 +11,12 @@ services:
     environment:
       YARN_CACHE_FOLDER: /yarn_cache
       GITHUB_TOKEN: $GITHUB_TOKEN
-      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-      AWS_SESSION_TOKEN: $AWS_SESSION_TOKEN
     volumes:
       - .:/root/node-duckdb
       - ~/.npmrc:/root/.npmrc
       - node-modules:/node_modules
       - yarn-cache:/yarn_cache
+      - ~/.aws/credentials:/root/.aws/credentials:ro
     entrypoint: ["sh", "-c"]
     command: ["yarn install && yarn prebuild:current-target"]
 

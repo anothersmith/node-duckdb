@@ -1,6 +1,7 @@
 FROM amazon/aws-lambda-nodejs:14
 WORKDIR /app
 RUN yum update -y && \
+  yum -y install aws-cli && \
   yum -y install openssl11-devel && \
   yum install make -y && \
   yum install yum install gcc-c++ -y && \
