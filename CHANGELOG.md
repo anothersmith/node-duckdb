@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.79](https://github.com/deepcrawl/node-duckdb/compare/v0.0.78...v0.0.79) (2021-12-15)
+
+
+### Features
+
+* [ODIN-1435] s3 reading ([#131](https://github.com/deepcrawl/node-duckdb/issues/131)) ([e33c3d6](https://github.com/deepcrawl/node-duckdb/commit/e33c3d677718d493e71f4b0f271403d4ba7c955d))
+
+
+### Bug Fixes
+
+* github action [#132](https://github.com/deepcrawl/node-duckdb/issues/132) ([d604309](https://github.com/deepcrawl/node-duckdb/commit/d604309f4d3ee530d2552b1b79029c887caac16a))
+
 ### [0.0.78](https://github.com/deepcrawl/node-duckdb/compare/v0.0.77...v0.0.78) (2021-09-01)
 
 ### [0.0.77](https://github.com/deepcrawl/node-duckdb/compare/v0.0.76...v0.0.77) (2021-09-01)
