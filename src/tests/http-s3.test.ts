@@ -40,7 +40,7 @@ describe("Http/s3 interface", () => {
   /**
    * - test needs AWS creds which have the permission to read from "amazon-reviews-pds" bucket
    * - when running in github actions "dforsber-duckdb-test" (Dev environment) user is used
-   * - when running locally "setup-test-environment" script loads credentials from your aws setup
+   * - when running locally the "run-tests-locally" script loads credentials from your aws setup
    */
   it("allows reading from s3 - github actions", async () => {
     await connection.executeIterator(`SET s3_region='us-east-1'`);

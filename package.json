@@ -55,10 +55,9 @@
     "prettier:check": "prettier --check '**/*.{js,json,md,ts,yml}'",
     "prettier:fix": "prettier --write '**/*.{js,json,md,ts,yml}'",
     "postpublish": "yarn prebuild:upload",
-    "test": "yarn setup-test-environment && yarn test:run",
+    "test": "AWS_PROFILE=dev ./scripts/run-tests-locally.sh",
     "test:ci": "yarn test:run",
-    "test:run": "yarn build:ts && jest --max-workers=1",
-    "setup-test-environment": "./scripts/setup-test-environment.sh"
+    "test:run": "yarn build:ts && jest --max-workers=1"
   },
   "resolutions": {
     "cmake-js/yargs/y18n": ">=5.0.5||>=4.0.1 <5.0.0||>=3.2.2 <4.0.0",
