@@ -71,8 +71,8 @@ describe("Http/s3 interface", () => {
     await connection.executeIterator(`SET s3_secret_access_key='${process.env.AWS_SECRET_ACCESS_KEY}'`);
     await connection.executeIterator(`SET s3_session_token='${process.env.AWS_SESSION_TOKEN}'`);
     const result = await connection.executeIterator(
-        "SELECT * FROM parquet_scan('s3://node-duckdb-test-bucket/alltypes_plain.parquet') LIMIT 1",
-        executeOptions,
+      "SELECT * FROM parquet_scan('s3://node-duckdb-test-bucket/alltypes_plain.parquet') LIMIT 1",
+      executeOptions,
     );
     expect(result.fetchRow()).toMatchObject([
       4,
