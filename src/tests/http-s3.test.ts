@@ -3,6 +3,7 @@ import { IExecuteOptions, RowResultFormat } from "@addon-types";
 
 const executeOptions: IExecuteOptions = { rowResultFormat: RowResultFormat.Array };
 
+jest.setTimeout(60 * 1000 * 2);
 describe("Http/s3 interface", () => {
   let db: DuckDB;
   let connection: Connection;
@@ -36,14 +37,20 @@ describe("Http/s3 interface", () => {
     ]);
   });
 
+  /**
+   * - test needs AWS creds which have the permission to read from "amazon-reviews-pds" bucket
+   * - when running in github actions "dforsber-duckdb-test" (Dev environment) user is used
+   * - when running locally the "run-tests-locally" script loads credentials from your aws setup
+   */
   it("allows reading from s3", async () => {
     await connection.executeIterator(`SET s3_region='us-east-1'`);
     await connection.executeIterator(`SET s3_access_key_id='${process.env.AWS_ACCESS_KEY_ID}'`);
     await connection.executeIterator(`SET s3_secret_access_key='${process.env.AWS_SECRET_ACCESS_KEY}'`);
-    // NOTE: The "=" sign had to be encoded to "%3D" to make this work,
-    //       probably something that DuckDB should be doing!
+    if (process.env.AWS_SESSION_TOKEN) {
+      await connection.executeIterator(`SET s3_session_token='${process.env.AWS_SESSION_TOKEN}'`);
+    }
     const result = await connection.executeIterator(
-      "SELECT * FROM parquet_scan('s3://amazon-reviews-pds/parquet/product_category%3DBooks/part-00000-495c48e6-96d6-4650-aa65-3c36a3516ddd.c000.snappy.parquet') LIMIT 1",
+      "SELECT * FROM parquet_scan('s3://amazon-reviews-pds/parquet/product_category=Books/part-00000-495c48e6-96d6-4650-aa65-3c36a3516ddd.c000.snappy.parquet') LIMIT 1",
       executeOptions,
     );
     expect(result.fetchRow()).toMatchObject([

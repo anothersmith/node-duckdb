@@ -16,6 +16,7 @@ services:
       - ~/.npmrc:/root/.npmrc
       - node-modules:/node_modules
       - yarn-cache:/yarn_cache
+      - ~/.aws/credentials:/root/.aws/credentials:ro
     entrypoint: ["sh", "-c"]
     command: ["yarn install && yarn prebuild:current-target"]
 

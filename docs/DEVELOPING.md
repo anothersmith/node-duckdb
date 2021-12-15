@@ -1,10 +1,23 @@
 ## Developing
 
-First build:
+### First build:
+
+Prerequisites:
+
+- aws cli tools (for the s3 test)
 
 1. `yarn install` - installs dependencies including downloading duckdb
 2. `yarn build:ts` - builds typescript
 3. `yarn test` - runs all tests
+
+### Build using DuckDB sources:
+
+Prerequisites:
+
+- OpenSSL v1.1+ (on Mac you may need to specify `OPENSSL_ROOT_DIR`, e.g. ` export OPENSSL_ROOT_DIR=/usr/local/opt/openssl`)
+
+1. `yarn download-duckdb`: downloads the version of duckdb specified in the package.json command
+2. `yarn build`: will build the DuckDB sources, the C++ addon sources and the typescript sources
 
 Other useful scripts:
 

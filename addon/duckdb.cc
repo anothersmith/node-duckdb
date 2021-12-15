@@ -71,7 +71,7 @@ DuckDB::DuckDB(const Napi::CallbackInfo &info)
     throw Napi::Error::New(env, e.what());
   } catch (...) {
     throw Napi::Error::New(env,
-                           "An error occured during DuckDB initialisation");
+                           "An error occurred during DuckDB initialisation");
   }
 }
 
