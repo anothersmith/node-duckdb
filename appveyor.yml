@@ -2,8 +2,8 @@ branches:
   only:
     - master
 
-#only_commits:
-#  message: /chore\(release\):/
+only_commits:
+  message: /chore\(release\):/
 
 image: macos
 
