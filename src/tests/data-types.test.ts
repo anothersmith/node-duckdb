@@ -235,49 +235,11 @@ describe("Data type mapping", () => {
     const result = await connection.executeIterator<any[]>(
       `SELECT raw_header from parquet_scan('src/tests/test-fixtures/crawl_urls.parquet')`,
     );
-    expect(result.fetchRow()).toEqual({
-      raw_header: [
-        {
-          key: "Content-Encoding",
-          value: "gzip",
-        },
-        {
-          key: "X-Frame-Options",
-          value: "SAMEORIGIN",
-        },
-        {
-          key: "Connection",
-          value: "keep-alive",
-        },
-        {
-          key: "X-Xss-Protection",
-          value: "1; mode=block",
-        },
-        {
-          key: "Content-Type",
-          value: "text/html;charset=utf-8",
-        },
-        {
-          key: "Date",
-          value: "Tue, 18 Aug 2020 13:46:36 GMT",
-        },
-        {
-          key: "Vary",
-          value: "User-agent,Accept-Encoding",
-        },
-        {
-          key: "Server",
-          value: "nginx/1.10.3",
-        },
-        {
-          key: "X-Content-Type-Options",
-          value: "nosniff",
-        },
-        {
-          key: "Content-Length",
-          value: "1180",
-        },
-      ],
+    const row = result.fetchRow();
+    console.log("*** result of fetchRow: ", row);
+    expect(row).toEqual({
+      raw_header:
+        "{Content-Encoding=gzip, X-Frame-Options=SAMEORIGIN, Connection=keep-alive, X-Xss-Protection=1; mode=block, Content-Type=text/html;charset=utf-8, Date=Tue, 18 Aug 2020 13:46:36 GMT, Vary=User-agent,Accept-Encoding, Server=nginx/1.10.3, X-Content-Type-Options=nosniff, Content-Length=1180}",
     });
   });
 

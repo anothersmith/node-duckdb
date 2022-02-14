@@ -21,9 +21,12 @@ const columnTypes = [
   ),
 ];
 
+// Commented out compression because there seems to be a case-sensitivity incompatibility between
+// parquetjs and latest DuckDb: parquetjs only understands all caps ('GZIP'), but DuckDb now requires
+// lower case ('gzip')
 const schema = Object.assign(
   {},
-  ...columnTypes.map((columnType, index) => ({ [`col${index}`]: { type: columnType, compression: "GZIP" } })),
+  ...columnTypes.map((columnType, index) => ({ [`col${index}`]: { type: columnType /* , compression: "GZIP" */ } })),
 );
 
 function getRandomValue(columnType: string): number | string | boolean {

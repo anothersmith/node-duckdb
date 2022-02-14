@@ -42,6 +42,10 @@ int64_t GetTime(int64_t timestamp) {
 #define EPOCH_DATE 719528
 #define SECONDS_PER_DAY (60 * 60 * 24)
 
+#define CLOSED_RESULT_ERR_MESSAGE                                              \
+  "Invalid Input Error: Attempting to execute an unsuccessful or closed "      \
+  "pending query result"
+
 int64_t Epoch(int64_t date) {
   return ((int64_t)date - EPOCH_DATE) * SECONDS_PER_DAY;
 }
@@ -56,10 +60,8 @@ Napi::Value ResultIterator::FetchRow(const Napi::CallbackInfo &info) {
     try {
       current_chunk = result->Fetch();
     } catch (const duckdb::InvalidInputException &e) {
-      if (strncmp(e.what(),
-                  "Invalid Input Error: Attempting to fetch from an "
-                  "unsuccessful or closed streaming query result",
-                  50) == 0) {
+      if (strncmp(e.what(), CLOSED_RESULT_ERR_MESSAGE,
+                  sizeof(CLOSED_RESULT_ERR_MESSAGE) - 1) == 0) {
         Napi::Error::New(
             env, "Attempting to fetch from an unsuccessful or closed streaming "
                  "query result: only "
@@ -146,7 +148,7 @@ Napi::Value ResultIterator::getCellValue(Napi::Env env, duckdb::idx_t col_idx) {
 }
 
 Napi::Value ResultIterator::getMappedValue(Napi::Env env, duckdb::Value value) {
-  if (value.is_null) {
+  if (value.IsNull()) {
     return env.Null();
   }
 
@@ -183,10 +185,11 @@ Napi::Value ResultIterator::getMappedValue(Napi::Env env, duckdb::Value value) {
   case duckdb::LogicalTypeId::VARCHAR:
     return Napi::String::New(env, value.GetValue<string>());
   case duckdb::LogicalTypeId::BLOB: {
-    int array_length = value.str_value.length();
+    string blob_str = value.GetValue<string>();
+    int array_length = blob_str.length();
     char char_array[array_length + 1];
     // TODO: multiple copies, improve
-    strcpy(char_array, value.str_value.c_str());
+    strcpy(char_array, blob_str.c_str());
     return Napi::Buffer<char>::Copy(env, char_array, array_length);
   }
   case duckdb::LogicalTypeId::TIMESTAMP: {
@@ -215,8 +218,9 @@ Napi::Value ResultIterator::getMappedValue(Napi::Env env, duckdb::Value value) {
     return Napi::Number::New(env, value.GetValue<int64_t>());
   case duckdb::LogicalTypeId::LIST: {
     auto array = Napi::Array::New(env);
-    for (size_t i = 0; i < value.list_value.size(); i++) {
-      auto &element = value.list_value[i];
+    auto &elements = duckdb::ListValue::GetChildren(value);
+    for (size_t i = 0; i < elements.size(); i++) {
+      auto &element = elements[i];
       auto mapped_value = getMappedValue(env, element);
       array.Set(i, mapped_value);
     }
@@ -224,10 +228,11 @@ Napi::Value ResultIterator::getMappedValue(Napi::Env env, duckdb::Value value) {
   }
   case duckdb::LogicalTypeId::STRUCT: {
     auto object = Napi::Object::New(env);
-    for (size_t i = 0; i < value.struct_value.size(); i++) {
+    auto &struct_object = duckdb::StructValue::GetChildren(value);
+    for (size_t i = 0; i < struct_object.size(); i++) {
       auto &child_types = duckdb::StructType::GetChildTypes(value.type());
       auto &key = child_types[i].first;
-      auto &element = value.struct_value[i];
+      auto &element = struct_object[i];
       auto child_value = getMappedValue(env, element);
       object.Set(key, child_value);
     }
