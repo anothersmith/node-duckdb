@@ -11,7 +11,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-          token: ${{secrets.BRANCH_PROTECTION_TOKEN}}
+          token: ${{secrets.RELEASE_JOB_MASTER_PROTECTION_TOKEN}}
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -32,7 +32,7 @@ jobs:
         uses: benjefferies/branch-protection-bot@master
         if: always()
         with:
-          access_token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
+          access_token: ${{ secrets.RELEASE_JOB_MASTER_PROTECTION_TOKEN }}
           enforce_admins: false
           branch: master
       - name: Install modules with frozen lockfile and build
@@ -53,13 +53,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
           USERNAME: ${{secrets.USERNAME}}
           EMAIL: ${{secrets.EMAIL}}
-          GH_TOKEN: ${{secrets.BRANCH_PROTECTION_TOKEN}}
+          GH_TOKEN: ${{secrets.RELEASE_JOB_MASTER_PROTECTION_TOKEN}}
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       - name: Enable "include administrators" branch protection
         uses: benjefferies/branch-protection-bot@master
         if: always() # Force to always run this step to ensure "include administrators" is always turned back on
         with:
-          access_token: ${{ secrets.BRANCH_PROTECTION_TOKEN }}
+          access_token: ${{ secrets.RELEASE_JOB_MASTER_PROTECTION_TOKEN }}
           enforce_admins: true
           branch: master
