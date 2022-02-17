@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.80](https://github.com/deepcrawl/node-duckdb/compare/v0.0.79...v0.0.80) (2022-02-17)
+
+
+### Bug Fixes
+
+* appveyor ([#133](https://github.com/deepcrawl/node-duckdb/issues/133)) ([1172aba](https://github.com/deepcrawl/node-duckdb/commit/1172abafa5d31bd79fe5941d603861a020dd164f))
+
 ### [0.0.79](https://github.com/deepcrawl/node-duckdb/compare/v0.0.78...v0.0.79) (2021-12-15)
 
 
