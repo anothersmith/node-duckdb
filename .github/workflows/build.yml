@@ -38,6 +38,5 @@ jobs:
           yarn test:ci
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_REGISTRY_TOKEN}}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
