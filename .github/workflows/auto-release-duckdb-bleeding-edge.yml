@@ -50,7 +50,7 @@ jobs:
           yarn publish --tag provisional-release --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          GITHUB_TOKEN: ${{ secrets.UPLOAD_ARTIFACTS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_JOB_UPLOAD_ARTIFACTS_TOKEN }}
           USERNAME: ${{secrets.USERNAME}}
           EMAIL: ${{secrets.EMAIL}}
           GH_TOKEN: ${{secrets.RELEASE_JOB_MASTER_PROTECTION_TOKEN}}
