@@ -33,7 +33,28 @@ Workflow notes:
 
 - if addon code is changed in your PR, the package.json version should also be changed manually, otherwise the old binary will be used in CI/CD and elsewhere
 
-## Automated Release
+## Information for internal contributors
+
+### Important
+
+Only allow external contributors' PR jobs to be run after inspecting the changes for any security issues (namely exposing github/appveyor tokens/secrets).
+
+### Service Users & their Tokens
+
+- `DeepDuckla` - GitHub/AppVeyor user.
+  - GitHub credentials are found in 1Password under the name `DeepDuckla`.
+  - Login to AppVeyor via GitHub.
+  - User's PATs are used to run GitHub actions and AppVeyor jobs.
+- `dforsber-duckdb-test` - AWS user for running s3 tests
+  - Credentials in Dev IAM.
+  - It's only needed to access the amazon s3 bucket, so any external user can create his own user if need be.
+- `deepcrawl-tech` - NPM User
+  - Credentials in 1Password
+  - Used to publish to NPM
+
+All tokens have the minimum required permissions and are exposed via GitHub secrets or AppVeyor secure variables.
+
+### Automated Release
 
 Once `master` is ready to be released:
 
@@ -65,7 +86,7 @@ yarn tag add node-duckdb@xxx latest
 
 You can now continue merging into master.
 
-## Manual Release
+### Manual Release
 
 On a mac:
 

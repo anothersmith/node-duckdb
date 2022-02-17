@@ -49,11 +49,15 @@ jobs:
           git push --follow-tags
           yarn publish --tag provisional-release --access public
         env:
+          # NPM Publish Token
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          # NPM Username
           USERNAME: ${{secrets.USERNAME}}
+          # NPM Email
           EMAIL: ${{secrets.EMAIL}}
           # used by prebuild to publish artifacts
           GITHUB_TOKEN: ${{secrets.RELEASE_JOB_UPLOAD_ARTIFACTS_TOKEN}}
+          # AWS user creds for s3 test
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       - name: Enable "include administrators" branch protection
